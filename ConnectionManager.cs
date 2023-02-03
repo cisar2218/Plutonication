@@ -20,9 +20,8 @@ public class ConnectionManager
             return null;
         }
     }
-    public static Socket Listen(int port)
+    public static Socket Listen(IPAddress ipLocal, int port)
     {
-        IPAddress ipLocal = IPAddress.Any;
         string ipStr = ipLocal.ToString();
         IPEndPoint localEndPoint = new IPEndPoint(ipLocal, port);
 
@@ -31,5 +30,13 @@ public class ConnectionManager
         listener.Listen();
 
         return listener;
+    }
+
+    public static string GetMyWebSocketLink(int port)
+    {
+        string hostName = Dns.GetHostName();
+        IPAddress[] ipAddresses = Dns.GetHostEntry(hostName).AddressList;
+        IPAddress localIP = ipAddresses[0];
+        return "ws://" + localIP.ToString() + ":" + port;
     }
 }
