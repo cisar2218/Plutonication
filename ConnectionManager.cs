@@ -39,4 +39,11 @@ public class ConnectionManager
         IPAddress localIP = ipAddresses[0];
         return "ws://" + localIP.ToString() + ":" + port;
     }
+
+    public static IPAddress GetMyIpAddress()
+    {
+        string hostName = Dns.GetHostName();
+        IPAddress[] ipAddresses = Dns.GetHostEntry(hostName).AddressList;
+        return ipAddresses[0];
+    }
 }
