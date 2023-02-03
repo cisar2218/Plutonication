@@ -6,7 +6,7 @@ public class ConnectionManager
 {
     public static Socket Connect(IPAddress address, int port)
     {
-        Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        Socket socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
         IPEndPoint endpoint = new IPEndPoint(address, port);
 
         try
@@ -25,7 +25,7 @@ public class ConnectionManager
         string ipStr = ipLocal.ToString();
         IPEndPoint localEndPoint = new IPEndPoint(ipLocal, port);
 
-        Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        Socket listener = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
         listener.Bind(localEndPoint);
         listener.Listen();
 
