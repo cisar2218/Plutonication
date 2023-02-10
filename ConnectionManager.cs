@@ -4,32 +4,37 @@ using System.Net;
 namespace Plutonication;
 public class ConnectionManager
 {
-    public static Socket Connect(IPAddress address, int port)
+    public static TcpClient? Connect(string serverAddr, int port)
     {
-        Socket socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint endpoint = new IPEndPoint(address, port);
-
         try
         {
-            socket.Connect(endpoint);
-            return socket;
+            TcpClient client = new TcpClient(serverAddr, port);
+            Console.WriteLine("Client connected to " + serverAddr + ":" + port);
+            return client;
         }
-        catch (SocketException ex)
+        catch (Exception ex)
         {
             Console.WriteLine("Failed to connect: " + ex.Message);
             return null;
         }
     }
-    public static Socket Listen(IPAddress ipLocal, int port)
+
+    public static TcpListener? ListenLocal() {
+        const int port = 8080;
+        return Listen(GetMyIpAddress(), port);
+    }
+    public static TcpListener? Listen(IPAddress ipLocal, int port)
     {
         string ipStr = ipLocal.ToString();
-        IPEndPoint localEndPoint = new IPEndPoint(ipLocal, port);
-
-        Socket listener = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-        listener.Bind(localEndPoint);
-        listener.Listen();
-
-        return listener;
+        try
+        {
+            TcpListener listener = new TcpListener(ipLocal, port);
+            return listener;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
     public static string GetMyWebSocketLink(int port)
