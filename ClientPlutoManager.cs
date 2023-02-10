@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Plutonication
 {
-    public class ClientPlutoManager : IPlutoManager
+    public class ClientPlutoManager : PlutoManager, IPlutoManager
     {
-        private int Port { get; set; }
-        private IPAddress ServerAddress { get; set; }
-        private TcpClient Client { get; set; }
         public ClientPlutoManager(IPAddress serverAddress, int port)
         {
             ServerAddress = serverAddress;
@@ -25,27 +22,7 @@ namespace Plutonication
             Client = new TcpClient(serverAddr, port);
         }
 
-        public void SendMessage(string data)
-        {
-            NetworkStream stream = Client.GetStream();
-            byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
-            stream.Write(msg, 0, msg.Length);
-        }
-
-        public string ReceiveMessage()
-        {
-            NetworkStream stream = Client.GetStream();
-
-            Byte[] data = new Byte[256];
-
-            Int32 bytes = stream.Read(data, 0, data.Length);
-            String responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            // TODO remove log
-            Console.WriteLine("Received: {0}", responseData);
-            return responseData;
-        }
-
-        public void CloseConnection()
+        public override void CloseConnection()
         {
             Client.Close();
         }
