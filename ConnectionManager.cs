@@ -28,7 +28,7 @@ public class ConnectionManager
         string ipStr = ipLocal.ToString();
         try
         {
-            TcpListener listener = new TcpListener(ipLocal, port);
+            TcpListener listener = new TcpListener(port);
             return listener;
         }
         catch (Exception ex)
