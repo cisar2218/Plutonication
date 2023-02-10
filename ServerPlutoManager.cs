@@ -13,6 +13,28 @@ namespace Plutonication
         {
             Port = port;
         }
+
+        public void SendTransaction(Byte palletIdx, Byte callIdx, Byte[] data)
+        {
+            NetworkStream stream = Client.GetStream();
+            Byte[] msg = new Byte[data.Length + 2];
+            msg[0] = palletIdx;
+            msg[1] = callIdx;
+            Array.Copy(data, 0, msg, 2, data.Length);
+            stream.Write(msg, 0, msg.Length);
+        }
+
+        public PlutoMessage ReceiveMessage()
+        {
+            NetworkStream stream = Client.GetStream();
+            Byte[] data = new Byte[256];
+
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            String responseData = System.Text.Encoding.ASCII.GetString(data, 1, bytes - 1);
+
+            PlutoMessage message = new PlutoMessage((MessageCode)data[0], responseData);
+            return message;
+        }
         public void AcceptClient()
         {
             Client = server.AcceptTcpClient();
@@ -29,7 +51,8 @@ namespace Plutonication
                 throw;
             }
         }
-        public override void CloseConnection() {
+        public override void CloseConnection()
+        {
             Client.Close();
             server.Stop();
         }

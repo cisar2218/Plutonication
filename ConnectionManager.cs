@@ -118,12 +118,6 @@ public class ConnectionManager
     {
         string hostName = Dns.GetHostName();
         IPAddress[] ipAddresses = Dns.GetHostEntry(hostName).AddressList;
-        var ads = hostName + "\n";
-        foreach (var address in ipAddresses)
-        {
-            ads += address.ToString() + "\n";
-        }
-        return ads;
         var ip = ipAddresses.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                  .FirstOrDefault();
         return ip.ToString() ?? "";
