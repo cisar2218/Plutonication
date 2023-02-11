@@ -16,11 +16,11 @@ namespace Plutonication
             Port = port;
         }
 
-        public Method ReceiveTransaction()
+        public Method ReceiveMethod()
         {
-            return ReceiveTransactionAsync().GetAwaiter().GetResult();
+            return ReceiveMethodAsync().GetAwaiter().GetResult();
         }
-        public async Task<Method> ReceiveTransactionAsync()
+        public async Task<Method> ReceiveMethodAsync()
         {
             const int NUM_OF_BYTES_REQUIRED = 3;
             NetworkStream stream = Client.GetStream();
