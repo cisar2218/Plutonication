@@ -28,8 +28,10 @@ namespace Plutonication
             {
                 throw new Exception("No data received.");
             }
-            String responseData = System.Text.Encoding.ASCII.GetString(data, 1, bytes - 1);
-            return new PlutoMessage((MessageCode)data[0], responseData);
+            int customDataLenght = bytes-1;
+            Byte[] customData = new Byte[customDataLenght]; 
+            Array.Copy(data, 1, customData, 0, customDataLenght);
+            return new PlutoMessage((MessageCode)data[0], customData);
         }
 
         public void SendMessage(PlutoMessage message)
