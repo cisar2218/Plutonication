@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Ajuna.NetApi" Version="0.3.3" />
+  </ItemGroup>
+
 </Project>
