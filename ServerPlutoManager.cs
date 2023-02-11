@@ -14,19 +14,21 @@ namespace Plutonication
         public ServerPlutoManager(int port)
         {
             Port = port;
-            // ServerAddress = GetServerLanIp(); TODO enable
-            ServerAddress = IPAddress.Parse("127.0.0.1"); // TODO get LAN ip 
+            ServerAddress = IPAddress.Parse("127.0.0.1");
         }
-
-        public void SendTransaction(Method transaction)
+        public async Task SendTransactionAsync(Method transaction)
         {
             Byte[] msg = new Byte[transaction.Parameters.Length + 2];
 
             msg[0] = transaction.ModuleIndex;
             msg[1] = transaction.CallIndex;
             transaction.Parameters.CopyTo(msg, 2);
-            
-            SendMessage(new PlutoMessage(MessageCode.Method, msg));
+
+            await SendMessageAsync(new PlutoMessage(MessageCode.Method, msg));
+        }
+        public void SendTransaction(Method transaction)
+        {
+            SendTransactionAsync(transaction).GetAwaiter().GetResult();
         }
 
         public void AcceptClient()
@@ -46,8 +48,9 @@ namespace Plutonication
             }
         }
 
-        private IPAddress GetServerLanIp() {
-            
+        private IPAddress GetServerLanIp()
+        {
+
             throw new NotImplementedException();
         }
         public override void CloseConnection()

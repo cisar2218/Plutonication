@@ -8,6 +8,9 @@ namespace Plutonication
     public interface IPlutoManager
     {
         void SendMessage(PlutoMessage message);
+        Task SendMessageAsync(MessageCode code);
+
+        Task<PlutoMessage> ReceiveMessageAsync();
         PlutoMessage ReceiveMessage();
     }
 }

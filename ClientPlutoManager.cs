@@ -18,10 +18,14 @@ namespace Plutonication
 
         public Method ReceiveTransaction()
         {
+            return ReceiveTransactionAsync().GetAwaiter().GetResult();
+        }
+        public async Task<Method> ReceiveTransactionAsync()
+        {
             const int NUM_OF_BYTES_REQUIRED = 3;
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
-            Int32 bytes = stream.Read(data, 0, data.Length);
+            Int32 bytes = await stream.ReadAsync(data, 0, data.Length);
             if (data[0] != (byte)MessageCode.Method)
             {
                 throw new Exception(String.Format("{0} not {1} of value {2}. Current value: {3}",

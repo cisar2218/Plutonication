@@ -13,28 +13,43 @@ namespace Plutonication
         protected int Port { get; set; }
         protected IPAddress ServerAddress { get; set; }
         public abstract void CloseConnection();
-
+        
         public PlutoMessage ReceiveMessage()
+        {
+            return ReceiveMessageAsync().GetAwaiter().GetResult();
+        }
+        public async Task<PlutoMessage> ReceiveMessageAsync()
         {
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
 
-            Int32 bytes = stream.Read(data, 0, data.Length);
+            Int32 bytes = await stream.ReadAsync(data, 0, data.Length);
+            if (!(bytes > 0))
+            {
+                throw new Exception("No data received.");
+            }
             String responseData = System.Text.Encoding.ASCII.GetString(data, 1, bytes - 1);
-
             return new PlutoMessage((MessageCode)data[0], responseData);
         }
 
         public void SendMessage(PlutoMessage message)
         {
-            NetworkStream stream = Client.GetStream();
-            byte[] msg = message.ToByteArray();
-            stream.Write(msg, 0, msg.Length);
+            SendMessageAsync(message).GetAwaiter().GetResult();
         }
 
         public void SendMessage(MessageCode code)
         {
-            SendMessage(new PlutoMessage(code, String.Empty));
+            SendMessageAsync(code).GetAwaiter().GetResult();
+        }
+        public async Task SendMessageAsync(MessageCode code)
+        {
+            await SendMessageAsync(new PlutoMessage(code, String.Empty));
+        }
+         public async Task SendMessageAsync(PlutoMessage message)
+        {
+            NetworkStream stream = Client.GetStream();
+            byte[] msg = message.ToByteArray();
+            await stream.WriteAsync(msg, 0, msg.Length);
         }
 
         public static IPAddress GetMyIpAddress()

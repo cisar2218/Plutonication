@@ -2,6 +2,8 @@
 using System.Net;
 
 namespace Plutonication;
+
+// !! this class is temporary and should be removed soon !!
 public class ConnectionManager
 {
     // dApp part
