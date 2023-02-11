@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ajuna.NetApi.Model.Extrinsics;
 
 namespace Plutonication
 {
@@ -29,6 +30,18 @@ namespace Plutonication
             merged[0] = (byte)Identifier;
             CustomData.CopyTo(merged, 1);
             return merged;
+        }
+
+        public Method GetMethod() {
+            if (Identifier != MessageCode.Method) {
+                throw new Exception(String.Format(
+                    "Can't convert cause '{0}' code is not suited for Method.", nameof(Identifier)));
+            }
+            var data = new Byte[0];
+            if (CustomData.Length > 2) {
+                data = CustomData.Skip(2).Take(CustomData.Length-2).ToArray();
+            } 
+            return new Method(CustomData[0], CustomData[1], data);
         }
     }
 }
