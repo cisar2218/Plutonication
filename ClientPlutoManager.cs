@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Ajuna.NetApi.Model.Extrinsics;
 
 namespace Plutonication
 {
@@ -15,20 +16,34 @@ namespace Plutonication
             Port = port;
         }
 
-        public (Byte, Byte, Byte[]) ReceiveTransaction()
+        public Method ReceiveTransaction()
         {
+            const int NUM_OF_BYTES_REQUIRED = 3;
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            return (data[0], data[1], data.Skip(2).ToArray());
+            if (data[0] != (byte)MessageCode.Method)
+            {
+                throw new Exception(String.Format("{0} not {1} of value {2}. Current value: {3}",
+                    nameof(MessageCode), nameof(MessageCode.Method), MessageCode.Method, data[0]));
+            }
+            if (data.Length > NUM_OF_BYTES_REQUIRED)
+            {
+                return new Method(data[1], data[2], data.Skip(3).ToArray());
+            }
+            else if (data.Length == NUM_OF_BYTES_REQUIRED)
+            {
+                // No parrameters of Method => pass empty array
+                return new Method(data[1], data[2], new Byte[0]);
+            }
+            else
+            {
+                throw new Exception(String.Format(
+                    "Not enought bytes received to correspond Method format. Bytes Received: {0}, num of bytes requered: {1}",
+                 data.Length, NUM_OF_BYTES_REQUIRED));
+            }
         }
 
-        public void SendMessage(PlutoMessage message)
-        {
-            NetworkStream stream = Client.GetStream();
-            byte[] msg = message.ToByteArray();
-            stream.Write(msg, 0, msg.Length);
-        }
         public void Connect()
         {
             int port = 8080;

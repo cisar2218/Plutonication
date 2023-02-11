@@ -5,5 +5,6 @@ namespace Plutonication
         PublicKey = 0,
         Success = 1,
         Refused = 2,
+        Method = 3,
     }
 }

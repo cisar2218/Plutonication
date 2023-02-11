@@ -8,22 +8,27 @@ namespace Plutonication
     public class PlutoMessage
     {
         public MessageCode Identifier { get; set; }
-        public String CustomData { get; set; }
+        public Byte[] CustomData {get;set;}
         public PlutoMessage(MessageCode id, String customData)
+        {
+            Identifier = id;
+            CustomData = System.Text.Encoding.ASCII.GetBytes(customData);
+        }
+        public PlutoMessage(MessageCode id, Byte[] customData)
         {
             Identifier = id;
             CustomData = customData;
         }
-        public Byte[] CustomDataAsBytes()
-        {
-            return System.Text.Encoding.ASCII.GetBytes(CustomData);
+
+        public String CustomDataToString() {
+            return System.Text.Encoding.ASCII.GetString(CustomData, 1, CustomData.Length);
         }
         public Byte[] ToByteArray()
         {
-            Byte[] targetArray = new Byte[CustomData.Length + 1];
-            targetArray[0] = (byte)Identifier;
-            Array.Copy(CustomDataAsBytes(), 0, targetArray, 1, CustomData.Length);
-            return targetArray;
+            Byte[] merged = new Byte[CustomData.Length+1];
+            merged[0] = (byte)Identifier;
+            CustomData.CopyTo(merged, 1);
+            return merged;
         }
     }
 }
