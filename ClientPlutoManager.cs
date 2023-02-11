@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plutonication
 {
-    public class ClientPlutoManager : PlutoManager, IPlutoManager
+    public class ClientPlutoManager : PlutoManager
     {
         public ClientPlutoManager(IPAddress serverAddress, int port)
         {

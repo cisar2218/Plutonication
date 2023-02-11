@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plutonication
 {
-    public class ServerPlutoManager : PlutoManager, IPlutoManager
+    public class ServerPlutoManager : PlutoManager
     {
         private TcpListener server;
         public ServerPlutoManager(int port)
@@ -14,13 +14,13 @@ namespace Plutonication
             Port = port;
         }
 
-        public void SendTransaction(Byte palletIdx, Byte callIdx, Byte[] data)
+        public void SendTransaction(Byte palletIdx, Byte callIdx, Byte[] parameters)
         {
             NetworkStream stream = Client.GetStream();
-            Byte[] msg = new Byte[data.Length + 2];
+            Byte[] msg = new Byte[parameters.Length + 2];
             msg[0] = palletIdx;
             msg[1] = callIdx;
-            Array.Copy(data, 0, msg, 2, data.Length);
+            Array.Copy(parameters, 0, msg, 2, parameters.Length);
             stream.Write(msg, 0, msg.Length);
         }
 

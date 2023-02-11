@@ -9,10 +9,10 @@ namespace Plutonication
     {
         public MessageCode Identifier { get; set; }
         public String CustomData { get; set; }
-        public PlutoMessage(MessageCode id, String CustomData)
+        public PlutoMessage(MessageCode id, String customData)
         {
             Identifier = id;
-            CustomData = CustomData;
+            CustomData = customData;
         }
         public Byte[] CustomDataAsBytes()
         {
