@@ -25,13 +25,13 @@ namespace Plutonication
             if (data[0] != (byte)MessageCode.Method)
             {
                 throw new Exception(String.Format("{0} not {1} of value {2}. Current value: {3}",
-                    nameof(MessageCode), nameof(MessageCode.Method), MessageCode.Method, data[0]));
+                    nameof(MessageCode), nameof(MessageCode.Method), ((int)MessageCode.Method), data[0]));
             }
-            if (data.Length > NUM_OF_BYTES_REQUIRED)
+            if (bytes > NUM_OF_BYTES_REQUIRED)
             {
                 return new Method(data[1], data[2], data.Skip(3).ToArray());
             }
-            else if (data.Length == NUM_OF_BYTES_REQUIRED)
+            else if (bytes == NUM_OF_BYTES_REQUIRED)
             {
                 // No parrameters of Method => pass empty array
                 return new Method(data[1], data[2], new Byte[0]);
@@ -40,15 +40,14 @@ namespace Plutonication
             {
                 throw new Exception(String.Format(
                     "Not enought bytes received to correspond Method format. Bytes Received: {0}, num of bytes requered: {1}",
-                 data.Length, NUM_OF_BYTES_REQUIRED));
+                 bytes, NUM_OF_BYTES_REQUIRED));
             }
         }
 
         public void Connect()
         {
             int port = 8080;
-            string serverAddr = "127.0.0.1";
-            Client = new TcpClient(serverAddr, port);
+            Client = new TcpClient(ServerAddress.ToString(), port);
         }
 
         public override void CloseConnection()

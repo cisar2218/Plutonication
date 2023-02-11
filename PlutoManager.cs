@@ -9,9 +9,9 @@ namespace Plutonication
 {
     public abstract class PlutoManager : IPlutoManager
     {
-        protected TcpClient Client {get; set;} = new TcpClient(IPAddress.Any.ToString(), 8080);
+        protected TcpClient Client {get; set;}
         protected int Port { get; set; }
-        protected IPAddress ServerAddress { get; set; } = IPAddress.Any;
+        protected IPAddress ServerAddress { get; set; }
         public abstract void CloseConnection();
 
         public PlutoMessage ReceiveMessage()

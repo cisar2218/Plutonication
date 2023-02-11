@@ -21,7 +21,7 @@ namespace Plutonication
         }
 
         public String CustomDataToString() {
-            return System.Text.Encoding.ASCII.GetString(CustomData, 1, CustomData.Length);
+            return System.Text.Encoding.ASCII.GetString(CustomData, 0, CustomData.Length);
         }
         public Byte[] ToByteArray()
         {

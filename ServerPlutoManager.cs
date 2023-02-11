@@ -15,7 +15,7 @@ namespace Plutonication
         {
             Port = port;
             // ServerAddress = GetServerLanIp(); TODO enable
-            ServerAddress = IPAddress.Loopback; // TODO get LAN ip 
+            ServerAddress = IPAddress.Parse("127.0.0.1"); // TODO get LAN ip 
         }
 
         public void SendTransaction(Method transaction)
