@@ -43,16 +43,15 @@ namespace Plutonication
             IPAddress[] ipAddresses = Dns.GetHostEntry(hostName).AddressList;
             var ip = ipAddresses.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Where(x =>
             {
-                Console.WriteLine(x.ToString());
-            var nums = x.ToString().Split(".");
-            int first = Int32.Parse(nums[0]);
-            int second = Int32.Parse(nums[1]);
-            return (
-                first == 192 && second == 168) 
-            || (first == 172 && ((second >= 16) && (second <= 31))
-            );
-        }).FirstOrDefault();
-        return ip;
+                var nums = x.ToString().Split(".");
+                int first = Int32.Parse(nums[0]);
+                int second = Int32.Parse(nums[1]);
+                return (
+                    first == 192 && second == 168)
+                || (first == 172 && ((second >= 16) && (second <= 31))
+                );
+            }).FirstOrDefault();
+            return ip;
+        }
     }
-}
 }
