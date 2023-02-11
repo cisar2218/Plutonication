@@ -9,7 +9,7 @@ namespace Plutonication
 {
     public abstract class PlutoManager : IPlutoManager
     {
-        protected TcpClient Client {get; set;}
+        protected TcpClient Client { get; set; }
         protected int Port { get; set; }
         protected IPAddress ServerAddress { get; set; }
         public abstract void CloseConnection();
@@ -32,8 +32,27 @@ namespace Plutonication
             stream.Write(msg, 0, msg.Length);
         }
 
-        public void SendMessage(MessageCode code) {
+        public void SendMessage(MessageCode code)
+        {
             SendMessage(new PlutoMessage(code, String.Empty));
         }
+
+        public static IPAddress GetMyIpAddress()
+        {
+            string hostName = Dns.GetHostName();
+            IPAddress[] ipAddresses = Dns.GetHostEntry(hostName).AddressList;
+            var ip = ipAddresses.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Where(x =>
+            {
+                Console.WriteLine(x.ToString());
+            var nums = x.ToString().Split(".");
+            int first = Int32.Parse(nums[0]);
+            int second = Int32.Parse(nums[1]);
+            return (
+                first == 192 && second == 168) 
+            || (first == 172 && ((second >= 16) && (second <= 31))
+            );
+        }).FirstOrDefault();
+        return ip;
     }
+}
 }
