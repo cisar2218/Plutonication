@@ -3,7 +3,7 @@ c# .NET 6 class class library for network communication originaly designed for [
 ## What it does?
 - Allow you to communicate between dApp and crypto Wallet.
 - Designed to send transactions (Methods), public keys and other data of your choice.
-## How it does?
+## How it is done?
 Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol).
 - Wallet acts as client (e.g. [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet))
 - dApp acts as server
