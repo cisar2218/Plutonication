@@ -16,20 +16,7 @@ namespace Plutonication
             Port = port;
             ServerAddress = IPAddress.Parse("127.0.0.1");
         }
-        public async Task SendTransactionAsync(Method transaction)
-        {
-            Byte[] msg = new Byte[transaction.Parameters.Length + 2];
-
-            msg[0] = transaction.ModuleIndex;
-            msg[1] = transaction.CallIndex;
-            transaction.Parameters.CopyTo(msg, 2);
-
-            await SendMessageAsync(new PlutoMessage(MessageCode.Method, msg));
-        }
-        public void SendTransaction(Method transaction)
-        {
-            SendTransactionAsync(transaction).GetAwaiter().GetResult();
-        }
+        
 
         public void AcceptClient()
         {

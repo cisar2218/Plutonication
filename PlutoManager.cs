@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Ajuna.NetApi.Model.Extrinsics;
 
 namespace Plutonication
 {
@@ -52,6 +53,21 @@ namespace Plutonication
             NetworkStream stream = Client.GetStream();
             byte[] msg = message.ToByteArray();
             await stream.WriteAsync(msg, 0, msg.Length);
+        }
+
+        public async Task SendMethodAsync(Method transaction)
+        {
+            Byte[] msg = new Byte[transaction.Parameters.Length + 2];
+
+            msg[0] = transaction.ModuleIndex;
+            msg[1] = transaction.CallIndex;
+            transaction.Parameters.CopyTo(msg, 2);
+
+            await SendMessageAsync(new PlutoMessage(MessageCode.Method, msg));
+        }
+        public void SendMethod(Method transaction)
+        {
+            SendMethodAsync(transaction).GetAwaiter().GetResult();
         }
 
         public static IPAddress GetMyIpAddress()
