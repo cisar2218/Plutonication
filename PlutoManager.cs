@@ -10,16 +10,18 @@ namespace Plutonication
 {
     public abstract class PlutoManager : IPlutoManager
     {
+        protected const int DEFAULT_READSTREAM_TIMEOUT = 1000; // miliseconds
         protected TcpClient Client { get; set; }
         protected int Port { get; set; }
         protected IPAddress ServerAddress { get; set; }
         public abstract void CloseConnection();
         
-        public PlutoMessage ReceiveMessage()
+        public PlutoMessage ReceiveMessage(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
         {
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
 
+            stream.ReadTimeout = timeoutMiliseconds > 0 ? timeoutMiliseconds : DEFAULT_READSTREAM_TIMEOUT;
             Int32 bytes = stream.Read(data, 0, data.Length);
             if (!(bytes > 0))
             {
