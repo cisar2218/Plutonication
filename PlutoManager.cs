@@ -70,7 +70,7 @@ namespace Plutonication
         }
          public async Task SendMessageAsync(PlutoMessage message)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
             // TODO implement and test properly
             NetworkStream stream = Client.GetStream();
             byte[] msg = message.ToByteArray();
@@ -79,7 +79,7 @@ namespace Plutonication
 
         public async Task SendMethodAsync(Method transaction)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             // TODO implement and test properly
             Byte[] msg = new Byte[transaction.Parameters.Length + 2];
 
