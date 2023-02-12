@@ -13,7 +13,7 @@ namespace Plutonication
 
         void SendMethod(Method transaction);
         Task SendMethodAsync(Method transaction);
-        Task<PlutoMessage> ReceiveMessageAsync();
+        Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds);
         PlutoMessage ReceiveMessage(int timeoutMiliseconds);
     }
 }
