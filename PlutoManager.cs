@@ -33,13 +33,14 @@ namespace Plutonication
             Array.Copy(data, 1, customData, 0, customDataLenght);
             return new PlutoMessage((MessageCode)data[0], customData);
         }
-        public async Task<PlutoMessage> ReceiveMessageAsync()
+        public async Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
         {
             // throw new NotImplementedException();
             // TODO implement and test properly
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
 
+            stream.ReadTimeout = timeoutMiliseconds > 0 ? timeoutMiliseconds : DEFAULT_READSTREAM_TIMEOUT;
             Int32 bytes = await stream.ReadAsync(data, 0, data.Length);
             if (!(bytes > 0))
             {
