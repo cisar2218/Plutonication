@@ -22,6 +22,10 @@ namespace Plutonication
             Client = new TcpClient(ServerAddress.ToString(), port);
         }
 
+        public bool IsConnected() {
+            return Client != null && Client.Connected;
+        }
+
         public override void CloseConnection()
         {
             Client.Close();

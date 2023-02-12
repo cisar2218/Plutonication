@@ -35,7 +35,6 @@ namespace Plutonication
         }
         public async Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
         {
-            // throw new NotImplementedException();
             // TODO implement and test properly
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
