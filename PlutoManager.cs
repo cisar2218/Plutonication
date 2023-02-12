@@ -25,7 +25,8 @@ namespace Plutonication
             Int32 bytes = stream.Read(data, 0, data.Length);
             if (!(bytes > 0))
             {
-                throw new Exception("No data received.");
+                throw new Exception(String.Format("Timeout ({0} ms). You can adjust timeout as {1} parameter {2}.",
+                 stream.ReadTimeout, nameof(ReceiveMessage), nameof(timeoutMiliseconds)));
             }
             int customDataLenght = bytes-1;
             Byte[] customData = new Byte[customDataLenght]; 
@@ -114,6 +115,17 @@ namespace Plutonication
                 );
             }).FirstOrDefault();
             return ip;
+        }
+
+        public override string ToString()
+        {
+            return String.Format(
+                "{0} <[{1}]{2}:[{3}]{4}>",
+                nameof(PlutoManager),
+                nameof(ServerAddress),
+                ServerAddress.ToString(),
+                nameof(Port),
+                Port.ToString());
         }
     }
 }
