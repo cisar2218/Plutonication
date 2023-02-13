@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace Plutonication
         private TcpListener server;
         public Queue<PlutoMessage> IncomingMessages = new Queue<PlutoMessage>();
         public int MESSAGE_QUEUE_CAPACITY = 20;
+
 
         public async Task ConnectSafeAsync(AccessCredentials c, int timeoutMiliseconds = 60_000)
         {
@@ -39,6 +41,10 @@ namespace Plutonication
             {
                 throw;
             }
+        }
+        public async Task ConnectSafeAsync(IPAddress iPAddress, int port, string key, int timeoutMiliseconds = 60_000) {
+            AccessCredentials ac = new AccessCredentials(iPAddress, port, key);
+            await ConnectSafeAsync(ac, timeoutMiliseconds);
         }
 
         public void StopReceiveLoop() {
