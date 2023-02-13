@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Security.Cryptography;
 
 namespace Plutonication
 {
@@ -13,9 +14,20 @@ namespace Plutonication
         public string Name;
         public string Icon;
 
-        public string GenerateKey()
+        public static string GenerateKey(int keyLen = 30)
         {
-            return "SampleKey";
+            // Create a string of characters, numbers, and special characters that are allowed in the password
+            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+
+            // Select one random character at a time from the string
+            // and create an array of chars
+            char[] chars = new char[keyLen];
+            for (int i = 0; i < keyLen; i++)
+            {
+                chars[i] = validChars[random.Next(0, validChars.Length)];
+            }
+            return new string(chars);
         }
         public Uri ToUri()
         {
