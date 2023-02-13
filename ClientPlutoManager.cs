@@ -18,8 +18,7 @@ namespace Plutonication
 
         public void Connect()
         {
-            int port = 8080;
-            Client = new TcpClient(ServerAddress.ToString(), port);
+            Client = new TcpClient(ServerAddress.ToString(), Port);
         }
 
         public bool IsConnected() {
