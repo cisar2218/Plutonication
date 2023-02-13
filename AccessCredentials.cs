@@ -7,13 +7,29 @@ using System.Security.Cryptography;
 
 namespace Plutonication
 {
-    public class AccessCredentials
+    public sealed class AccessCredentials
     {
-        public string Address;
-        public string Key;
-        public string Name;
-        public string Icon;
+        public string Address {get;set;}
+        public string Key {get;}
 
+        public string Name {get;set;} // optional
+        public string Icon {get;set;} // optional
+        public AccessCredentials(string address)
+        {
+            if (address == null) {
+                throw new Exception("Given address is null.");
+            }
+            Address = address;
+            Key = AccessCredentials.GenerateKey();
+        }
+        public AccessCredentials(string address, string name) : this(address)
+        {
+            Name = name;
+        }
+        public AccessCredentials(string address, string name, string icon) : this(address, name)
+        {
+            Icon = icon;
+        }
         public static string GenerateKey(int keyLen = 30)
         {
             // Create a string of characters, numbers, and special characters that are allowed in the password
@@ -31,7 +47,6 @@ namespace Plutonication
         }
         public Uri ToUri()
         {
-            // plutonication:?url=192.168.0.1:8000&key=password123&name=Galaxy logic game&icon=http://rostislavlitovkin.pythonanywhere.com/logo
             var queryParams = HttpUtility.ParseQueryString(string.Empty);
             queryParams["url"] = Address;
             queryParams["key"] = Key;
