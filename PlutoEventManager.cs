@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -19,6 +20,10 @@ namespace Plutonication
         public Queue<PlutoMessage> IncomingMessages = new Queue<PlutoMessage>();
         public int MESSAGE_QUEUE_CAPACITY = 20;
 
+
+        public async override Task ConnectSafeAsync(IPAddress iPAddress, int port, string key, int timeoutMiliseconds = 60_000) {
+            
+        }
         public async Task ConnectSafeAsync(AccessCredentials c, int timeoutMiliseconds = 60_000)
         {
             Client = new TcpClient(c.Address, c.Port);

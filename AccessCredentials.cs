@@ -13,7 +13,7 @@ namespace Plutonication
     {
         public string Address { get; set; }
         public int Port { get; set; }
-        public string Key { get; }
+        public string Key { get; set; }
 
         public string Name { get; set; } // optional
         public string Icon { get; set; } // optional
@@ -34,16 +34,21 @@ namespace Plutonication
             Port = Int32.Parse(ipPort[1]);
 
             Key = queryParams[QUERY_PARAM_KEY] ?? throw InvalidUrlParam(QUERY_PARAM_KEY);
-            
-            try { // optional param
-                Name = queryParams[QUERY_PARAM_NAME] ?? throw InvalidUrlParam(QUERY_PARAM_NAME);
-            } catch {}
-            try { // optional param
-                Icon = queryParams[QUERY_PARAM_ICON] ?? throw InvalidUrlParam(QUERY_PARAM_ICON);
-            } catch {}
 
-            Exception InvalidUrlParam(string nameOfParam) {
-                return new Exception($"{nameOfParam} url param is value.");                
+            try
+            { // optional param
+                Name = queryParams[QUERY_PARAM_NAME] ?? throw InvalidUrlParam(QUERY_PARAM_NAME);
+            }
+            catch { }
+            try
+            { // optional param
+                Icon = queryParams[QUERY_PARAM_ICON] ?? throw InvalidUrlParam(QUERY_PARAM_ICON);
+            }
+            catch { }
+
+            Exception InvalidUrlParam(string nameOfParam)
+            {
+                return new Exception($"{nameOfParam} url param is value.");
             }
         }
         public AccessCredentials(IPAddress address, int port)
@@ -56,13 +61,17 @@ namespace Plutonication
             Port = port;
             Key = AccessCredentials.GenerateKey();
         }
-        public AccessCredentials(IPAddress address, int port, string name) : this(address, port)
+        public AccessCredentials(IPAddress address, int port, string key) : this(address, port)
         {
-            Name = name;
+            Key = key;
         }
         public AccessCredentials(IPAddress address, int port, string name, string icon) : this(address, port, name)
         {
             Icon = icon;
+        }
+        public AccessCredentials(IPAddress address, int port, string key, string name, string icon) : this(address, port, name, icon)
+        {
+            Key = key;
         }
         public static string GenerateKey(int keyLen = 30)
         {
