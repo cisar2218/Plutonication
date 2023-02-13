@@ -29,3 +29,8 @@ jobs:
         echo "Check the logs for more information."
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish Nuget Package
+      uses: brandedoutcast/publish-nuget@v2.5.2  
+      with:
+       PROJECT_FILE_PATH: Plutonication.csproj
+       NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
