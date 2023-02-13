@@ -21,9 +21,6 @@ namespace Plutonication
         public int MESSAGE_QUEUE_CAPACITY = 20;
 
 
-        public async override Task ConnectSafeAsync(IPAddress iPAddress, int port, string key, int timeoutMiliseconds = 60_000) {
-            
-        }
         public async Task ConnectSafeAsync(AccessCredentials c, int timeoutMiliseconds = 60_000)
         {
             Client = new TcpClient(c.Address, c.Port);
@@ -44,6 +41,10 @@ namespace Plutonication
             {
                 throw;
             }
+        }
+        public async Task ConnectSafeAsync(IPAddress iPAddress, int port, string key, int timeoutMiliseconds = 60_000) {
+            AccessCredentials ac = new AccessCredentials(iPAddress, port, key);
+            await ConnectSafeAsync(ac, timeoutMiliseconds);
         }
 
         public void StopReceiveLoop() {
