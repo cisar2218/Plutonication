@@ -73,8 +73,6 @@ namespace Plutonication
             
             PlutoMessage authMessage = await ReceiveMessageAsync(timeoutMiliseconds);
             Task sendingResponse;
-            Console.WriteLine(authMessage.Identifier);
-            Console.WriteLine(authMessage.CustomDataToString());
             if (authMessage.Identifier == MessageCode.Auth && authMessage.CustomDataToString() == key) {
                 sendingResponse = SendMessageAsync(MessageCode.Success);
                 ConnectionEstablished?.Invoke();
