@@ -110,7 +110,9 @@ namespace Plutonication
                 || (first == 172 && ((second >= 16) && (second <= 31))
                 );
             }).FirstOrDefault();
-            return ip;
+            return ip ?? throw new Exception(@"Local ip address at your network not found. 
+            Check that you are connected to local network. List of ip addresses from your DNS: "
+            + ipAddresses.ToString());
         }
 
         public override string ToString()
