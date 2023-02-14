@@ -96,10 +96,6 @@ namespace Plutonication
         }
 
 
-        public void SendExtrinsic(string method, object parameters) {
-            PlutoMessage msg = new PlutoMessage(MessageCode.Extrinsic, method, parameters);
-            SendMessage(msg);
-        }
         public static IPAddress GetMyIpAddress()
         {
             string hostName = Dns.GetHostName();

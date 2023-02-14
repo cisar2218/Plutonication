@@ -25,12 +25,6 @@ namespace Plutonication
             CustomData = customData;
         }
 
-        public PlutoMessage(MessageCode id, string method, object parameters)
-        {
-            Extrinsic e = new Extrinsic(method, parameters);
-            CustomData = e.Serialize();
-        }
-
         public String CustomDataToString()
         {
             return System.Text.Encoding.ASCII.GetString(CustomData, 0, CustomData.Length);
@@ -43,16 +37,6 @@ namespace Plutonication
             return merged;
         }
 
-        public Extrinsic GetExtrinsic()
-        {
-            if (Identifier != MessageCode.Method)
-            {
-                throw new Exception(String.Format(
-                    "Can't convert cause '{0}' code is not suited for {1}.", nameof(Identifier), MessageCode.Extrinsic));
-            }
-            return new Extrinsic(CustomData);
-            
-        }
 
         public Method GetMethod()
         {
