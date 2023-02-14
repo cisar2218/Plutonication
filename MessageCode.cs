@@ -8,5 +8,6 @@ namespace Plutonication
         Method = 3,
         Auth = 4,
         FilledOut = 5,
+        Extrinsic = 6,
     }
 }

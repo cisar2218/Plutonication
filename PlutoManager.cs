@@ -16,6 +16,7 @@ namespace Plutonication
         protected IPAddress ServerAddress { get; set; }
         public abstract void CloseConnection();
         
+        
         public PlutoMessage ReceiveMessage(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
         {
             NetworkStream stream = Client.GetStream();
@@ -35,7 +36,6 @@ namespace Plutonication
         }
         public async Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
         {
-            // TODO implement and test properly
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
 
@@ -95,6 +95,11 @@ namespace Plutonication
             SendMessage(new PlutoMessage(MessageCode.Method, msg));
         }
 
+
+        public void SendExtrinsic(string method, object parameters) {
+            PlutoMessage msg = new PlutoMessage(MessageCode.Extrinsic, method, parameters);
+            SendMessage(msg);
+        }
         public static IPAddress GetMyIpAddress()
         {
             string hostName = Dns.GetHostName();
