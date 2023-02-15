@@ -109,7 +109,7 @@ manager.ConnectionEstablished += () =>
 
 manager.ConnectionRefused += () =>
 {
-    Console.WriteLine("Connectin Refused! :()");
+    Console.WriteLine("Connectin Refused! :(");
     return;
 };
 
