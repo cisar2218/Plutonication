@@ -1,5 +1,36 @@
 # Plutonication
 c# .NET 6 class class library for network TCP communication. Originaly designed for [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet).
+- [Plutonication](#plutonication)
+  - [What it does?](#what-it-does)
+  - [How it is done?](#how-it-is-done)
+  - [Usa cases](#usa-cases)
+    - [Projects](#projects)
+    - [Why this solution](#why-this-solution)
+      - [I. Event driven architecture: Easy to use](#i-event-driven-architecture-easy-to-use)
+      - [II. Connection with authentification by default](#ii-connection-with-authentification-by-default)
+      - [III. Send](#iii-send)
+      - [IV. Receive data](#iv-receive-data)
+      - [V. Adjustable](#v-adjustable)
+  - [Usage by Pure code examples](#usage-by-pure-code-examples)
+    - [Server (CryptoWallet) Demo](#server-cryptowallet-demo)
+    - [Client (dApp) Demo](#client-dapp-demo)
+  - [Usage by object](#usage-by-object)
+    - [`PlutoEventManager` class](#plutoeventmanager-class)
+      - [Overview](#overview)
+      - [Sending `PlutoMessage` object](#sending-plutomessage-object)
+      - [Sending Ajuna.NetApi Method](#sending-ajunanetapi-method)
+      - [Sending Async](#sending-async)
+    - [Receiving](#receiving)
+      - [Closing Connection](#closing-connection)
+    - [`PlutoMessage` class](#plutomessage-class)
+      - [Structure](#structure)
+      - [How to instanciate](#how-to-instanciate)
+      - [Basics](#basics)
+      - [Variations](#variations)
+      - [Processing of incoming messages](#processing-of-incoming-messages)
+    - [`CodeMessage` enum](#codemessage-enum)
+    - [More flexible object](#more-flexible-object)
+
 ## What it does?
 - Allow you to communicate between 2 applications on LAN using [TCP sockets](https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/sockets/socket-services?source=recommendations) (e.g. dApp and crypto Wallet in case of [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet)).
 - Designed to send transactions ([see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi)), public keys and other data of your choice.
@@ -34,15 +65,13 @@ No need to setup receiving loop.
 - To implement custom solution, you can adjust and implement your own variations. 
 - If `PlutoEventManager` is not general or specific enought for your usecase: Extend `class PlutoManager` the way YOU like it. PlutoManager contains methods that designed to build custom abstraction.
 
-## Usage
-**! Note that Plutonication is still in development stage !** We are looking forward to deliver the best solution soon.
-### Pure code examples:
+## Usage by Pure code examples
 If you like learn&play with prepared demo:
 1. Create C# cmd apps
 2. Run Server code
 3. Run Client code
 4. Watch for their outputs
-#### Server (CryptoWallet) Demo
+### Server (CryptoWallet) Demo
 ```cs
 using Plutonication;
 
@@ -132,7 +161,7 @@ work just fine.
 - for more details see documentation on github: www.github.com/cisar2218/Plutonication
 */
 ```
-#### Client (dApp) Demo
+### Client (dApp) Demo
 
 ```cs
 using System.Net;
@@ -234,10 +263,82 @@ work just fine.
 - for more details see documentation on github: www.github.com/cisar2218/Plutonication
 */
 ```
-### Server specific code
-- Server in context of crypto is dApp
-### Client specific code
-- Client in context of crypto is Wallet
-### Sending
+
+## Usage by object
+
+### `PlutoEventManager` class
+#### Overview
+Data that you are sending are stored in object called [`PlutoMessage`](#plutomessage-class).
+#### Sending `PlutoMessage` object
+#### Sending Ajuna.NetApi Method
+#### Sending Async
+- all 'SendSomething' methods implement their async version
 ### Receiving
-### Close Connection
+Common version with `PlutoEventManager`:
+```cs
+PlutoMessage msg = manager.IncomingMessages.Dequeue();
+```
+Naked `PlutoManager` method:
+```cs
+PlutoMessage msg = await manager.ReceiveMsgAsync();
+```
+#### Closing Connection
+### `PlutoMessage` class
+#### Structure
+`PlutoMessage` has 2 parts
+1. MessageCode Identifier
+2. byte[] CustomData
+#### How to instanciate
+#### Basics
+```cs
+PlutoMessage msgToSend = new PlutoMessage(MessageCode.XXX, dataToSend);
+```
+Now you are able to [send message](#sending) with `PlutoEventManager`. To receive see [receiving messages](#receiving) section.
+#### Variations
+You can use different types of pluto messages.
+1. String
+- typicaly used to send publickey from wallet to dApp, but can send any string type of data
+```cs
+var keyMsg = new PlutoMessage(MessageCode.PublicKey, "keySample");
+```
+1. Byte[]
+- you can also serialize and send any type of data. Give it propper header you can process it when received
+```cs
+var byteMsg = new PlutoMessage(MessageCode.Method, new byte[3] {4,8,1});
+```
+2. MessageCode
+- You can send `MessageCode` alone like so. This is typical for response messages.
+```cs
+var respose = new PlutoMessage(MessageCode.Success);
+```
+3. Method
+- Don't forget you can [send Ajuna.NetApi Methods](#sending-method)
+
+
+#### Processing of incoming messages
+Based on `msg.Indentifier` process message like so:
+```cs
+PlutoMessage msg = manager.IncomingMessages.Dequeue();
+switch (msg.Identifier) {
+    case MessageCode.Success:
+        Console.WriteLine("Code: '{0}'. public key delivered!", msg.Identifier);
+        break;
+    //...
+}
+```
+### `CodeMessage` enum
+`MessageCode` class serves as a header of messages. When receiving message we have to interpret incoming bytes that why header convention is essential in this type of network communication.
+> See [`PlutoMessage` class](#plutomessage-class) for common message format.
+- See table of basics MessageCodes.
+- You can implement your own new code.
+- We plan to add more codes in the future.
+
+| MessageCode | Value |
+|-------------|-------|
+|PublicKey |0|
+|Success | 1|
+|Refused| 2|
+|Method| 3|
+|Auth| 4|
+|FilledOut| 5|
+### More flexible object
