@@ -43,7 +43,7 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
 Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol).
 - Wallet acts as client (e.g. [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet))
 - dApp acts as server
-- Completely [**P2P**](https://en.wikipedia.org/wiki/Peer-to-peer). Any third party server involved.
+- Completely [**P2P**](https://en.wikipedia.org/wiki/Peer-to-peer). No third party server involved.
 - Note that connection may not be completely secure. Keep that please in mind and **don't transfer any sensitive information via Plutonication**. We hope that with smart design choices of Plutonication and PlutoWallet there is no need to transfer any sensitive data.
 ## Usa cases
 ### Projects
