@@ -2,7 +2,7 @@
 c# .NET 6 class class library for network TCP communication. Originaly designed for [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet).
 ## What it does?
 - Allow you to communicate between 2 applications on LAN using [TCP sockets](https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/sockets/socket-services?source=recommendations) (e.g. dApp and crypto Wallet in case of [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet)).
-- Designed to send transactions (Methods), public keys and other data of your choice.
+- Designed to send transactions ([see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi)), public keys and other data of your choice.
 ## How it is done?
 Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol).
 - Wallet acts as client (e.g. [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet))
@@ -25,7 +25,7 @@ No need to setup receiving loop.
 - AcccessCredentials class enable you to convert information (which are must for connection) to URI. That way, it's easy to share. E.g. PlutoWallet use QR code scanning to access dApp's URI.
 #### III. Send
 - Each message has id header `MessageCode`(e.g. `MessageCode.PublicKey`). This way you determinate, how to interpret the data.
-- Sending messages (byte[], string, transaction(=[see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi))). Serialize any data of your choice.
+- Sending messages (byte[], string, transaction([see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi))). Serialize any data of your choice.
 - `SendMethod(Method m)` makes very convinient to send your method.
 #### IV. Receive data
 - As mentioned in `I.` there network stream receiving loop is automaticaly setup.
