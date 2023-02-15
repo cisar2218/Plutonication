@@ -16,20 +16,25 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
     - [Client (dApp) Demo](#client-dapp-demo)
   - [Usage by object](#usage-by-object)
     - [`PlutoEventManager` class](#plutoeventmanager-class)
-      - [Overview](#overview)
-      - [Sending `PlutoMessage` object](#sending-plutomessage-object)
-      - [Sending Ajuna.NetApi Method](#sending-ajunanetapi-method)
-      - [Sending Async](#sending-async)
-    - [Receiving](#receiving)
+      - [Sending](#sending)
+        - [Overview](#overview)
+        - [Sending `PlutoMessage` object](#sending-plutomessage-object)
+        - [Sending Ajuna.NetApi Method](#sending-ajunanetapi-method)
+        - [Sending Async](#sending-async)
+      - [Receiving](#receiving)
+      - [Common setup](#common-setup)
+      - [Processing of incoming messages](#processing-of-incoming-messages)
       - [Closing Connection](#closing-connection)
     - [`PlutoMessage` class](#plutomessage-class)
-      - [Structure](#structure)
-      - [How to instanciate](#how-to-instanciate)
+      - [Parameters](#parameters)
+      - [How to create](#how-to-create)
       - [Basics](#basics)
       - [Variations](#variations)
-      - [Processing of incoming messages](#processing-of-incoming-messages)
     - [`CodeMessage` enum](#codemessage-enum)
-    - [More flexible object](#more-flexible-object)
+    - [More flexible objects](#more-flexible-objects)
+      - [PlutoManager](#plutomanager)
+      - [ClientPlutoManager](#clientplutomanager)
+      - [ServerPlutoManager](#serverplutomanager)
 
 ## What it does?
 - Allow you to communicate between 2 applications on LAN using [TCP sockets](https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/sockets/socket-services?source=recommendations) (e.g. dApp and crypto Wallet in case of [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet)).
@@ -267,13 +272,46 @@ work just fine.
 ## Usage by object
 
 ### `PlutoEventManager` class
-#### Overview
+#### Sending
+##### Overview
 Data that you are sending are stored in object called [`PlutoMessage`](#plutomessage-class).
-#### Sending `PlutoMessage` object
-#### Sending Ajuna.NetApi Method
-#### Sending Async
+##### Sending `PlutoMessage` object
+##### Sending Ajuna.NetApi Method
+##### Sending Async
 - all 'SendSomething' methods implement their async version
-### Receiving
+#### Receiving
+Receiving messages is based on event handeling. On each incoming message:
+1. Incoming message is added to `IncomingMessages` queue
+2. `MessageReceived` event is triggered
+#### Common setup
+I supose you have instanciated `PlutoEventManager` and Establish
+```cs
+// PlutoEventManager manager = new PlutoEventManager();
+// 
+// ...
+
+manager.MessageReceived += () => {
+    Console.WriteLine("message received!");
+
+    // Pop oldest message from message queue
+    PlutoMessage msg = manager.IncomingMessages.Dequeue();
+    
+    // Based on MessageCode process you message
+    switch (msg.Identifier) {
+        case MessageCode.Success:
+            Console.WriteLine("Code: '{0}'. public key delivered!", msg.Identifier);
+            break;
+        // handle other message code as you wish
+        // case MessageCode.XXX
+        // ... process message object ...   
+        // break;
+
+        default:
+            Console.WriteLine("Unknown code: " + msg.Identifier);
+            break;
+    }
+};
+```
 Common version with `PlutoEventManager`:
 ```cs
 PlutoMessage msg = manager.IncomingMessages.Dequeue();
@@ -282,39 +320,6 @@ Naked `PlutoManager` method:
 ```cs
 PlutoMessage msg = await manager.ReceiveMsgAsync();
 ```
-#### Closing Connection
-### `PlutoMessage` class
-#### Structure
-`PlutoMessage` has 2 parts
-1. MessageCode Identifier
-2. byte[] CustomData
-#### How to instanciate
-#### Basics
-```cs
-PlutoMessage msgToSend = new PlutoMessage(MessageCode.XXX, dataToSend);
-```
-Now you are able to [send message](#sending) with `PlutoEventManager`. To receive see [receiving messages](#receiving) section.
-#### Variations
-You can use different types of pluto messages.
-1. String
-- typicaly used to send publickey from wallet to dApp, but can send any string type of data
-```cs
-var keyMsg = new PlutoMessage(MessageCode.PublicKey, "keySample");
-```
-1. Byte[]
-- you can also serialize and send any type of data. Give it propper header you can process it when received
-```cs
-var byteMsg = new PlutoMessage(MessageCode.Method, new byte[3] {4,8,1});
-```
-2. MessageCode
-- You can send `MessageCode` alone like so. This is typical for response messages.
-```cs
-var respose = new PlutoMessage(MessageCode.Success);
-```
-3. Method
-- Don't forget you can [send Ajuna.NetApi Methods](#sending-method)
-
-
 #### Processing of incoming messages
 Based on `msg.Indentifier` process message like so:
 ```cs
@@ -326,12 +331,42 @@ switch (msg.Identifier) {
     //...
 }
 ```
+#### Closing Connection
+### `PlutoMessage` class
+#### Parameters
+  1. MessageCode Identifier
+  2. byte[] CustomData
+#### How to create
+#### Basics
+```cs
+PlutoMessage msgToSend = new PlutoMessage(MessageCode.XXX, dataToSend);
+```
+Now you are able to [send message](#sending) with `PlutoEventManager`. To receive see [receiving messages](#receiving) section.
+#### Variations
+You can use different types of pluto messages.
+1. **String**
+- typicaly used to send publickey from wallet to dApp, but can send any string type of data
+```cs
+var keyMsg = new PlutoMessage(MessageCode.PublicKey, "keySample");
+```
+1. **Byte[]**
+- you can also serialize and send any type of data. Give it propper header you can process it when received
+```cs
+var byteMsg = new PlutoMessage(MessageCode.Method, new byte[3] {4,8,1});
+```
+1. **MessageCode**
+- You can send `MessageCode` alone like so. This is typical for response messages.
+```cs
+var respose = new PlutoMessage(MessageCode.Success);
+```
+1. **Method**
+- Don't forget you can [send Ajuna.NetApi Methods](#sending-method). Receiving Methods [here](#receiving).
+
 ### `CodeMessage` enum
 `MessageCode` class serves as a header of messages. When receiving message we have to interpret incoming bytes that why header convention is essential in this type of network communication.
-> See [`PlutoMessage` class](#plutomessage-class) for common message format.
-- See table of basics MessageCodes.
-- You can implement your own new code.
 - We plan to add more codes in the future.
+- You can implement your own new code.
+- See table of basics MessageCodes bellow.
 
 | MessageCode | Value |
 |-------------|-------|
@@ -341,4 +376,8 @@ switch (msg.Identifier) {
 |Method| 3|
 |Auth| 4|
 |FilledOut| 5|
-### More flexible object
+> See [`PlutoMessage` class](#plutomessage-class) for common message format.
+### More flexible objects
+#### PlutoManager
+#### ClientPlutoManager
+#### ServerPlutoManager
