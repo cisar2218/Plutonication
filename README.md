@@ -6,26 +6,38 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
   - [Usa cases](#usa-cases)
     - [Projects](#projects)
     - [Why this solution](#why-this-solution)
-      - [I. Event driven architecture: Easy to use](#i-event-driven-architecture-easy-to-use)
+      - [I. Event driven architecture that is easy to use](#i-event-driven-architecture-that-is-easy-to-use)
       - [II. Connection with authentification by default](#ii-connection-with-authentification-by-default)
-      - [III. Send](#iii-send)
-      - [IV. Receive data](#iv-receive-data)
-      - [V. Adjustable](#v-adjustable)
-  - [Usage by Pure code examples](#usage-by-pure-code-examples)
+      - [III. Send data easily](#iii-send-data-easily)
+      - [IV. Receive \& process data](#iv-receive--process-data)
+      - [V. Multiplatform solution](#v-multiplatform-solution)
+      - [VI. Adjustable](#vi-adjustable)
+  - [Usage by pure code examples](#usage-by-pure-code-examples)
     - [Server (CryptoWallet) Demo](#server-cryptowallet-demo)
     - [Client (dApp) Demo](#client-dapp-demo)
   - [Usage by object](#usage-by-object)
     - [`PlutoEventManager` class](#plutoeventmanager-class)
+      - [Establish Connection](#establish-connection)
+        - [Server (dApp)](#server-dapp)
+        - [Client (Wallet)](#client-wallet)
       - [Sending](#sending)
         - [Overview](#overview)
         - [Sending `PlutoMessage` object](#sending-plutomessage-object)
+        - [Sending `MessageCode` object alone](#sending-messagecode-object-alone)
         - [Sending Ajuna.NetApi Method](#sending-ajunanetapi-method)
         - [Sending Async](#sending-async)
       - [Receiving](#receiving)
-      - [Common setup](#common-setup)
+        - [Common setup](#common-setup)
       - [Processing of incoming messages](#processing-of-incoming-messages)
-      - [Closing Connection](#closing-connection)
+      - [List of events](#list-of-events)
+        - [`ConnectionEstablished` event](#connectionestablished-event)
+        - [`ConnectionRefused` event](#connectionrefused-event)
+        - [`MessageReceived` event](#messagereceived-event)
+      - [Closing connection](#closing-connection)
     - [`PlutoMessage` class](#plutomessage-class)
+    - [`AccessCredentials` class](#accesscredentials-class)
+      - [...](#)
+      - [Parse to URI](#parse-to-uri)
       - [Parameters](#parameters)
       - [How to create](#how-to-create)
       - [Basics](#basics)
@@ -37,7 +49,7 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
       - [ServerPlutoManager](#serverplutomanager)
 
 ## What it does?
-- Allow you to communicate between 2 applications on LAN using [TCP sockets](https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/sockets/socket-services?source=recommendations) (e.g. dApp and crypto Wallet in case of [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet)).
+- Allow you to communicate between 2 applications on LAN using [TCP sockets](https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/sockets/socket-services?source=recommendations) (dApp and crypto Wallet in case of [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet)).
 - Designed to send transactions ([see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi)), public keys and other data of your choice.
 ## How it is done?
 Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol).
@@ -48,35 +60,41 @@ Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Tr
 ## Usa cases
 ### Projects
 1. You want to implement dApp (that communicate via TCP with Wallet)
-2. You want to implement cryptowallet (that communicate via TCP) including:
-3. You want to implement general TCP app which
+    - Send *transactions* into cryptowallet where you can sign them.
+    - Share *publickey* with dApp.
+    - Send responses.
+    - Also possible to send other data, see [sending](#sending).
+2. You want to implement cryptowallet (that communicate via TCP) with dApps.
+3. You want to implement general app that has on one hand high level of abstraction of TCP communication but on the other hand is extensible.
 ### Why this solution
-#### I. Event driven architecture: Easy to use
-No need to setup receiving loop.
-1. Setup methods that handle events which will pop up every time you receive message.
-2. Establish connection with just one call and you are ready to go.
+#### I. Event driven architecture that is easy to use
+1. Setup methods that handle [`MessageReceived`](#messagereceived-event) event which will pop up every time you receive message.
+2. Establish connection with just [one call](#establish-connection) and you are ready to go.
 3. To send message just use `SendMessage(PlutoMessage msg)`.
 4. To close connection just use `CloseConnection()` method.
 #### II. Connection with authentification by default
-- AcccessCredentials class enable you to convert information (which are must for connection) to URI. That way, it's easy to share. E.g. PlutoWallet use QR code scanning to access dApp's URI.
-#### III. Send
-- Each message has id header `MessageCode`(e.g. `MessageCode.PublicKey`). This way you determinate, how to interpret the data.
-- Sending messages (byte[], string or transaction(=[see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi))). This enable you to serialize any data of your choice and send them as `byte[]`.
-- `SendMethod(Method m)` makes very convinient to send your method.
-#### IV. Receive data
-- As mentioned in **I.**: network stream receiving loop is setup automaticaly.
+- [`AcccessCredentials`](#accesscredentials-class) class enable you to convert information (that are must for connection) to URI. That way, it's easy to share. E.g. PlutoWallet use QR code scanning to access dApp's URI.
+#### III. Send data easily
+- Each message has id header `MessageCode` (e.g. `MessageCode.PublicKey`). This way you determinate, how to interpret the received data.
+- Sending messages (byte[], string or transaction ([see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi))). Optionaly you can serialize any data of your choice and send them as `byte[]`.
+- `SendMethod(Method m)` makes very convinient to send methods.
+#### IV. Receive & process data
+- As mentioned in [above](#iii-send-data-easily): network stream receiving loop is setup automaticaly.
 - Handle event `OnMessageReceived` with you custom function, which process the incoming message.
-#### V. Adjustable
-- To implement custom solution, you can adjust and implement your own variations. 
+#### V. Multiplatform solution
+- Plutonication can be implemented on any device that run .NET. This include desktop programs (Windows, MacOS, Linux), mobile apps (android, IOS), smart watches, smart TVs, IOT devices and other.
+#### VI. Adjustable
+- To implement custom solution you can adjust and implement your own variations. 
 - If `PlutoEventManager` is not general or specific enought for your usecase: Extend `class PlutoManager` the way YOU like it. PlutoManager contains methods that designed to build custom abstraction.
 
-## Usage by Pure code examples
+## Usage by pure code examples
 If you like learn&play with prepared demo:
-1. Create C# cmd apps
+1. Create 2 .NET C# cmd apps from our examples bellow
 2. Run Server code
 3. Run Client code
-4. Watch for their outputs
+4. Learn, play & develop
 ### Server (CryptoWallet) Demo
+Use this code to test serverside behaviour or implement apps that support comunication between Wallet and dApp. [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet) uses similar code to pair itself with dApps (by scanning QR code - generated by dApp - where [URI of AccessCredential](#parse-to-uri) is encoded). PlutoWallet at first share its *publickey* to give dApp information abou itself.
 ```cs
 using Plutonication;
 
@@ -104,12 +122,12 @@ await manager.ListenSafeAsync(
 // bind individual events to a function
 manager.ConnectionEstablished += () =>
 {
-    Console.WriteLine("Connectin Established! :)");
+    Console.WriteLine("Connection Established! :)");
 };
 
 manager.ConnectionRefused += () =>
 {
-    Console.WriteLine("Connectin Refused! :(");
+    Console.WriteLine("Connection Refused! :(");
     return;
 };
 
@@ -132,7 +150,7 @@ manager.MessageReceived += () => {
         // break;
 
         default:
-            Console.WriteLine("Unknown code: " + msg.Identifier);
+            Console.WriteLine("Message with unknown code received: " + msg.Identifier);
             Task sendingRefused = manager.SendMessageAsync(MessageCode.Refused);
             break;
     }
@@ -148,7 +166,7 @@ Task sendingMsg = manager.SendMessageAsync(new PlutoMessage(MessageCode.PublicKe
 
 
 // ... app is comunicating ... ------------------------------------------------
-Console.ReadKey(); // after you press key on your board code goes on ...
+Console.ReadKey(); // after you press key on your keyboard code goes on ...
 // ... app is going to close connection ... -----------------------------------
 
 // PART 4.5 (optional): stop receiving messages -------------------------------
@@ -159,14 +177,15 @@ manager.CloseConnection();
 
 /* 
 Notes 
-- if you strugle with events see handling and raising events c#
-- if you strugle with connection establishment check firewall rules (can be problem 
+- If you strugle with events see handling and raising events C#.
+- If you strugle with connection establishment check firewall rules (can be problem 
 on server side - this code). This case is specific for LAN. On localhost it should
-work just fine.
+works just fine.
 - for more details see documentation on github: www.github.com/cisar2218/Plutonication
 */
 ```
 ### Client (dApp) Demo
+Create custom dApp using `PlutoEventManager`. Example of usecase: [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet) send its *publickey* to dApp. App then can read information about Wallet. DApp send custom *transaction* to PlutoWallet. In [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet) you can *sign* this *transaction* with *privatekey* (or omit).
 
 ```cs
 using System.Net;
@@ -204,15 +223,14 @@ await manager.ConnectSafeAsync(ac);
 // bind individual events to a function
 manager.ConnectionEstablished += () =>
 {
-    Console.WriteLine("Connectin Established! :)");
+    Console.WriteLine("Connection Established! :)");
 };
 
 manager.ConnectionRefused += () =>
 {
-    Console.WriteLine("Connectin Refused! :()");
+    Console.WriteLine("Connection Refused! :(");
     return;
 };
-
 
 manager.MessageReceived += () => {
     Console.WriteLine("message received!");
@@ -231,7 +249,7 @@ manager.MessageReceived += () => {
         // break;
 
         default:
-            Console.WriteLine("Unknown code: " + msg.Identifier);
+            Console.WriteLine("Message with unknown code received: " + msg.Identifier);
             break;
     }
 };
@@ -263,7 +281,7 @@ manager.CloseConnection();
 Notes 
 - if you strugle with events see handling and raising events c#
 - if you strugle with connection establishment check firewall rules (can be problem 
-on server side - this code). This case is specific for LAN. On localhost it should
+on server side). This case is specific for LAN. On localhost it should
 work just fine.
 - for more details see documentation on github: www.github.com/cisar2218/Plutonication
 */
@@ -272,10 +290,43 @@ work just fine.
 ## Usage by object
 
 ### `PlutoEventManager` class
+`PlutoEventManager` class will be propably your main class used from Plutonication package if you want to build simple dApp that communicate with PlutoWallet. We recommend run [code examples](#usage-by-pure-code-examples) and then study additional details in documentation. 
+> It has the highest level of abstraction, if you want more flexible solution, see [more flexible objects](#more-flexible-objects). 
+#### Establish Connection
+To establish connection instantiate `PlutoEventManager` and then make call specific for your usecase ([client](#client-wallet) / [server](#server-dapp)).
+```cs
+PlutoEventManager manager = new PlutoEventManager();
+// ... make your connection call bellow ...
+```
+##### Server (dApp)
+To start listening as server use async method bellow:
+```cs
+string key = "samplePassword";
+int port = 8080;
+await manager.ListenSafeAsync( key: key, port: port );
+```
+Server will be started at port that you have specified. Client can connect with password (which matches `key`). Optionaly you can specify timeout param which default value is 1 minute.
+```cs
+int timeoutMiliseconds = 3*60_000; // 3 minutes
+await manager.ListenSafeAsync("samplePassword", 8080, timeoutMiliseconds);
+```
+##### Client (Wallet)
+- Make sure server is running before you attempt connection.
+- Make sure that address, port and key is matching.
+- To connect with server use async method bellow.
+```cs
+string key = "samplePassword";
+int port = 8080;
+await manager.ConnectSafeAsync( key: key, port: port );
+```
+[`ConnectionEstablished`](#connectionestablished-event) event is raised when connection established. [`ConnectionRefused`](#connectionrefused-event) event is raised when connection refused.
 #### Sending
+- Make sure connection is [established](#connectionestablished-event). And other side is [ready](#common-setup) to receive messages.
+- To send messages 2 main methods are used: `sendMessage()`, `sendMethod()`. See they variations bellow to find your usecase.
 ##### Overview
 Data that you are sending are stored in object called [`PlutoMessage`](#plutomessage-class).
 ##### Sending `PlutoMessage` object
+##### Sending `MessageCode` object alone 
 ##### Sending Ajuna.NetApi Method
 ##### Sending Async
 - all 'SendSomething' methods implement their async version
@@ -283,7 +334,7 @@ Data that you are sending are stored in object called [`PlutoMessage`](#plutomes
 Receiving messages is based on event handeling. On each incoming message:
 1. Incoming message is added to `IncomingMessages` queue
 2. `MessageReceived` event is triggered
-#### Common setup
+##### Common setup
 I supose you have instanciated `PlutoEventManager` and Establish
 ```cs
 // PlutoEventManager manager = new PlutoEventManager();
@@ -331,8 +382,15 @@ switch (msg.Identifier) {
     //...
 }
 ```
-#### Closing Connection
+#### List of events
+##### `ConnectionEstablished` event
+##### `ConnectionRefused` event
+##### `MessageReceived` event
+#### Closing connection
 ### `PlutoMessage` class
+### `AccessCredentials` class
+#### ...
+#### Parse to URI
 #### Parameters
   1. MessageCode Identifier
   2. byte[] CustomData
