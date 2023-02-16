@@ -3,7 +3,7 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
 - [Plutonication](#plutonication)
   - [What it does?](#what-it-does)
   - [How it is done?](#how-it-is-done)
-  - [Usa cases](#usa-cases)
+  - [Usecases](#usecases)
     - [Projects](#projects)
     - [Why this solution](#why-this-solution)
       - [I. Event driven architecture that is easy to use](#i-event-driven-architecture-that-is-easy-to-use)
@@ -57,7 +57,7 @@ Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Tr
 - dApp acts as server
 - Completely [**P2P**](https://en.wikipedia.org/wiki/Peer-to-peer). No third party server involved.
 - Note that connection may not be completely secure. Keep that please in mind and **don't transfer any sensitive information via Plutonication**. We hope that with smart design choices of Plutonication and PlutoWallet there is no need to transfer any sensitive data.
-## Usa cases
+## Usecases
 ### Projects
 1. You want to implement dApp (that communicate via TCP with Wallet)
     - Send *transactions* into cryptowallet where you can sign them.
