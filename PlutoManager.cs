@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Ajuna.NetApi.Model.Extrinsics;
@@ -15,6 +16,7 @@ namespace Plutonication
         protected int Port { get; set; }
         protected IPAddress ServerAddress { get; set; }
         public abstract void CloseConnection();
+        
         
         public PlutoMessage ReceiveMessage(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
         {
@@ -35,7 +37,6 @@ namespace Plutonication
         }
         public async Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
         {
-            // TODO implement and test properly
             NetworkStream stream = Client.GetStream();
             Byte[] data = new Byte[256];
 
@@ -95,21 +96,33 @@ namespace Plutonication
             SendMessage(new PlutoMessage(MessageCode.Method, msg));
         }
 
+
         public static IPAddress GetMyIpAddress()
         {
-            string hostName = Dns.GetHostName();
-            IPAddress[] ipAddresses = Dns.GetHostEntry(hostName).AddressList;
-            var ip = ipAddresses.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Where(x =>
+            var result = new List<IPAddress>();
+            try
             {
-                var nums = x.ToString().Split(".");
-                int first = Int32.Parse(nums[0]);
-                int second = Int32.Parse(nums[1]);
-                return (
-                    first == 192 && second == 168)
-                || (first == 172 && ((second >= 16) && (second <= 31))
-                );
-            }).FirstOrDefault();
-            return ip;
+                var upAndNotLoopbackNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces()
+                    .Where(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback
+                                && n.OperationalStatus == OperationalStatus.Up);
+
+                foreach (var networkInterface in upAndNotLoopbackNetworkInterfaces)
+                {
+                    var iPInterfaceProperties = networkInterface.GetIPProperties();
+
+                    var unicastIpAddressInformation = iPInterfaceProperties.UnicastAddresses.FirstOrDefault(u => u.Address.AddressFamily == AddressFamily.InterNetwork);
+                    if (unicastIpAddressInformation == null) continue;
+
+                    result.Add(unicastIpAddressInformation.Address);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unable to find IP: {ex.Message}");
+            }
+            return result.FirstOrDefault();
+
         }
 
         public override string ToString()

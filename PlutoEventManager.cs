@@ -69,7 +69,7 @@ namespace Plutonication
         {
             server = new TcpListener(port);
             server.Start();
-            Client = server.AcceptTcpClient();
+            Client = await server.AcceptTcpClientAsync();
             
             PlutoMessage authMessage = await ReceiveMessageAsync(timeoutMiliseconds);
             Task sendingResponse;
