@@ -481,10 +481,52 @@ Now you are able to [send message](#sending) with `PlutoEventManager`. To receiv
 You can use different types of pluto messages.
 1. **Method**
 - You can [send Ajuna.NetApi Methods](#sending-method) with EZ. Receiving Methods [here](#receiving).
-1. **String** (publickey)
-- typicaly used to send publickey from wallet to dApp, but can send any `string` data.
+- Create method:
 ```cs
-var keyMsg = new PlutoMessage(MessageCode.PublicKey, "keySample");
+// define method with your values
+byte moduleIndex = 0;
+byte callIndex = 1;
+byte[] parameters = new byte[3] {4,8,1};
+
+Method method = new Method(moduleIndex, callIndex, parameters);
+// method with empty params also possible like this: 
+Method methodEmptyParams = new Method(moduleIndex, callIndex, new byte[0]);
+
+// send with PlutoEventManager or PlutoManager class
+manager.SendMethod(method);
+```
+Where manager is [`PlutoEventManager`](#plutoeventmanager-class).
+- Unpack method:
+```cs
+// incomingMessage is message you have received earlier
+PlutoMessage incomingMessage;
+// is incomingMessage method?
+if (incomingMessage.Identifier == MessageCode.Method) {
+    // YES, ITS METHOD
+    Method m = incomingMessage.GetMethod();
+    // ... process method ...
+} else { /* IS NOT METHOD */ }
+```
+
+2. **String** (publickey)
+- typicaly used to send publickey from wallet to dApp, but can send any `string` data.
+- Create `PlutoMessage` with containing *publickey*
+```cs
+string publickey = "YourKeyGoesHere";
+var keyMsg = new PlutoMessage(MessageCode.PublicKey, publickey);
+// to send with PlutoEventManager / PlutoManager
+manager.SendMessage(keyMsg);
+```
+- Unpack `PlutoMessage` with *publickey*
+```cs
+// incomingMessage is message you have received earlier
+PlutoMessage incomingMessage;
+// is incomingMessage method?
+if (incomingMessage.Identifier == MessageCode.PublicKey) {
+    // YES, ITS PUBLICKEY
+    string publickey = incomingMessage.CustomDataToString();
+    // ... process publickey here ...
+} else { /* IS NOT PUBLICKEY */ }
 ```
 1. **Byte[]**
 - you can also serialize and send any type of data. Give it propper header you can process it when received
