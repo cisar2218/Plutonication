@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ajuna.NetApi" Version="0.3.3" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
