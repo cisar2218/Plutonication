@@ -23,7 +23,7 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
         - [Client (Wallet)](#client-wallet)
       - [Sending](#sending)
         - [Overview](#overview)
-        - [Sending `PlutoMessage` object](#sending-plutomessage-object)
+        - [Sending `PlutoMessage` object with publickey](#sending-plutomessage-object-with-publickey)
         - [Sending `MessageCode` object alone](#sending-messagecode-object-alone)
         - [Sending Ajuna.NetApi Method](#sending-ajunanetapi-method)
         - [Sending Async](#sending-async)
@@ -39,7 +39,7 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
       - [How to create](#how-to-create)
         - [Variations](#variations)
     - [`AccessCredentials` class](#accesscredentials-class)
-    - [`CodeMessage` enum](#codemessage-enum)
+    - [`MessageCode` enum](#messagecode-enum)
     - [More flexible objects](#more-flexible-objects)
       - [PlutoManager](#plutomanager)
 ## Installation
@@ -321,9 +321,31 @@ await manager.ConnectSafeAsync( key: key, port: port );
 - Make sure connection is [established](#connectionestablished-event-and-connectionrefused-event). And other side is [ready](#common-setup) to receive messages.
 - To send messages 2 main methods are used: `sendMessage()`, `sendMethod()`. See they variations bellow to find your usecase.
 ##### Overview
-Data that you are sending are stored in object called [`PlutoMessage`](#plutomessage-class).
-##### Sending `PlutoMessage` object
-##### Sending `MessageCode` object alone 
+Data that you are sending are stored in object called [`PlutoMessage`](#plutomessage-class). Requirment for sending messages is that [connection is established](#try-to-establish-connection). That means `PlutoEventManager` is instanciated like so:
+```cs
+PlutoEventManager manager = new PlutoEventManager();
+```
+##### Sending `PlutoMessage` object with publickey 
+1. Create `PlutoMessage` object like so (see [PlutoMessage variations](#variations)).
+```cs
+MessageCode id = MessageCode.PublicKey; // identifier for your key
+string publickey = "PublicKeySample"; // here goes your key
+PlutoMessage msg = new PlutoMessage(id, publickey);
+```
+2. Send created `PlutoMessage`.
+```cs
+manager.SendMessage(msg);
+```
+##### Sending `MessageCode` object alone
+`MessageCode` is convient way to send response to certain message (see [MessageCode overview table](#messagecode-enum) to more variants):
+```cs
+MessageCode resCode = MessageCode.Success; // your response code
+PlutoMessage msg = new PlutoMessage(resCode);
+```
+3. Send created `PlutoMessage`.
+```cs
+manager.SendMessage(msg);
+```
 ##### Sending Ajuna.NetApi Method
 ##### Sending Async
 - all 'SendSomething' methods implement their async version
@@ -566,7 +588,7 @@ if (incomingMessage.Identifier == MessageCode.Success) {
         var credentials = AccessCredentials(Uri uri);
         ```
 
-### `CodeMessage` enum
+### `MessageCode` enum
 `MessageCode` class serves as a header of messages. When receiving message we have to interpret incoming bytes that why header convention is essential in this type of network communication.
 - We plan to add more codes in the future.
 - You can implement your own new code.
@@ -583,23 +605,23 @@ if (incomingMessage.Identifier == MessageCode.Success) {
 > See [`PlutoMessage` class](#plutomessage-class) for common message format.
 ### More flexible objects
 #### PlutoManager
-Naked `PlutoManager` method:
-```cs
-PlutoMessage msg = await manager.ReceiveMsgAsync();
-```
+- This part of documentation is brief. Can be extended in the future.
+- For custom implementation of Plutonication, extend PlutoManager to your needs. E.g.:
+  - Custom receving loop
+  - Custom authentification
 - **Properties**
-  - protected const int DEFAULT_READSTREAM_TIMEOUT = 1000; // miliseconds
-  - protected TcpClient Client { get; set; }
-  - protected int Port { get; set; }
-  - protected IPAddress ServerAddress { get; set; }
+  - `protected const int DEFAULT_READSTREAM_TIMEOUT = 1000; // miliseconds`
+  - `protected TcpClient Client { get; set; }`
+  - `protected int Port { get; set; }`
+  - `protected IPAddress ServerAddress { get; set; }`
 - **Methods**
-  - public abstract void CloseConnection();
-  - public PlutoMessage ReceiveMessage(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
-  - public async Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
-  - public void SendMethod(Method transaction)
-  - public async Task SendMethodAsync(Method transaction)
-  - public void SendMessage(MessageCode code)
-  - public void SendMessage(PlutoMessage message)
-  - public async Task SendMessageAsync(MessageCode code)
-  - public async Task SendMessageAsync(PlutoMessage message)
-  - public static IPAddress GetMyIpAddress()
+  - `public abstract void CloseConnection();`
+  - `public PlutoMessage ReceiveMessage(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)`
+  - `public async Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)`
+  - `public void SendMethod(Method transaction)`
+  - `public async Task SendMethodAsync(Method transaction)`
+  - `public void SendMessage(MessageCode code)`
+  - `public void SendMessage(PlutoMessage message)`
+  - `public async Task SendMessageAsync(MessageCode code)`
+  - `public async Task SendMessageAsync(PlutoMessage message)`
+  - `public static IPAddress GetMyIpAddress()`
