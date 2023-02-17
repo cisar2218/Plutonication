@@ -293,10 +293,10 @@ work just fine.
 ## Usage by object
 
 ### `PlutoEventManager` class
-`PlutoEventManager` class will be propably your main class used from Plutonication package if you want to build simple dApp that communicate with PlutoWallet. We recommend run [code examples](#usage-by-pure-code-examples) and then study additional details in documentation. 
+`PlutoEventManager` class will be your main class used from Plutonication package if you want to build simple dApp that communicate with PlutoWallet. We recommend run and play with [code examples](#usage-by-pure-code-examples) and then study additional details in documentation. 
 > It has the highest level of abstraction, if you want more flexible solution, see [more flexible objects](#more-flexible-objects). 
 #### Establish Connection
-To establish connection instantiate `PlutoEventManager` and then make call specific for your usecase ([client](#client-wallet) / [server](#server-dapp)).
+To establish connection instantiate `PlutoEventManager` and then make call specific for your usecase ([client (wallet)](#client-wallet) / [server (dApp)](#server-dapp)).
 ```cs
 PlutoEventManager manager = new PlutoEventManager();
 // ... make your connection call bellow ...
@@ -338,7 +338,9 @@ Receiving messages is based on event handeling. On each incoming message:
 1. Incoming message is added to `IncomingMessages` queue
 2. `MessageReceived` event is triggered
 ##### Common setup
-I supose you have instanciated `PlutoEventManager` and Establish
+I supose you have instanciated `PlutoEventManager` and [established connection](#connectionestablished-event).
+1. Set which function will execute on message received event.
+2. Deque and process message
 ```cs
 // PlutoEventManager manager = new PlutoEventManager();
 // 
@@ -366,14 +368,11 @@ manager.MessageReceived += () => {
     }
 };
 ```
-Common version with `PlutoEventManager`:
+Messages are stored in queue. By calling the event bellow, put the oldest message out of the queue.
 ```cs
 PlutoMessage msg = manager.IncomingMessages.Dequeue();
 ```
-Naked `PlutoManager` method:
-```cs
-PlutoMessage msg = await manager.ReceiveMsgAsync();
-```
+
 #### Processing of incoming messages
 Based on `msg.Indentifier` process message like so:
 ```cs
@@ -440,5 +439,9 @@ var respose = new PlutoMessage(MessageCode.Success);
 > See [`PlutoMessage` class](#plutomessage-class) for common message format.
 ### More flexible objects
 #### PlutoManager
+Naked `PlutoManager` method:
+```cs
+PlutoMessage msg = await manager.ReceiveMsgAsync();
+```
 #### ClientPlutoManager
 #### ServerPlutoManager
