@@ -528,17 +528,29 @@ if (incomingMessage.Identifier == MessageCode.PublicKey) {
     // ... process publickey here ...
 } else { /* IS NOT PUBLICKEY */ }
 ```
-1. **Byte[]**
+3. **Byte[]**
 - you can also serialize and send any type of data. Give it propper header you can process it when received
 ```cs
 var byteMsg = new PlutoMessage(MessageCode.Method, new byte[] {4,8,1});
 ```
-1. **MessageCode**
+4. **MessageCode**
 - You can send `MessageCode` alone like so. This is typical for response messages.
 ```cs
 var respose = new PlutoMessage(MessageCode.Success);
 ```
+- Handle responses like so
+```cs
+// incomingMessage is message you have received earlier
+PlutoMessage incomingMessage;
 
+if (incomingMessage.Identifier == MessageCode.Success) {
+    // ... handle response here ...
+} else if (incomingMessage.Identifier == MessageCode.Refused){
+    // ... handle response here ...
+} else if ( /* other codes */ ){
+    // ... handle response here ...
+}
+```
 ### `AccessCredentials` class
 - This class is used to store information about dApp that are needed for connection.
 - **Properties**:
@@ -562,14 +574,14 @@ var respose = new PlutoMessage(MessageCode.Success);
 - You can implement your own new code.
 - See table of basics MessageCodes bellow.
 
-| MessageCode | Value |
-|-------------|-------|
-|PublicKey |0|
-|Success | 1|
-|Refused| 2|
-|Method| 3|
-|Auth| 4|
-|FilledOut| 5|
+| MessageCode | Value | Convinient use |
+|-------------|-------|------|
+|PublicKey |0| *This* message contains (string) public key. |
+|Success | 1| Response that confirms succesful operation. |
+|Refused| 2| Response that your message was refused. |
+|Method| 3| *This* message contains Ajuna Method. |
+|Auth| 4| *This* message contains key. |
+|FilledOut| 5| Other side is overloaded. Try send message later. |
 > See [`PlutoMessage` class](#plutomessage-class) for common message format.
 ### More flexible objects
 #### PlutoManager
