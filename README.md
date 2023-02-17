@@ -36,13 +36,9 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
         - [`MessageReceived` event](#messagereceived-event)
       - [Closing connection](#closing-connection)
     - [`PlutoMessage` class](#plutomessage-class)
-    - [`AccessCredentials` class](#accesscredentials-class)
-      - [...](#)
-      - [Parse to URI](#parse-to-uri)
-      - [Parameters](#parameters)
       - [How to create](#how-to-create)
-      - [Basics](#basics)
-      - [Variations](#variations)
+        - [Variations](#variations)
+    - [`AccessCredentials` class](#accesscredentials-class)
     - [`CodeMessage` enum](#codemessage-enum)
     - [More flexible objects](#more-flexible-objects)
       - [PlutoManager](#plutomanager)
@@ -459,37 +455,64 @@ PlutoEventManager manager = new PlutoEventManager();
 manager.CloseConnection();
 ```
 ### `PlutoMessage` class
-### `AccessCredentials` class
-#### ...
-#### Parse to URI
-#### Parameters
+- Class that make abstraction over data that are send and received.
+- **Properties**:
+  - `MessageCode Identifier` - header which is used to identify type of message received.
+  - `Byte[] CustomData` - message itself serialized to bytes
+- **Methods**:
+  - `string CustomDataToString()` - used to convert received data to string (e.g. publickey).
+  - `byte[] ToByteArray()` - used to align `Identifier` and `CustomData` together into one `byte` array before sending. User typicaly don't need to use this method.
+  - `Method GetMethod()` - When received `CustomData` are serialized `Method`, you can convert them with this method. E.g.: 
+    ```cs
+    if (incomingMessage.Identifier == MessageCode.Method) {
+        Method m = incomingMessage.GetMethod();
+        // ...
+    }
+    ```
+    #### Parameters
   1. MessageCode Identifier
   2. byte[] CustomData
 #### How to create
-#### Basics
 ```cs
 PlutoMessage msgToSend = new PlutoMessage(MessageCode.XXX, dataToSend);
 ```
 Now you are able to [send message](#sending) with `PlutoEventManager`. To receive see [receiving messages](#receiving) section.
-#### Variations
+##### Variations
 You can use different types of pluto messages.
-1. **String**
-- typicaly used to send publickey from wallet to dApp, but can send any string type of data
+1. **Method**
+- You can [send Ajuna.NetApi Methods](#sending-method) with EZ. Receiving Methods [here](#receiving).
+1. **String** (publickey)
+- typicaly used to send publickey from wallet to dApp, but can send any `string` data.
 ```cs
 var keyMsg = new PlutoMessage(MessageCode.PublicKey, "keySample");
 ```
 1. **Byte[]**
 - you can also serialize and send any type of data. Give it propper header you can process it when received
 ```cs
-var byteMsg = new PlutoMessage(MessageCode.Method, new byte[3] {4,8,1});
+var byteMsg = new PlutoMessage(MessageCode.Method, new byte[] {4,8,1});
 ```
 1. **MessageCode**
 - You can send `MessageCode` alone like so. This is typical for response messages.
 ```cs
 var respose = new PlutoMessage(MessageCode.Success);
 ```
-1. **Method**
-- Don't forget you can [send Ajuna.NetApi Methods](#sending-method). Receiving Methods [here](#receiving).
+
+### `AccessCredentials` class
+- This class is used to store information about dApp that are needed for connection.
+- **Properties**:
+  - `string Address` - LAN ip address in string format (where to connect).
+  - `int Port` - Port number in int format (where to connect).
+  - `string Key` - Acts like password or auth token. Has to match on server/client side. Can be generated or setted manualy.
+  - `string Name` (optional) - dApp name. This way wallet with dApp's `AccessCredentials` object know name of dApp without connecting.
+  - `string Icon` (optional) - Url that leads to image of dApp. E.g icon.
+- **Methods**:
+  - `static string GenerateKey(int keyLen=30)` - generates key for you. THe `keyLen` argument is optional (default value is 30).
+  - `Uri ToUri()` - Converts properties of `AccessCredentials` object to URI address.
+    - Uri address can be (and in case of PlutoWallet is) encoded to QR code.
+    - `AccessCredentials` has constructor that accepts `Uri` object:
+        ```cs
+        var credentials = AccessCredentials(Uri uri);
+        ```
 
 ### `CodeMessage` enum
 `MessageCode` class serves as a header of messages. When receiving message we have to interpret incoming bytes that why header convention is essential in this type of network communication.
