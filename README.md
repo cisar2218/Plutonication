@@ -42,8 +42,6 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
     - [`CodeMessage` enum](#codemessage-enum)
     - [More flexible objects](#more-flexible-objects)
       - [PlutoManager](#plutomanager)
-      - [ClientPlutoManager](#clientplutomanager)
-      - [ServerPlutoManager](#serverplutomanager)
 ## Installation
 Install Plutonication package in LTS from nuget. See [Nuget](https://www.nuget.org/packages/Plutonication).
 ## What it does?
@@ -589,5 +587,19 @@ Naked `PlutoManager` method:
 ```cs
 PlutoMessage msg = await manager.ReceiveMsgAsync();
 ```
-#### ClientPlutoManager
-#### ServerPlutoManager
+- **Properties**
+  - protected const int DEFAULT_READSTREAM_TIMEOUT = 1000; // miliseconds
+  - protected TcpClient Client { get; set; }
+  - protected int Port { get; set; }
+  - protected IPAddress ServerAddress { get; set; }
+- **Methods**
+  - public abstract void CloseConnection();
+  - public PlutoMessage ReceiveMessage(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
+  - public async Task<PlutoMessage> ReceiveMessageAsync(int timeoutMiliseconds = DEFAULT_READSTREAM_TIMEOUT)
+  - public void SendMethod(Method transaction)
+  - public async Task SendMethodAsync(Method transaction)
+  - public void SendMessage(MessageCode code)
+  - public void SendMessage(PlutoMessage message)
+  - public async Task SendMessageAsync(MessageCode code)
+  - public async Task SendMessageAsync(PlutoMessage message)
+  - public static IPAddress GetMyIpAddress()
