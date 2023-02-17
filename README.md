@@ -18,7 +18,7 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
     - [Client (CryptoWallet) Demo](#client-cryptowallet-demo)
   - [Usage by object](#usage-by-object)
     - [`PlutoEventManager` class](#plutoeventmanager-class)
-      - [Establish Connection](#establish-connection)
+      - [Try to establish connection](#try-to-establish-connection)
         - [Server (dApp)](#server-dapp)
         - [Client (Wallet)](#client-wallet)
       - [Sending](#sending)
@@ -31,8 +31,8 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
         - [Common setup](#common-setup)
       - [Processing of incoming messages](#processing-of-incoming-messages)
       - [List of events](#list-of-events)
-        - [`ConnectionEstablished` event](#connectionestablished-event)
-        - [`ConnectionRefused` event](#connectionrefused-event)
+        - [`ConnectionEstablished` event and `ConnectionRefused` event](#connectionestablished-event-and-connectionrefused-event)
+        - [`SetupReceiveLoopAsync()` method](#setupreceiveloopasync-method)
         - [`MessageReceived` event](#messagereceived-event)
       - [Closing connection](#closing-connection)
     - [`PlutoMessage` class](#plutomessage-class)
@@ -71,7 +71,7 @@ Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Tr
 ### Why this solution
 #### I. Event driven architecture that is easy to use
 1. Setup methods that handle [`MessageReceived`](#messagereceived-event) event which will pop up every time you receive message.
-2. Establish connection with just [one call](#establish-connection) and you are ready to go.
+2. Establish connection with just [one call](#try-to-establish-connection) and you are ready to go.
 3. To send message just use `SendMessage(PlutoMessage msg)`.
 4. To close connection just use `CloseConnection()` method.
 #### II. Connection with authentification by default
@@ -295,7 +295,7 @@ work just fine.
 ### `PlutoEventManager` class
 `PlutoEventManager` class will be your main class used from Plutonication package if you want to build simple dApp that communicate with PlutoWallet. We recommend run and play with [code examples](#usage-by-pure-code-examples) and then study additional details in documentation. 
 > It has the highest level of abstraction, if you want more flexible solution, see [more flexible objects](#more-flexible-objects). 
-#### Establish Connection
+#### Try to establish connection
 To establish connection instantiate `PlutoEventManager` and then make call specific for your usecase ([client (wallet)](#client-wallet) / [server (dApp)](#server-dapp)).
 ```cs
 PlutoEventManager manager = new PlutoEventManager();
@@ -322,9 +322,9 @@ string key = "samplePassword";
 int port = 8080;
 await manager.ConnectSafeAsync( key: key, port: port );
 ```
-[`ConnectionEstablished`](#connectionestablished-event) event is raised when connection established. [`ConnectionRefused`](#connectionrefused-event) event is raised when connection refused.
+[`ConnectionEstablished`](#connectionestablished-event-and-connectionrefused-event) event is raised when connection established. [`ConnectionRefused`](#connectionestablished-event-and-connectionrefused-event) event is raised when connection refused.
 #### Sending
-- Make sure connection is [established](#connectionestablished-event). And other side is [ready](#common-setup) to receive messages.
+- Make sure connection is [established](#connectionestablished-event-and-connectionrefused-event). And other side is [ready](#common-setup) to receive messages.
 - To send messages 2 main methods are used: `sendMessage()`, `sendMethod()`. See they variations bellow to find your usecase.
 ##### Overview
 Data that you are sending are stored in object called [`PlutoMessage`](#plutomessage-class).
@@ -338,9 +338,10 @@ Receiving messages is based on event handeling. On each incoming message:
 1. Incoming message is added to `IncomingMessages` queue
 2. `MessageReceived` event is triggered
 ##### Common setup
-I supose you have instanciated `PlutoEventManager` and [established connection](#connectionestablished-event).
+I supose you have instanciated `PlutoEventManager` and [established connection](#connectionestablished-event-and-connectionrefused-event).
 1. Set which function will execute on message received event.
-2. Deque and process message
+2. Deque and process message (inside your custom method which handles incoming messages)
+3. Start receiving messages by calling `SetupReceiveLoopAsync()` method.
 ```cs
 // PlutoEventManager manager = new PlutoEventManager();
 // 
@@ -367,6 +368,8 @@ manager.MessageReceived += () => {
             break;
     }
 };
+
+Task receiving = manager.SetupReceiveLoopAsync();
 ```
 Messages are stored in queue. By calling the event bellow, put the oldest message out of the queue.
 ```cs
@@ -374,21 +377,87 @@ PlutoMessage msg = manager.IncomingMessages.Dequeue();
 ```
 
 #### Processing of incoming messages
-Based on `msg.Indentifier` process message like so:
+> Messages are in form of [`PlutoMessage` object](#plutomessage-class).
+ 
+To interpret data in form of `byte[]`, you need to read the Identifier member of message. Based on `msg.Indentifier` process message like so:
 ```cs
 PlutoMessage msg = manager.IncomingMessages.Dequeue();
 switch (msg.Identifier) {
+    // handle short responses
     case MessageCode.Success:
+    case MessageCode.Refused:
+    case MessageCode.FilledOut:
+        Console.WriteLine("Code: '{0}'!", msg.Identifier);
+        // ... process message here ...
+        break;
+    // handle incoming string data
+    case MessageCode.PublicKey:
         Console.WriteLine("Code: '{0}'. public key delivered!", msg.Identifier);
+        string publicKey = msg.CustomDataToString();
+        // ... process publiKey here ...
+        break;
+    // handle incoming methods to be sign
+    case MessageCode.Method:
+        Console.WriteLine("Code: '{0}'. Method delivered!", msg.Identifier);
+        Method m = msg.GetMethod();
+        // ... process method here ...
         break;
     //...
+
+    // handle unknown message codes
+    dafault:
+        Console.Writeline("Unknown message code + ", msg.Indetifier);
+        break;
 }
 ```
 #### List of events
-##### `ConnectionEstablished` event
-##### `ConnectionRefused` event
+##### `ConnectionEstablished` event and `ConnectionRefused` event
+Before you call method which [tries to establish connection](#try-to-establish-connection) with other app setup these events.
+```cs
+// bind individual events to a function
+// this event will fire when apps are connected
+manager.ConnectionEstablished += () =>
+{
+    Console.WriteLine("Connection Established! :)");
+    // ... execude any code here ...
+};
+
+// this event will fire when other side refuse connection
+manager.ConnectionRefused += () =>
+{
+    Console.WriteLine("Connection Refused! :(");
+    // ... execude any code here ...
+};
+```
+You don't have to use lambda function ofc.:
+```cs
+manager.ConnectionRefused += MyHandleFunction;
+
+// ... 
+
+public void MyHandleFunction() {
+    Console.WriteLine("Connection Refused! :(");
+    //... handle here ...
+}
+```
+> Don't know about events? Check [official documentation](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/events/how-to-subscribe-to-and-unsubscribe-from-events) about events
+##### `SetupReceiveLoopAsync()` method
 ##### `MessageReceived` event
+Before you call method which [receives messages](#setupreceiveloopasync-method) setup this event:
+```cs
+manager.MessageReceived += () => {
+    // ... handle message here ...
+};
+```
+See [Common setup](#common-setup) and [complete examples](#usage-by-pure-code-examples) for complete examples.
+> Don't know about events? Check [official documentation](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/events/how-to-subscribe-to-and-unsubscribe-from-events) about events
 #### Closing connection
+To close connection manually call `PlutoEventManager`'s method `CloseConnection`. From now on connection will be closed.
+```cs
+PlutoEventManager manager = new PlutoEventManager();
+// ... 
+manager.CloseConnection();
+```
 ### `PlutoMessage` class
 ### `AccessCredentials` class
 #### ...
