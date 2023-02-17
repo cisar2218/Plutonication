@@ -49,7 +49,7 @@ c# .NET 6 class class library for network TCP communication. Originaly designed 
       - [ClientPlutoManager](#clientplutomanager)
       - [ServerPlutoManager](#serverplutomanager)
 ## Installation
-See [Nuget](https://www.nuget.org/packages/Plutonication).
+Install Plutonication package in LTS from nuget. See [Nuget](https://www.nuget.org/packages/Plutonication).
 ## What it does?
 - Allow you to communicate between 2 applications on LAN using [TCP sockets](https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/sockets/socket-services?source=recommendations) (dApp and crypto Wallet in case of [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet)).
 - Designed to send transactions ([see `Method` class](https://github.com/ajuna-network/Ajuna.NetApi/blob/6976d251c3ae468b1190f13b0656ce54d94bf0af/Ajuna.NetApi/Model/Extrinsics/Method.cs) in [Ajuna.NetApi](https://github.com/ajuna-network/Ajuna.NetApi)), public keys and other data of your choice.
