@@ -1,7 +1,7 @@
 # Plutonication
 c# .NET 6 class class library for network TCP communication. Originaly designed for [PlutoWallet project](https://github.com/RostislavLitovkin/PlutoWallet).
 
-Plutonication is now available for use via [NuGet package] (https://www.nuget.org/packages/Plutonication)
+Plutonication is now available for use via [NuGet package](https://www.nuget.org/packages/Plutonication)
 
 - [Plutonication](#plutonication)
   - [Installation](#installation)
