@@ -168,6 +168,7 @@ Task sendingMsg = manager.SendMessageAsync(new PlutoMessage(MessageCode.PublicKe
 
 
 // ... app is comunicating ... ------------------------------------------------
+Console.WriteLine("[After you type connection will stop]");
 Console.ReadKey(); // after you press key on your keyboard code goes on ...
 // ... app is going to close connection ... -----------------------------------
 
@@ -270,6 +271,7 @@ Task receiving = manager.SetupReceiveLoopAsync();
 */
 
 // ... app is comunicating ... ------------------------------------------------
+Console.WriteLine("[After you type connection will stop]");
 Console.ReadKey(); // after you press key on your board code goes on ...
 // ... app is going to close connection ... -----------------------------------
 
