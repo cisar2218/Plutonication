@@ -113,6 +113,7 @@ AccessCredentials ac = new AccessCredentials(
 );
 
 // PART 2: Listen for incoming connections ------------------------------------
+Console.WriteLine("... waiting for connection ...");
 await manager.ListenSafeAsync(
     key: ac.Key, 
     port: ac.Port
