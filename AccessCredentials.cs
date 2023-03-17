@@ -65,6 +65,7 @@ namespace Plutonication
         }
         public AccessCredentials(IPAddress address, int port, string name, string icon) : this(address, port, name)
         {
+            Name = name;
             Icon = icon;
         }
         public AccessCredentials(IPAddress address, int port, string key, string name, string icon) : this(address, port, name, icon)
