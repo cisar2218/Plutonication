@@ -12,7 +12,6 @@ namespace Plutonication
         public string Address { get; set; }
         public int Port { get; set; }
         public string Key { get; set; }
-
         public string Name { get; set; } // optional
         public string Icon { get; set; } // optional
 
