@@ -58,6 +58,8 @@ Communication is established via [TCP protocol](https://en.wikipedia.org/wiki/Tr
 - Completely [**P2P**](https://en.wikipedia.org/wiki/Peer-to-peer). No third party server involved.
 - Note that connection may not be completely secure. Keep that please in mind and **don't transfer any sensitive information via Plutonication**. We hope that with smart design choices of Plutonication and PlutoWallet there is no need to transfer any sensitive data.
 ## Usecases
+## Dev notes and integration ideas
+- webRTC for dApp + wallet connection
 ### Projects
 1. You want to implement dApp (that communicate via TCP with Wallet)
     - Send *transactions* into cryptowallet where you can sign them.
