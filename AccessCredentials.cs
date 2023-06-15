@@ -12,7 +12,6 @@ namespace Plutonication
         public string Address { get; set; }
         public int Port { get; set; }
         public string Key { get; set; }
-
         public string Name { get; set; } // optional
         public string Icon { get; set; } // optional
 
@@ -65,6 +64,8 @@ namespace Plutonication
         }
         public AccessCredentials(IPAddress address, int port, string name, string icon) : this(address, port, name)
         {
+            Key = GenerateKey();
+            Name = name;
             Icon = icon;
         }
         public AccessCredentials(IPAddress address, int port, string key, string name, string icon) : this(address, port, name, icon)
