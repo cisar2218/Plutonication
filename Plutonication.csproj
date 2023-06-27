@@ -12,7 +12,9 @@
 
   <ItemGroup>
     <PackageReference Include="Ajuna.NetApi" Version="0.3.3" />
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.1.0" />
+    <PackageReference Include="SocketIOClient" Version="3.0.8" />
   </ItemGroup>
 
 </Project>
