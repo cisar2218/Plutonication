@@ -8,11 +8,19 @@ namespace Plutonication
 	{
 		public static SocketIO? Client;
 
-		public static async Task InitializeAsync(AccessCredentials c, string pubkey)
+		public static async Task InitializeAsync(
+            AccessCredentials ac,
+            string pubkey,
+            Action<SocketIOResponse> signPayload)
 		{
-			Client = new SocketIO(c.Url);
+            Console.WriteLine(ac.Url);
+			Client = new SocketIO(ac.Url);
+
+            Client.On("sign_payload", signPayload);
 
             await Client.ConnectAsync();
+
+            Console.WriteLine("Connected");
 
 			await SendPublicKeyAsync(pubkey);
         }
@@ -28,6 +36,13 @@ namespace Plutonication
         {
             await Client.DisconnectAsync();
             Client.Dispose();
+        }
+
+        public static async Task SendSignedPayloadAsync(SignerResult signerResult)
+        {
+            await Client.EmitAsync(
+                "signed_payload",
+                new PlutonicationSignedResult { Data = signerResult });
         }
     }
 }

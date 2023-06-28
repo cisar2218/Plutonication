@@ -6,5 +6,10 @@ namespace Plutonication
         public int Room { get; set; }
         public string Data { get; set; } = "";
     }
+    public class PlutonicationSignedResult
+    {
+        public int Room { get; set; }
+        public SignerResult? Data { get; set; }
+    }
 }
 
