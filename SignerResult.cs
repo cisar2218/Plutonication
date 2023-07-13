@@ -3,10 +3,10 @@ namespace Plutonication
 {
 	public class SignerResult
 	{
-		public uint Id { get; set; }
+		public uint id { get; set; }
 
 		// Must be in hex
-		public string Signature { get; set; } = "0x";
+		public string signature { get; set; } = "0x";
 	}
 }
 
