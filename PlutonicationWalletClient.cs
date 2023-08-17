@@ -11,12 +11,16 @@ namespace Plutonication
 		public static async Task InitializeAsync(
             AccessCredentials ac,
             string pubkey,
-            Action<SocketIOResponse> signPayload)
+            Action<SocketIOResponse> signPayload,
+            Action<SocketIOResponse> signRaw)
 		{
             Console.WriteLine(ac.Url);
 			Client = new SocketIO(ac.Url);
 
             Client.On("sign_payload", signPayload);
+
+            Client.On("sign_raw", signRaw);
+
 
             await Client.ConnectAsync();
 
