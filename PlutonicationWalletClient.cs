@@ -8,12 +8,15 @@ namespace Plutonication
 	{
 		public static SocketIO? Client;
 
+        public static string RoomKey = "";
+
 		public static async Task InitializeAsync(
             AccessCredentials ac,
             string pubkey,
             Action<SocketIOResponse> signPayload,
             Action<SocketIOResponse> signRaw)
 		{
+            RoomKey = ac.Key;
             Console.WriteLine(ac.Url);
 			Client = new SocketIO(ac.Url);
 
@@ -33,7 +36,7 @@ namespace Plutonication
 		{
             await Client.EmitAsync(
                 "pubkey",
-                new PlutonicationMessage { Data = pubkey });
+                new PlutonicationMessage { Data = pubkey, Room = RoomKey });
         }
 
         public static async Task DisconnectAsync()
@@ -46,7 +49,7 @@ namespace Plutonication
         {
             await Client.EmitAsync(
                 "signed_payload",
-                new PlutonicationSignedResult { Data = signerResult });
+                new PlutonicationSignedResult { Data = signerResult, Room = RoomKey });
         }
     }
 }

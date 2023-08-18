@@ -68,17 +68,9 @@ namespace Plutonication
         {
             Key = key;
         }
-        public static string GenerateKey(int keyLen = 30)
+        public static string GenerateKey()
         {
-            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            Random random = new Random();
-
-            char[] chars = new char[keyLen];
-            for (int i = 0; i < keyLen; i++)
-            {
-                chars[i] = validChars[random.Next(0, validChars.Length)];
-            }
-            return new string(chars);
+            return DateTime.Now.ToString();
         }
         public Uri ToUri()
         {
