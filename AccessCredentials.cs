@@ -45,6 +45,9 @@ namespace Plutonication
                 return new Exception($"{nameOfParam} url param is value.");
             }
         }
+        public AccessCredentials() {
+            
+        }
         public AccessCredentials(IPAddress address)
         {
             if (address == null)
