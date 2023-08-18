@@ -9,8 +9,7 @@ namespace Plutonication
 {
     public sealed class AccessCredentials
     {
-        public string Address { get; set; }
-        public int Port { get; set; }
+        public string Url { get; set; }
         public string Key { get; set; }
         public string Name { get; set; } // optional
         public string Icon { get; set; } // optional
@@ -19,16 +18,14 @@ namespace Plutonication
         public const string QUERY_PARAM_KEY = "key";
         public const string QUERY_PARAM_NAME = "name";
         public const string QUERY_PARAM_ICON = "icon";
+
         public AccessCredentials(Uri uri)
         {
             if (uri == null) { throw new ArgumentNullException(); }
 
             NameValueCollection queryParams = HttpUtility.ParseQueryString(uri.Query);
 
-            string url = queryParams[QUERY_PARAM_URL] ?? throw InvalidUrlParam(QUERY_PARAM_URL);
-            string[] ipPort = url.Split(":");
-            Address = ipPort[0];
-            Port = Int32.Parse(ipPort[1]);
+            Url = queryParams[QUERY_PARAM_URL] ?? throw InvalidUrlParam(QUERY_PARAM_URL);
 
             Key = queryParams[QUERY_PARAM_KEY] ?? throw InvalidUrlParam(QUERY_PARAM_KEY);
 
@@ -48,46 +45,37 @@ namespace Plutonication
                 return new Exception($"{nameOfParam} url param is value.");
             }
         }
-        public AccessCredentials(IPAddress address, int port)
+        public AccessCredentials(IPAddress address)
         {
             if (address == null)
             {
                 throw new Exception("Given address is null.");
             }
-            Address = address.ToString();
-            Port = port;
+            Url = address.ToString();
             Key = AccessCredentials.GenerateKey();
         }
-        public AccessCredentials(IPAddress address, int port, string key) : this(address, port)
+        public AccessCredentials(IPAddress address, string key) : this(address)
         {
             Key = key;
         }
-        public AccessCredentials(IPAddress address, int port, string name, string icon) : this(address, port, name)
+        public AccessCredentials(IPAddress address, string name, string icon) : this(address, name)
         {
             Key = GenerateKey();
             Name = name;
             Icon = icon;
         }
-        public AccessCredentials(IPAddress address, int port, string key, string name, string icon) : this(address, port, name, icon)
+        public AccessCredentials(IPAddress address, string key, string name, string icon) : this(address, name, icon)
         {
             Key = key;
         }
-        public static string GenerateKey(int keyLen = 30)
+        public static string GenerateKey()
         {
-            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            Random random = new Random();
-
-            char[] chars = new char[keyLen];
-            for (int i = 0; i < keyLen; i++)
-            {
-                chars[i] = validChars[random.Next(0, validChars.Length)];
-            }
-            return new string(chars);
+            return DateTime.Now.ToString();
         }
         public Uri ToUri()
         {
             var queryParams = HttpUtility.ParseQueryString(string.Empty);
-            queryParams["url"] = String.Format($"{Address}:{Port}");
+            queryParams["url"] = String.Format($"{Url}");
             queryParams["key"] = Key;
             if (Name != null)
             {
