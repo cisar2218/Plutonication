@@ -27,9 +27,9 @@ namespace Plutonication
 
             await Client.ConnectAsync();
 
-            Console.WriteLine("Connected");
+            Console.WriteLine("Plutonication connected");
 
-			await SendPublicKeyAsync(pubkey);
+            await SendPublicKeyAsync(pubkey);
         }
 
 		public static async Task SendPublicKeyAsync(string pubkey)
