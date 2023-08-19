@@ -51,7 +51,7 @@ namespace Plutonication
         
         public static string GenerateKey()
         {
-            return DateTime.Now.ToString();
+            return DateTime.UtcNow.Ticks.ToString();
         }
 
         public Uri ToUri()
