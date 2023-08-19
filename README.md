@@ -1,5 +1,7 @@
 # Plutonication
 
+<img width="1512" alt="Screenshot 2023-08-19 at 22 50 21" src="https://github.com/cisar2218/Plutonication/assets/77352013/78c46443-8b41-4f62-a2d9-0b206bb7cd6d">
+
 Communications protocol that enables seamless interactions between dApps and wallets across all platforms.
 
 Establishing a connection is as easy as scanning a QR code.
@@ -99,11 +101,18 @@ await PlutonicationDAppClient.SendPayloadAsync(52, 3, parameters.ToArray());
 # Problem / Motivation
 Currently, there is no way to connect a wallet to more exotic devices, like gaming console and wearables.
 
-# Projects utilising Plutonication
+# dApps utilising Plutonication
 
-- https://github.com/RostislavLitovkin/galaxylogicgamemaui
+- [Galaxy Logic Game](https://github.com/RostislavLitovkin/galaxylogicgamemaui)
+
+Feel free to add your own project by making a PR.
+
+# Wallets utilising Plutonication
+
+- [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet)
 
 Feel free to add your own project by making a PR.
 
 # Inspiration
+
 - https://walletconnect.com/
