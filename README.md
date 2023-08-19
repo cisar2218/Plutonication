@@ -9,8 +9,9 @@ This is a c# version.
 # Installation
 
 Nuget package: https://www.nuget.org/packages/Plutonication
-
+```
 dotnet add package Plutonication
+```
 
 # Other versions
 
