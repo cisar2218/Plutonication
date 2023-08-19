@@ -36,7 +36,7 @@ namespace Plutonication
 
             SubstrateClient = substrateClient;
 
-            Client.On("pubkey", publicKeyJson =>
+            Client.On("receivepubkey", publicKeyJson =>
             {
                 string pubkey = JsonConvert.DeserializeObject<string[]>(publicKeyJson.ToString())[0];
 
