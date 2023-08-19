@@ -5,16 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>2.0.2</Version>
+    <Version>2.0.3</Version>
     <Authors>Dusan Jansky</Authors>
     <Product>Plutonication</Product>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.1.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="SocketIOClient" Version="3.0.8" />
-    <PackageReference Include="Substrate.NET.API" Version="0.9.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Substrate.NET.API\Substrate.NetApi\Substrate.NetApi.csproj" />
+  </ItemGroup>
 </Project>

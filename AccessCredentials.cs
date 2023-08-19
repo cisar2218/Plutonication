@@ -48,53 +48,27 @@ namespace Plutonication
         public AccessCredentials() {
             
         }
-        public AccessCredentials(IPAddress address)
-        {
-            if (address == null)
-            {
-                throw new Exception("Given address is null.");
-            }
-            Url = address.ToString();
-            Key = AccessCredentials.GenerateKey();
-        }
-        public AccessCredentials(IPAddress address, string key) : this(address)
-        {
-            Key = key;
-        }
-        public AccessCredentials(IPAddress address, string name, string icon) : this(address, name)
-        {
-            Key = GenerateKey();
-            Name = name;
-            Icon = icon;
-        }
-        public AccessCredentials(IPAddress address, string key, string name, string icon) : this(address, name, icon)
-        {
-            Key = key;
-        }
+        
         public static string GenerateKey()
         {
             return DateTime.Now.ToString();
         }
+
         public Uri ToUri()
         {
-            var queryParams = HttpUtility.ParseQueryString(string.Empty);
-            queryParams["url"] = String.Format($"{Url}");
-            queryParams["key"] = Key;
+            string link = "plutonication:?";
+            link += "url=" + Url;
+            link += "&key=" + Key;
             if (Name != null)
             {
-                queryParams["name"] = Name;
+                link += "&name=" + Name;
             }
             if (Icon != null)
             {
-                queryParams["icon"] = Icon;
+                link += "&icon=" + Icon;
             }
-            UriBuilder builder = new UriBuilder();
-            builder.Scheme = "plutonication";
-            builder.Host = String.Empty;
-            builder.Query = queryParams.ToString();
-            Uri uri = builder.Uri;
 
-            return uri;
+            return new Uri(link);
         }
     }
 }
