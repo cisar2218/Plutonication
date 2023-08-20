@@ -28,6 +28,7 @@ The overall structure of Plutonication is designed to be as little intrusive as 
 If you are building a dApp, you will want to interact with `PlutonicationDAppClient` static class.
 
 Here is how:
+
 ```C#
 use Plutonication
 use Substrate.NetApi
@@ -99,7 +100,22 @@ await PlutonicationDAppClient.SendPayloadAsync(52, 3, parameters.ToArray());
 ```
 
 # Problem / Motivation
+
 Currently, there is no way to connect a wallet to more exotic devices, like gaming console and wearables.
+
+# How it works
+
+1) The private key is always saved in your wallet on your phone and is never sent anywhere.
+2) You need to pair the dApp with the wallet.
+   To do so, the wallet needs to receive a special link with information needed to establish the connection.
+   The wallet can receive this link for example by scanning a QR code.
+3) Once the link is received, the dApp and the wallet will get paired via websockets.
+   This is to establish a stable connection between different platforms.
+4) After the connection is established, the wallet is ready to receive any Extrinsics, which it can then sigh and send back to the dApp.
+
+# Limitations
+
+- both devices need to support internet connection
 
 # dApps utilising Plutonication
 
