@@ -8,6 +8,14 @@ Establishing a connection is as easy as scanning a QR code.
 
 This is a c# version.
 
+# Use with any web dApp
+
+<img width="1511" alt="Screenshot 2023-08-22 at 16 26 24" src="https://github.com/cisar2218/Plutonication/assets/77352013/99bb3b51-6602-4a00-ac02-287bdad17958">
+
+You can use plutonication **now** with any web dApp. Just download **Plutonication Extension**.
+
+You can find it here: https://github.com/RostislavLitovkin/PlutonicationExtension
+
 # Installation
 
 Nuget package: https://www.nuget.org/packages/Plutonication
@@ -119,6 +127,7 @@ Currently, there is no way to connect a wallet to more exotic devices, like gami
 
 # dApps utilising Plutonication
 
+- [Plutonication Extension](https://github.com/RostislavLitovkin/PlutonicationExtension)
 - [Galaxy Logic Game](https://github.com/RostislavLitovkin/galaxylogicgamemaui)
 
 Feel free to add your own project by making a PR.
