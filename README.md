@@ -121,6 +121,62 @@ Currently, there is no way to connect a wallet to more exotic devices, like gami
    This is to establish a stable connection between different platforms.
 4) After the connection is established, the wallet is ready to receive any Extrinsics, which it can then sigh and send back to the dApp.
 
+# Structure
+
+Native plutonication:
+
+```mermaid
+flowchart LR
+
+subgraph Cloud
+S[Plutonication Websocket Server]
+end
+
+subgraph Any device
+D[dApp using Plutonication]
+end
+
+subgraph Phone
+W["Mobile wallet
+    Private key always stays here"]
+end
+
+S -- Receive signed payload --> D
+D -- Send extrinsic payload --> S
+
+S -- Receive extrinsic payload --> W
+W -- Send signed payload --> S
+
+D -. Scan QR code for establishing connection .-> W;
+```
+
+Plutonication on existing polkadot.js apps: 
+```mermaid
+flowchart LR
+
+subgraph Cloud
+S[Plutonication Websocket Server]
+end
+
+subgraph Web
+D[dApp using Polkadot.js] ~~~ E[Plutonication Extension]
+E -. Connection via Polkadot.js extension .- D
+end
+
+subgraph Phone
+W["Mobile wallet
+    Private key always stays here"]
+end
+
+S -- Receive signed payload --> E
+E -- Send extrinsic payload --> S
+
+S -- Receive extrinsic payload --> W
+W -- Send signed payload --> S
+
+E -. Scan QR code for establishing connection .-> W;
+```
+
 # Limitations
 
 - both devices need to support internet connection
