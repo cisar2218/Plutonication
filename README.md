@@ -177,6 +177,28 @@ W -- Send signed payload --> S
 E -. Scan QR code for establishing connection .-> W;
 ```
 
+### Plutonication Server
+- Used for reliable establishing of connection.
+- Passes payloads between Wallets and dApps.
+
+### Mobile Wallet
+- Has access to the private key
+- signs the payloads and sends them back to the dApp.
+- Never exposes the private key
+
+### dApp
+- needs to have access to either: Plutonication Native / Plutonication Extension
+
+### Plutonication Native
+- A simple package that allows the dApp get connected with the Mobile Wallet.
+- Connects the dApp with the Plutonication server.
+- Helps to generate a QR code for the Wallet to establish the connection.
+
+### Plutonication Extension
+- a polkadot.js extension that works with any existing dApp that supports polkadot.js extension.
+- Connects the dApp with the Plutonication server.
+- Generate a QR code for the Wallet to establish the connection.
+
 # Limitations
 
 - both devices need to support internet connection
