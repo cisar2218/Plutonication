@@ -8,6 +8,8 @@ Establishing a connection is as easy as scanning a QR code.
 
 This is a c# version.
 
+Short demo: https://youtu.be/hw2B8-sBc9A?si=S4BBA3LEib-BYw5m
+
 # Use with any web dApp
 
 <img width="1511" alt="Screenshot 2023-08-22 at 16 26 24" src="https://github.com/cisar2218/Plutonication/assets/77352013/99bb3b51-6602-4a00-ac02-287bdad17958">
