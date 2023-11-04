@@ -32,7 +32,7 @@ namespace Plutonication
             await SendPublicKeyAsync(pubkey);
         }
 
-		public static async Task SendPublicKeyAsync(string pubkey)
+		private static async Task SendPublicKeyAsync(string pubkey)
 		{
             await Client.EmitAsync(
                 "pubkey",
@@ -45,10 +45,17 @@ namespace Plutonication
             Client.Dispose();
         }
 
-        public static async Task SendSignedPayloadAsync(SignerResult signerResult)
+        public static async Task SendPayloadSignatureAsync(SignerResult signerResult)
         {
             await Client.EmitAsync(
-                "signed_payload",
+                "payload_signature",
+                new PlutonicationSignedResult { Data = signerResult, Room = RoomKey });
+        }
+
+        public static async Task SendRawSignatureAsync(SignerResult signerResult)
+        {
+            await Client.EmitAsync(
+                "raw_signature",
                 new PlutonicationSignedResult { Data = signerResult, Room = RoomKey });
         }
     }
