@@ -17,4 +17,7 @@
     <PackageReference Include="Substrate.NET.API" Version="0.9.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Substrate.NET.API\Substrate.NetApi\Substrate.NetApi.csproj" />
+  </ItemGroup>
 </Project>
