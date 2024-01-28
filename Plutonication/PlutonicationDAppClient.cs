@@ -45,7 +45,7 @@ namespace Plutonication
                 receivePublicKey.Invoke(pubkey);
             });
 
-            Client.On("signed_payload", signatureJson =>
+            Client.On("payload_signature", signatureJson =>
             {
                 if (!substrateClient.IsConnected) {
                     return;
@@ -61,7 +61,13 @@ namespace Plutonication
 
             await Client.ConnectAsync();
 
+            await Client.EmitAsync(
+                "create_room",
+                new PlutonicationMessage { Data = "Nothing here", Room = ac.Key });
+
             Console.WriteLine("Plutonication connected");
+
+
         }
 
         public static async Task SendPayloadAsync(Method method, Era era,
