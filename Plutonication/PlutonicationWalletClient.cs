@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Sockets;
-using SocketIOClient;
+﻿using SocketIOClient;
 
 namespace Plutonication
 {
@@ -34,6 +32,10 @@ namespace Plutonication
 
 		private static async Task SendPublicKeyAsync(string pubkey)
 		{
+            if (Client is null){
+                throw new WalletClientNotIntializedException();
+            }
+
             await Client.EmitAsync(
                 "pubkey",
                 new PlutonicationMessage { Data = pubkey, Room = RoomKey });
@@ -41,22 +43,34 @@ namespace Plutonication
 
         public static async Task DisconnectAsync()
         {
+            if (Client is null){
+                throw new WalletClientNotIntializedException();
+            }
+
             await Client.DisconnectAsync();
             Client.Dispose();
         }
 
         public static async Task SendPayloadSignatureAsync(SignerResult signerResult)
         {
+            if (Client is null){
+                throw new WalletClientNotIntializedException();
+            }
+
             await Client.EmitAsync(
                 "payload_signature",
-                new PlutonicationSignedResult { Data = signerResult, Room = RoomKey });
+                new PlutonicationMessage { Data = signerResult, Room = RoomKey });
         }
 
         public static async Task SendRawSignatureAsync(SignerResult signerResult)
         {
+            if (Client is null){
+                throw new WalletClientNotIntializedException();
+            }
+
             await Client.EmitAsync(
                 "raw_signature",
-                new PlutonicationSignedResult { Data = signerResult, Room = RoomKey });
+                new PlutonicationMessage { Data = signerResult, Room = RoomKey });
         }
     }
 }

@@ -1,14 +1,5 @@
-﻿using System;
-using System.Security.Principal;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Schnorrkel.Signed;
+﻿using Newtonsoft.Json;
 using SocketIOClient;
-using Substrate.NetApi;
-using Substrate.NetApi.Model.Extrinsics;
-using Substrate.NetApi.Model.Rpc;
-using Substrate.NetApi.Model.Types;
-using Substrate.NetApi.Model.Types.Base;
 
 namespace Plutonication
 {
@@ -16,10 +7,8 @@ namespace Plutonication
 	{
         public static async Task<PlutonicationAccount> InitializeAsync(
             AccessCredentials ac,
-            Action<string> onReceivePublicKey,
-            SubstrateClient substrateClient
-            )
-        {
+            Action<string> onReceivePublicKey
+        ) {
             var client = new SocketIO(ac.Url);
 
             await client.ConnectAsync();
@@ -32,11 +21,15 @@ namespace Plutonication
 
             client.On("pubkey", receivedPublicKey =>
             {
-                string pubkey = JsonConvert.DeserializeObject<string[]>(receivedPublicKey.ToString())[0];
+                string[]? pubkey = JsonConvert.DeserializeObject<string[]>(receivedPublicKey.ToString());
+                
+                if (pubkey is null || !pubkey.Any()){
+                    throw new WrongMessageReceivedException();
+                }
 
-                publicKey.TrySetResult(pubkey);
+                publicKey.TrySetResult(pubkey[0]);
 
-                onReceivePublicKey.Invoke(pubkey);
+                onReceivePublicKey.Invoke(pubkey[0]);
             });
 
             return new PlutonicationAccount(client, await publicKey.Task, ac.Key);
