@@ -1,11 +1,11 @@
 ﻿using System;
 namespace Plutonication
 {
-	public class Message
+	public class RawMessage
 	{
-		public string address { get; set; }
-        public string data { get; set; }
-        public string type { get; set; }
+		public string? address { get; set; }
+        public string? data { get; set; }
+        public string? type { get; set; }
     }
 }
 

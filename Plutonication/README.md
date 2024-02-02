@@ -27,7 +27,7 @@ dotnet add package Plutonication
 
 # Other versions
 
-- Javascript/Typescript - in works
+- Javascript/Typescript = https://github.com/rostislavLitovkin/plutonication
 - Kotlin - planned
 - Swift - planned
 
@@ -37,7 +37,7 @@ The overall structure of Plutonication is designed to be as little intrusive as 
 
 If you are building a dApp, you will want to interact with `PlutonicationDAppClient` static class.
 
-Here is how:
+Here is how (This is outdated. I will update it soon):
 
 ```C#
 use Plutonication

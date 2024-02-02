@@ -1,3 +1,52 @@
-﻿<Properties>
+﻿<Properties NuGet.AddPackagesDialog.IncludePrerelease="True" StartupConfiguration="{E1246735-9967-43CE-8E7D-BDB479D6E124}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.PlutonicationConsoleSample PreferredExecutionTarget="MonoDevelop.Default" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/SubstrateClient.cs">
+    <Files>
+      <File FileName="Plutonication/PlutonicationAccount.cs" Line="128" Column="20" IsPinned="True" />
+      <File FileName="PlutonicationConsoleSample/Program.cs" Line="56" Column="40" />
+      <File FileName="Plutonication/PlutonicationDAppClient.cs" Line="21" Column="10" />
+      <File FileName="Plutonication/Plutonication.csproj" Line="17" Column="15" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/Model/Types/Base/BasePrim.cs" Line="44" Column="10" />
+      <File FileName="Plutonication/PlutonicationWalletClient.cs" Line="22" Column="1" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/Model/Types/Base/AccountId.cs" Line="68" Column="15" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/Model/Rpc/StorageChangeSet.cs" Line="1" Column="1" />
+      <File FileName="Plutonication/PlutonicationMessage.cs" Line="9" Column="5" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/Model/Extrinsics/Extrinsic.cs" Line="87" Column="17" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/Model/Extrinsics/UnCheckedExtrinsic.cs" Line="90" Column="28" />
+      <File FileName="Plutonication/Payload.cs" Line="4" Column="5" />
+      <File FileName="PlutonicationConsoleSample/SubstrateClientExt.cs" Line="24" Column="69" />
+      <File FileName="PlutonicationConsoleSample/Generated/Storage/MainBalances.cs" Line="416" Column="66" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/Modules/Author.cs" Line="51" Column="54" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/RequestGenerator.cs" Line="97" Column="1" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/Modules/Payment.cs" Line="1" Column="1" />
+      <File FileName="../../PlutoWallet/Substrate.NET.API/Substrate.NetApi/SubstrateClient.cs" Line="411" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Plutonication" expanded="True">
+            <Node name="Plutonication" expanded="True" />
+            <Node name="PlutonicationConsoleSample" expanded="True">
+              <Node name="Generated" expanded="True" />
+            </Node>
+            <Node name="Substrate.NetApi" expanded="True">
+              <Node name="Model" expanded="True">
+                <Node name="Extrinsics" expanded="True" />
+                <Node name="Rpc" expanded="True" />
+                <Node name="Types" expanded="True">
+                  <Node name="Base" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Modules" expanded="True" />
+              <Node name="SubstrateClient.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
