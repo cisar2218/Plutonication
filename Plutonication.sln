@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutonication", "Plutonicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlutonicationConsoleSample", "PlutonicationConsoleSample\PlutonicationConsoleSample.csproj", "{E1246735-9967-43CE-8E7D-BDB479D6E124}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlutonicationTests", "PlutonicationTests\PlutonicationTests.csproj", "{8BCA2156-47D2-4AA7-8BBF-C8127162B99E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{E1246735-9967-43CE-8E7D-BDB479D6E124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1246735-9967-43CE-8E7D-BDB479D6E124}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1246735-9967-43CE-8E7D-BDB479D6E124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCA2156-47D2-4AA7-8BBF-C8127162B99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCA2156-47D2-4AA7-8BBF-C8127162B99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCA2156-47D2-4AA7-8BBF-C8127162B99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCA2156-47D2-4AA7-8BBF-C8127162B99E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

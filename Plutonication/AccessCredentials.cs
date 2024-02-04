@@ -38,10 +38,8 @@ namespace Plutonication
             }
         }
 
-        public AccessCredentials() {
-            
-        }
-        
+        public AccessCredentials() { }
+
         private static string GenerateKey()
         {
             return DateTime.UtcNow.Ticks.ToString();
@@ -49,16 +47,21 @@ namespace Plutonication
 
         public Uri ToUri()
         {
+            if (Url is null)
+            {
+                throw new AccessCredentialsBadFormatException("Url property must not be null");
+            }
+
             string link = "plutonication:?";
-            link += "url=" + Url;
-            link += "&key=" + Key;
+            link += "url=" + Uri.EscapeDataString(Url);
+            link += "&key=" + Uri.EscapeDataString(Key);
             if (Name != null)
             {
-                link += "&name=" + Name;
+                link += "&name=" + Uri.EscapeDataString(Name);
             }
             if (Icon != null)
             {
-                link += "&icon=" + Icon;
+                link += "&icon=" + Uri.EscapeDataString(Icon);
             }
 
             return new Uri(link);

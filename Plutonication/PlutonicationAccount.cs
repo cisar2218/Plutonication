@@ -24,7 +24,24 @@ namespace Plutonication
 
             Create(KeyType.Sr25519, Utils.GetPublicKeyFrom(publicKey));
 
-            Action<SocketIOResponse> onSignatureReceived = signatureJson =>
+            client.On("raw_signature", signatureJson =>
+            {
+                SignerResult[]? signerResult = JsonConvert.DeserializeObject<SignerResult[]>(signatureJson.ToString());
+
+                if (signature == null)
+                {
+                    return;
+                }
+
+                if (signerResult is null || !signerResult.Any() || signerResult[0].signature.Length < 2)
+                {
+                    throw new WrongMessageReceivedException();
+                }
+
+                signature.TrySetResult(Utils.HexToByteArray(signerResult[0].signature.Substring(2)));
+            });
+
+            client.On("payload_signature", signatureJson =>
             {
                 SignerResult[]? signerResult = JsonConvert.DeserializeObject<SignerResult[]>(signatureJson.ToString());
 
@@ -39,11 +56,7 @@ namespace Plutonication
                 }
 
                 signature.TrySetResult(Utils.HexToByteArray(signerResult[0].signature.Substring(4)));
-            };
-
-            client.On("raw_signature", onSignatureReceived);
-
-            client.On("payload_signature", onSignatureReceived);
+            });
         }
 
         public override async Task<byte[]> SignAsync(byte[] message)

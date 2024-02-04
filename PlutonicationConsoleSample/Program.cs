@@ -15,7 +15,7 @@ Console.WriteLine("Hello, World!");
 
 AccessCredentials ac = new AccessCredentials
 {
-    Name = "C# Plutonication console test",
+    Name = "CSharp Plutonication console test",
     Url = "wss://plutonication-acnha.ondigitalocean.app/",
     Key = "134",
 };

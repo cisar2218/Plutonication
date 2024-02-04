@@ -50,5 +50,22 @@
         {
         }
     }
+
+    public class AccessCredentialsBadFormatException : Exception
+    {
+        public AccessCredentialsBadFormatException()
+        {
+        }
+
+        public AccessCredentialsBadFormatException(string message)
+            : base(message)
+        {
+        }
+
+        public AccessCredentialsBadFormatException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }
 
