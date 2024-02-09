@@ -31,6 +31,61 @@ The overall structure of Plutonication is designed to be as little intrusive as 
 
 A comprehensive guide for adding Plutonication to your dApp / Wallet can be found here: https://plutonication-acnha.ondigitalocean.app/docs/csharp.
 
+# Plutonication Console Example
+
+### Run Locally
+
+Example Console application can be found in the `PlutonicationConsoleSample` folder.
+
+```
+cd PlutonicationConsoleSample
+
+# Install nuget dependencies
+dotnet restore
+
+dotnet build
+
+dotnet run
+```
+
+### Docker
+
+The following docker file runs the C# console sample dApp, which can be used for testing all plutonication dApp functionalities.
+
+```
+cd PlutonicationConsoleSample
+
+docker build -t plutonication-csharp-dapp-example . 
+
+docker run -p 3000:3000 plutonication-csharp-dapp-example
+```
+
+# Build the package locally
+
+```
+cd Plutonication
+
+# Install nuget dependencies
+dotnet restore
+
+dotnet build
+```
+
+# Testing
+
+### Unit tests
+
+The provided tests showcase how Plutonication can be implemented for both dApps and Wallets.
+
+```
+cd PlutonicationTests
+
+# Install nuget dependencies
+dotnet restore
+
+dotnet test PlutonicationTests.csproj
+```
+
 # How Plutonication works
 
 The private key is always saved in your wallet on your phone and is never sent anywhere.
@@ -49,6 +104,19 @@ Plutonication enables that!
 
 - Both devices need to support internet connection
 
+# dApps utilising Plutonication
+
+- [Plutonication Extension](https://github.com/RostislavLitovkin/PlutonicationExtension)
+- [Galaxy Logic Game](https://github.com/RostislavLitovkin/galaxylogicgamemaui)
+
+Feel free to add your own project by making a PR.
+
+# Wallets utilising Plutonication
+
+- [PlutoWallet](https://github.com/RostislavLitovkin/PlutoWallet)
+
+Feel free to add your own project by making a PR.
+
 # Inspiration
 
 - [https://walletconnect.com/](https://walletconnect.com/)
@@ -60,4 +128,3 @@ Contributions are welcome.
 # License
 
 This project is licensed under the MIT License.
-

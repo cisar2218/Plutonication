@@ -4,15 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>2.2.0</Version>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>2.2.1</Version>
     <Authors>Dusan Jansky, Rostislav Litovkin</Authors>
     <Product>Plutonication</Product>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="SocketIOClient" Version="3.0.8" />
     <PackageReference Include="Substrate.NET.API" Version="0.9.17" />
   </ItemGroup>

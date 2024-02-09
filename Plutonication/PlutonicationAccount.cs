@@ -7,6 +7,10 @@ using Substrate.NetApi.Model.Types.Primitive;
 
 namespace Plutonication
 {
+    /// <summary>
+    /// Custom implementation of <b>Substrate.NetApi.Model.Types.Account</b>
+    /// that enables communication with Plutonication dApps.
+    /// </summary>
     public class PlutonicationAccount : Account
     {
         private SocketIO client;
@@ -83,7 +87,7 @@ namespace Plutonication
 
             return await signature.Task;
         }
-
+        
         public override async Task<byte[]> SignPayloadAsync(Substrate.NetApi.Model.Extrinsics.Payload payload)
         {
             if (!client.Connected)
@@ -135,6 +139,10 @@ namespace Plutonication
             return await signature.Task;
         }
 
+        /// <summary>
+        /// Disconnects from the Plutonication server.
+        /// </summary>
+        /// <returns></returns>
         public async Task DisconnectAsync()
         {
             await client.DisconnectAsync();

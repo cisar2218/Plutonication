@@ -1,5 +1,8 @@
 ﻿namespace Plutonication
 {
+    /// <summary>
+    /// Representation of the Polkadot.js api SignerPayloadJSON type
+    /// </summary>
     public class Payload
     {
         public string? specVersion { get; set; }

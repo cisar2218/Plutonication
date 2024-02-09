@@ -1,6 +1,8 @@
-﻿using System;
-namespace Plutonication
+﻿namespace Plutonication
 {
+    /// <summary>
+    /// Representation of the Polkadot.js api SignerPayloadRaw type
+    /// </summary>
 	public class RawMessage
 	{
 		public string? address { get; set; }
@@ -8,4 +10,3 @@ namespace Plutonication
         public string? type { get; set; }
     }
 }
-

@@ -1,8 +1,13 @@
 using System.Web;
 using System.Collections.Specialized;
+using System.Security.Cryptography;
+using System.Drawing;
 
 namespace Plutonication
 {
+    /// <summary>
+    /// Class to use correct acces credential information in the wallet
+    /// </summary>
     public sealed class AccessCredentials
     {
         public string? Url { get; set; }
@@ -14,7 +19,7 @@ namespace Plutonication
         private const string QUERY_PARAM_KEY = "key";
         private const string QUERY_PARAM_NAME = "name";
         private const string QUERY_PARAM_ICON = "icon";
-
+        
         public AccessCredentials(Uri uri)
         {
             if (uri == null)
@@ -40,11 +45,27 @@ namespace Plutonication
 
         public AccessCredentials() { }
 
+        /// <summary>
+        /// Helper method that generates a random key.
+        /// </summary>
+        /// <returns></returns>
         private static string GenerateKey()
         {
-            return DateTime.UtcNow.Ticks.ToString();
+            // This is a cryptographically secure random number generator, however it does not strictly have to be.
+            // https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator?view=net-8.0
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                byte[] randomBytes = new byte[8];
+                rng.GetBytes(randomBytes);
+                return BitConverter.ToUInt64(randomBytes, 0).ToString();
+            }
         }
 
+        /// <summary>
+        /// Converts the credentials into a Uri to be used in the Plutonication application.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="AccessCredentialsBadFormatException"></exception>
         public Uri ToUri()
         {
             if (Url is null)

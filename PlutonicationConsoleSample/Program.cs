@@ -11,7 +11,7 @@ using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
 using Substrate.NetApi.Model.Types.Primitive;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Hello, Plutonication!");
 
 AccessCredentials ac = new AccessCredentials
 {
@@ -28,6 +28,9 @@ AccessCredentials ac = new AccessCredentials
 
 // Show the AccessCredentials to the wallet
 Console.WriteLine(ac.ToUri());
+Console.WriteLine();
+Console.WriteLine("The following link opens you a QR code image that can be scanned by PlutoWallet: ");
+Console.WriteLine("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + ac.ToUri());
 
 // Get the Plutonication account
 Account account = await PlutonicationDAppClient.InitializeAsync(

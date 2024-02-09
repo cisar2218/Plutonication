@@ -13,20 +13,29 @@ using Substrate.NetApi.Model.Types.Base;
 
 namespace Plutonication
 {
-	public class PlutonicationWalletClient
-	{
-		private static SocketIO? client;
+    public class PlutonicationWalletClient
+    {
+        private static SocketIO? client;
 
         private static string roomKey = "";
 
+        /// <summary>
+        /// Handles communication with the Plutonication server, sending and receiving payloads and raw signatures.
+        /// </summary>
+        /// <param name="ac">The credentials required for connecting to the Plutonication server.</param>
+        /// <param name="pubkey">The public key associated with the wallet.</param>
+        /// <param name="signPayload">Callback function to handle payload signing.</param>
+        /// <param name="signRaw">Callback function to handle raw message signing.</param>
+        /// <returns></returns>
+        /// <exception cref="WrongMessageReceivedException">Error when receiving a wrong message from the Plutonication server.</exception>
 		public static async Task InitializeAsync(
             AccessCredentials ac,
             string pubkey,
             Func<UnCheckedExtrinsic, RuntimeVersion, Task> signPayload,
             Func<RawMessage, Task> signRaw)
-		{
+        {
             roomKey = ac.Key;
-			client = new SocketIO(ac.Url);
+            client = new SocketIO(ac.Url);
 
             client.On("sign_payload", payloadJson =>
             {
@@ -73,7 +82,7 @@ namespace Plutonication
                 };
 
                 ChargeType charge;
-                
+
                 if (payload.tip.Length == 34)
                 {
                     charge = new ChargeTransactionPayment(HexStringToUint(payload.tip));
@@ -112,9 +121,17 @@ namespace Plutonication
             await SendPublicKeyAsync(pubkey);
         }
 
-		private static async Task SendPublicKeyAsync(string pubkey)
-		{
-            if (client is null){
+        /// <summary>
+        /// Helper method used to send the public key to the dApp.
+        /// Important at initialisation.
+        /// </summary>
+        /// <param name="pubkey"></param>
+        /// <returns></returns>
+        /// <exception cref="WalletClientNotIntializedException"></exception>
+        private static async Task SendPublicKeyAsync(string pubkey)
+        {
+            if (client is null)
+            {
                 throw new WalletClientNotIntializedException();
             }
 
@@ -123,19 +140,16 @@ namespace Plutonication
                 new PlutonicationMessage { Data = pubkey, Room = roomKey });
         }
 
-        public static async Task DisconnectAsync()
-        {
-            if (client is null){
-                throw new WalletClientNotIntializedException();
-            }
-
-            await client.DisconnectAsync();
-            client.Dispose();
-        }
-
+        /// <summary>
+        /// Sends payload's signature to the dApp.
+        /// </summary>
+        /// <param name="signerResult"></param>
+        /// <returns></returns>
+        /// <exception cref="WalletClientNotIntializedException"></exception>
         public static async Task SendPayloadSignatureAsync(SignerResult signerResult)
         {
-            if (client is null){
+            if (client is null)
+            {
                 throw new WalletClientNotIntializedException();
             }
 
@@ -144,15 +158,38 @@ namespace Plutonication
                 new PlutonicationMessage { Data = signerResult, Room = roomKey });
         }
 
+        /// <summary>
+        /// Sends raw message's signature to the dApp.
+        /// </summary>
+        /// <param name="signerResult"></param>
+        /// <returns></returns>
+        /// <exception cref="WalletClientNotIntializedException"></exception>
         public static async Task SendRawSignatureAsync(SignerResult signerResult)
         {
-            if (client is null){
+            if (client is null)
+            {
                 throw new WalletClientNotIntializedException();
             }
 
             await client.EmitAsync(
                 "raw_signature",
                 new PlutonicationMessage { Data = signerResult, Room = roomKey });
+        }
+
+        /// <summary>
+        /// Disconnects from the Plutonication server.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="WalletClientNotIntializedException"></exception>
+        public static async Task DisconnectAsync()
+        {
+            if (client is null)
+            {
+                throw new WalletClientNotIntializedException();
+            }
+
+            await client.DisconnectAsync();
+            client.Dispose();
         }
 
         /// <summary>
