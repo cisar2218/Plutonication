@@ -85,8 +85,13 @@ public class Plutonication
                 await Task.Delay(3000);
 
                 await PlutonicationWalletClient.InitializeAsync(
+                    // Your Access Credentials
                     ac,
+
+                    // Account public address
                     automatedTestsAccount.Value,
+
+                    // Payload signing logic
                     async (unCheckedExtrinsic, runtime) => {
                         //
                         // You can use the unCheckedExtrinsic and runtime to showcase the
@@ -112,6 +117,8 @@ public class Plutonication
                         // Send the payload signature to the dApp.
                         await PlutonicationWalletClient.SendPayloadSignatureAsync(signerResult);
                     },
+
+                    // Raw message signing logic
                     async (raw) => {
                         //
                         // You can use the raw to show the message to the user before signing it.

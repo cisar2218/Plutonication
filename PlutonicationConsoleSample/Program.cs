@@ -15,14 +15,30 @@ Console.WriteLine("Hello, World!");
 
 AccessCredentials ac = new AccessCredentials
 {
+    // Name of your dApp
     Name = "CSharp Plutonication console test",
+
+    // Icon of your dApp
+    Icon = "https://rostislavlitovkin.pythonanywhere.com/plutowalleticonwhite",
+
+    // Address of Plutonication server
+    // Feel free to use this one
     Url = "wss://plutonication-acnha.ondigitalocean.app/",
-    Key = "134",
 };
 
+// Show the AccessCredentials to the wallet
 Console.WriteLine(ac.ToUri());
 
-Account account = await PlutonicationDAppClient.InitializeAsync(ac, (string _) => { });
+// Get the Plutonication account
+Account account = await PlutonicationDAppClient.InitializeAsync(
+    // Include your access credentials
+    ac,
+
+    // Optinally add extra behaviour on when the wallet successfully connects
+    (string receivedPubkey) => {
+        Console.WriteLine("Received public key: " + receivedPubkey);
+    }
+);
 
 Console.WriteLine("Account connected: " + account);
 
@@ -36,6 +52,7 @@ var substrateClient = new SubstrateClient(
     ChargeTransactionPayment.Default()
 );
 
+// Do not forget to connect the SubstrateClient
 await substrateClient.ConnectAsync();
 
 var destinationAccountId = new AccountId32();
@@ -52,10 +69,11 @@ Method transfer = BalancesCalls.Transfer(destinationMultiAddress, amount);
 // Make a Balances.Transfer call
 await substrateClient.Author.SubmitExtrinsicAsync(
     transfer,
-    account, // Request a signature from this account
+    account, // Request a signature from the Plutonication account
     ChargeTransactionPayment.Default(), // No tip
-    0, // Lifetime. For details, refer to: https://polkadot.js.org/docs/api/FAQ/#how-long-do-transactions-live
-    CancellationToken.None);
+    64, // Lifetime. For details, refer to: https://polkadot.js.org/docs/api/FAQ/#how-long-do-transactions-live
+    CancellationToken.None
+);
 
 Console.WriteLine("Extrinsic submitted");
 
