@@ -2,7 +2,6 @@
 using Chaos.NaCl;
 using Newtonsoft.Json;
 using Plutonication;
-using Schnorrkel;
 using SocketIOClient.Transport;
 using Substrate.NET.Wallet;
 using Substrate.NET.Wallet.Keyring;
@@ -20,7 +19,7 @@ namespace PlutonicationTests;
 
 public class Plutonication
 {
-    private static readonly Meta META = new Meta() { name = "Automated test wallet" };
+    private static readonly Meta META = new Meta() { Name = "Automated test wallet" };
 
     AccessCredentials ac = new AccessCredentials
     {
