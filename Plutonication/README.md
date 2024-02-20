@@ -1,7 +1,5 @@
 # Plutonication
 
-![Plutonication illustrative image](https://github.com/cisar2218/Plutonication/assets/77352013/78c46443-8b41-4f62-a2d9-0b206bb7cd6d)
-
 Communications protocol that enables seamless interactions between dApps and wallets across all platforms.
 
 Establishing a connection is as easy as scanning a QR code.
@@ -60,4 +58,3 @@ Contributions are welcome.
 # License
 
 This project is licensed under the MIT License.
-

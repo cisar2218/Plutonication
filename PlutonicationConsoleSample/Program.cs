@@ -30,7 +30,7 @@ AccessCredentials ac = new AccessCredentials
 Console.WriteLine(ac.ToUri());
 Console.WriteLine();
 Console.WriteLine("The following link opens you a QR code image that can be scanned by PlutoWallet: ");
-Console.WriteLine("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + ac.ToUri());
+Console.WriteLine("https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=40&data=" + ac.ToEncodedString());
 
 // Get the Plutonication account
 Account account = await PlutonicationDAppClient.InitializeAsync(
@@ -79,5 +79,16 @@ await substrateClient.Author.SubmitExtrinsicAsync(
 );
 
 Console.WriteLine("Extrinsic submitted");
+
+// Wait 1 second
+await Task.Delay(1000);
+
+byte[] message = new byte[] { 1, 2, 3 };
+
+byte[] signature = await account.SignAsync(message);
+
+Console.WriteLine("Message signed");
+
+Console.WriteLine("Signature: " + Utils.Bytes2HexString(signature));
 
 Console.ReadKey();
