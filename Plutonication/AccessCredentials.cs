@@ -62,7 +62,7 @@ namespace Plutonication
         }
 
         /// <summary>
-        /// Converts the credentials into a Uri to be used in the Plutonication application.
+        /// Converts the credentials into an Uri that can used in the Plutonication application.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="AccessCredentialsBadFormatException"></exception>
@@ -86,6 +86,36 @@ namespace Plutonication
             }
 
             return new Uri(link);
+        }
+
+        /// <summary>
+        /// Converts the credentials to string representation.
+        ///
+        /// Useful when adding the text into a QR code link.
+        /// It makes sure that the deep link is recognized as link and not as text.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="AccessCredentialsBadFormatException"></exception>
+        public string ToEncodedString()
+        {
+            if (Url is null)
+            {
+                throw new AccessCredentialsBadFormatException("Url property must not be null");
+            }
+
+            string link = "plutonication:?";
+            link += "url=" + Url;
+            link += "&key=" + Key;
+            if (Name != null)
+            {
+                link += "&name=" + Uri.EscapeDataString(Name);
+            }
+            if (Icon != null)
+            {
+                link += "&icon=" + Icon;
+            }
+
+            return Uri.EscapeDataString(link);
         }
     }
 }

@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>2.2.1</Version>
+    <Version>2.3.1</Version>
     <Authors>Dusan Jansky, Rostislav Litovkin</Authors>
     <Product>Plutonication</Product>
   </PropertyGroup>
