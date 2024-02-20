@@ -64,6 +64,16 @@ public class Plutonication
         Console.WriteLine(ac.ToUri());
 
         Assert.That(ac.ToUri().ToString() == $"plutonication:?url=wss%3A%2F%2Fplutonication-acnha.ondigitalocean.app%2F&key={ac.Key}&name=C%23 Plutonication automated test&icon=https%3A%2F%2Frostislavlitovkin.pythonanywhere.com%2Fplutowalleticonwhite");
+
+        Assert.That(ac.ToUri() == new System.Uri($"plutonication:?url=wss%3A%2F%2Fplutonication-acnha.ondigitalocean.app%2F&key={ac.Key}&name=C%23 Plutonication automated test&icon=https%3A%2F%2Frostislavlitovkin.pythonanywhere.com%2Fplutowalleticonwhite"));
+    }
+
+    [Test]
+    public void AccessCredentialsToEncodedString()
+    {
+        Console.WriteLine(ac.ToEncodedString());
+
+        Assert.That(ac.ToEncodedString() == $"plutonication%3A%3Furl%3Dwss%3A%2F%2Fplutonication-acnha.ondigitalocean.app%2F%26key%3D{ac.Key}%26name%3DC%2523%2520Plutonication%2520automated%2520test%26icon%3Dhttps%3A%2F%2Frostislavlitovkin.pythonanywhere.com%2Fplutowalleticonwhite");
     }
 
     [Test]
@@ -177,4 +187,3 @@ public class Plutonication
         Assert.That(await account.VerifyAsync(signature, account.Bytes, message));
     }
 }
-
