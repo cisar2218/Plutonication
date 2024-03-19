@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using System.Collections.Specialized;
 using System.Security.Cryptography;
@@ -22,7 +23,7 @@ namespace Plutonication
         
         public AccessCredentials(Uri uri)
         {
-            if (uri == null)
+            if (uri is null)
             {
                 throw new ArgumentNullException();
             }

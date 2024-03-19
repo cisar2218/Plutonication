@@ -10,6 +10,7 @@ using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
+using System;
 
 namespace Plutonication
 {

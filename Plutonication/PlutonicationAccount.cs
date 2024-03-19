@@ -4,6 +4,7 @@ using Substrate.NetApi;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Primitive;
+using System;
 
 namespace Plutonication
 {

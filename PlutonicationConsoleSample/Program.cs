@@ -67,7 +67,7 @@ destinationMultiAddress.Create(0, destinationAccountId);
 var amount = new BaseCom<U128>(1000000000000); // This is equivalent to 1 TZERO token (10^12 planks)
 
 // Building the transfer Method
-Method transfer = BalancesCalls.Transfer(destinationMultiAddress, amount);
+Method transfer = BalancesCalls.TransferAllowDeath(destinationMultiAddress, amount);
 
 // Make a Balances.Transfer call
 await substrateClient.Author.SubmitExtrinsicAsync(
