@@ -2,9 +2,9 @@
 
 namespace Plutonication
 {
-    public class ConnectionExpetion : Exception
+    public class PlutonicationConnectionException : Exception
     {
-        public ConnectionExpetion()
+        public PlutonicationConnectionException()
         {
 
         }
