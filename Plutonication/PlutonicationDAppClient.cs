@@ -21,9 +21,11 @@ namespace Plutonication
             var client = new SocketIO(ac.Url);
 
             // Wait for the dApp socket client to connect.
-            await client.ConnectAsync();
-
-            if (!client.Connected)
+            try
+            {
+                await client.ConnectAsync();
+            }
+            catch (SocketIOClient.ConnectionException)
             {
                 throw new PlutonicationConnectionException();
             }

@@ -28,6 +28,7 @@ namespace Plutonication
         /// <param name="signPayload">Callback function to handle payload signing.</param>
         /// <param name="signRaw">Callback function to handle raw message signing.</param>
         /// <returns></returns>
+        /// <exception cref="PlutonicationConnectionException">Error when unable to establish connection with the websocket server provided in the access credentials.</exception>
         /// <exception cref="WrongMessageReceivedException">Error when receiving a wrong message from the Plutonication server.</exception>
 		public static async Task InitializeAsync(
             AccessCredentials ac,
@@ -117,7 +118,14 @@ namespace Plutonication
                 Task signRawTask = signRaw.Invoke(rawMessages[0]);
             });
 
-            await client.ConnectAsync();
+            try
+            {
+                await client.ConnectAsync();
+            }
+            catch (SocketIOClient.ConnectionException)
+            {
+                throw new PlutonicationConnectionException();
+            }
 
             await SendPublicKeyAsync(pubkey);
         }
