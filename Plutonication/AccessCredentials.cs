@@ -15,11 +15,14 @@ namespace Plutonication
         public string Key { get; set; } = GenerateKey();
         public string? Name { get; set; } // optional
         public string? Icon { get; set; } // optional
+        public string? PlutoLayout { get; set; } // optional
+
 
         private const string QUERY_PARAM_URL = "url";
         private const string QUERY_PARAM_KEY = "key";
         private const string QUERY_PARAM_NAME = "name";
         private const string QUERY_PARAM_ICON = "icon";
+        private const string QUERY_PARAM_PLUTO_LAYOUT = "plutolayout";
         
         public AccessCredentials(Uri uri)
         {
@@ -37,6 +40,8 @@ namespace Plutonication
             Name ??= queryParams[QUERY_PARAM_NAME];
 
             Icon ??= queryParams[QUERY_PARAM_ICON];
+
+            PlutoLayout ??= queryParams[QUERY_PARAM_PLUTO_LAYOUT];
 
             Exception InvalidUrlParam(string nameOfParam)
             {
@@ -85,6 +90,10 @@ namespace Plutonication
             {
                 link += "&icon=" + Uri.EscapeDataString(Icon);
             }
+            if (PlutoLayout != null)
+            {
+                link += "&plutolayout=" + Uri.EscapeDataString(PlutoLayout);
+            }
 
             return new Uri(link);
         }
@@ -114,6 +123,10 @@ namespace Plutonication
             if (Icon != null)
             {
                 link += "&icon=" + Icon;
+            }
+            if (PlutoLayout != null)
+            {
+                link += "&plutolayout=" + PlutoLayout;
             }
 
             return Uri.EscapeDataString(link);
