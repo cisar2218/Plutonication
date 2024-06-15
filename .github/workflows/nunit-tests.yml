@@ -1,4 +1,4 @@
-name: NuGet publish
+name: NUnit tests
 
 on:
   push:
@@ -17,20 +17,18 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 7.*.*
+        
+    - name: Change directory
+      run: cd PlutonicationTests
+
     - name: Install dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+      
+    - name: NUnit tests
+      run: dotnet test PlutonicationTests.csproj
 
     - name: Display build error
       if: failure()
       run: |
         echo "Build failed with exit code: ${{ steps.build.outputs.exit-code }}"
         echo "Check the logs for more information."
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Publish Nuget Package
-      uses: brandedoutcast/publish-nuget@v2.5.2  
-      with:
-       PROJECT_FILE_PATH: Plutonication/Plutonication.csproj
-       NUGET_KEY: ${{secrets.NUGET_API_KEY}} 

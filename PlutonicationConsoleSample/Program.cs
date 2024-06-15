@@ -1,8 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Plutonication;
-using Substrate.NET.Wallet;
+﻿using Plutonication;
 using Substrate.NetApi;
-using Substrate.NetApi.Generated;
 using Substrate.NetApi.Generated.Model.sp_core.crypto;
 using Substrate.NetApi.Generated.Model.sp_runtime.multiaddress;
 using Substrate.NetApi.Generated.Storage;

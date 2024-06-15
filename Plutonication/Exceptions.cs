@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Plutonication
+﻿namespace Plutonication
 {
     public class PlutonicationConnectionException : Exception
     {

@@ -4,7 +4,6 @@ using Substrate.NetApi;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Primitive;
-using System;
 
 namespace Plutonication
 {
@@ -88,7 +87,7 @@ namespace Plutonication
 
             return await signature.Task;
         }
-        
+
         public override async Task<byte[]> SignPayloadAsync(Substrate.NetApi.Model.Extrinsics.Payload payload)
         {
             if (!client.Connected)

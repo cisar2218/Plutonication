@@ -1,16 +1,11 @@
-﻿using System.Globalization;
-using System.Reflection;
-using System.Security.Principal;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
 using SocketIOClient;
-using SocketIOClient.Transport;
 using Substrate.NetApi;
 using Substrate.NetApi.Model.Extrinsics;
 using Substrate.NetApi.Model.Rpc;
 using Substrate.NetApi.Model.Types;
 using Substrate.NetApi.Model.Types.Base;
-using System;
+using System.Globalization;
 
 namespace Plutonication
 {
@@ -27,14 +22,28 @@ namespace Plutonication
         /// <param name="pubkey">The public key associated with the wallet.</param>
         /// <param name="signPayload">Callback function to handle payload signing.</param>
         /// <param name="signRaw">Callback function to handle raw message signing.</param>
+        /// <param name="onDisconnected">Callback function to handle the disconnection from the Plutonication Server.</param>
+        /// <param name="onReconnectAttempt">Callback function to handle the reconnection attempt to the Plutonication Server.</param>
+        /// <param name="onReconnected">Callback function to handle the reconnection to the Plutonication Server.</param>
+        /// <param name="onReconnectFailed">Callback function to handle the reconnect failed to the Plutonication Server.</param>
+        /// <param name="onConfirmDAppConnection">Callback function to handle the confirmation of the dApp connection to the Plutonication Server.</param>
+        /// <param name="onDAppDisconnected">Callback function to handle the disconnection of the respective dApp.</param>
         /// <returns></returns>
         /// <exception cref="PlutonicationConnectionException">Error when unable to establish connection with the websocket server provided in the access credentials.</exception>
         /// <exception cref="WrongMessageReceivedException">Error when receiving a wrong message from the Plutonication server.</exception>
-		public static async Task InitializeAsync(
+        public static async Task InitializeAsync(
             AccessCredentials ac,
             string pubkey,
             Func<UnCheckedExtrinsic, RuntimeVersion, Task> signPayload,
-            Func<RawMessage, Task> signRaw)
+            Func<RawMessage, Task> signRaw,
+            EventHandler? onConnected = null,
+            EventHandler<string>? onDisconnected = null,
+            EventHandler<int>? onReconnectAttempt = null,
+            EventHandler<int>? onReconnected = null,
+            EventHandler? onReconnectFailed = null,
+            Action? onConfirmDAppConnection = null,
+            Action? onDAppDisconnected = null
+        )
         {
             roomKey = ac.Key;
             client = new SocketIO(ac.Url);
@@ -118,6 +127,36 @@ namespace Plutonication
                 Task signRawTask = signRaw.Invoke(rawMessages[0]);
             });
 
+            // Handle the scenario where dApp connects after the Wallet.
+            client.On("dapp_connected", _ =>
+            {
+                Task sendPublicKeyTask = SendPublicKeyAsync(pubkey);
+            });
+
+            // Confirm dApp connection
+            client.On("confirm_dapp_connection", _ =>
+            {
+                onConfirmDAppConnection?.Invoke();
+            });
+
+            //  Handle the dApp disconnection
+            client.On("disconnect", _ =>
+            {
+                onDAppDisconnected?.Invoke();
+            });
+
+            // Handle client connection
+            client.OnConnected += onConnected;
+            client.OnDisconnected += onDisconnected;
+            client.OnReconnectAttempt += onReconnectAttempt;
+            client.OnReconnected += onReconnected;
+            client.OnReconnected += (object sender, int _) =>
+            {
+                Task sendPublicKeyTask = SendPublicKeyAsync(pubkey);
+            };
+            client.OnReconnectFailed += onReconnectFailed;
+
+            // Connect to WebSocket
             try
             {
                 await client.ConnectAsync();
@@ -145,7 +184,7 @@ namespace Plutonication
             }
 
             await client.EmitAsync(
-                "pubkey",
+                "connect_wallet",
                 new PlutonicationMessage { Data = pubkey, Room = roomKey });
         }
 

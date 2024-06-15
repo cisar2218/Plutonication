@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>2.3.6</Version>
+    <Version>2.4.0</Version>
     <Authors>Dusan Jansky, Rostislav Litovkin</Authors>
     <Product>Plutonication</Product>
   </PropertyGroup>
@@ -19,6 +19,6 @@
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
     <PackageReference Include="SocketIOClient" Version="3.0.8" />
-    <PackageReference Include="Substrate.NET.API" Version="0.9.17" />
+    <PackageReference Include="Substrate.NET.API" Version="0.9.21" />
   </ItemGroup>
 </Project>

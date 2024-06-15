@@ -1,13 +1,8 @@
-﻿using System;
-using Chaos.NaCl;
-using Newtonsoft.Json;
-using Plutonication;
-using SocketIOClient.Transport;
+﻿using Plutonication;
 using Substrate.NET.Wallet;
 using Substrate.NET.Wallet.Keyring;
 using Substrate.NetApi;
 using Substrate.NetApi.Generated.Model.sp_core.crypto;
-using Substrate.NetApi.Generated.Model.sp_runtime.generic.unchecked_extrinsic;
 using Substrate.NetApi.Generated.Model.sp_runtime.multiaddress;
 using Substrate.NetApi.Generated.Storage;
 using Substrate.NetApi.Model.Extrinsics;
@@ -46,7 +41,8 @@ public class Plutonication
     }
 
     [SetUp]
-    public async Task SetupAsync() {
+    public async Task SetupAsync()
+    {
         substrateClient = new SubstrateClient(
             // Randomly chosen chain.
             // I generated the SubstrateClientExt according to this guide:
@@ -83,6 +79,8 @@ public class Plutonication
 
         Account automatedTestsAccount = GetAccount();
 
+        bool connectionConfirmed = false;
+
         await Task.WhenAll(
             Task.Run(async () =>
             {
@@ -101,7 +99,8 @@ public class Plutonication
                     automatedTestsAccount.Value,
 
                     // Payload signing logic
-                    async (unCheckedExtrinsic, runtime) => {
+                    async (unCheckedExtrinsic, runtime) =>
+                    {
                         //
                         // You can use the unCheckedExtrinsic and runtime to showcase the
                         // info about the transaction to the user before signing it.
@@ -128,7 +127,139 @@ public class Plutonication
                     },
 
                     // Raw message signing logic
-                    async (raw) => {
+                    async (raw) =>
+                    {
+                        //
+                        // You can use the raw to show the message to the user before signing it.
+                        //
+
+                        if (raw.type != "bytes")
+                        {
+                            // Unsupported
+                            return;
+                        }
+
+                        byte[] rawMessageBytes = Utils.HexToByteArray(raw.data);
+
+                        var signerResult = new SignerResult
+                        {
+                            // Id of the signature
+                            id = 1,
+                            signature = Utils.Bytes2HexString(
+                                await automatedTestsAccount.SignAsync(rawMessageBytes)
+                            ).ToLower(),
+                        };
+
+                        await PlutonicationWalletClient.SendRawSignatureAsync(signerResult);
+                    },
+
+                    onConfirmDAppConnection: () =>
+                    {
+                        Console.WriteLine("dApp connection confirmed");
+
+                        connectionConfirmed = true;
+                    }
+                );
+            })
+        );
+
+        Assert.That(account.Value == automatedTestsAccount.Value);
+
+        var destinationAccountId = new AccountId32();
+        destinationAccountId.Create(Utils.GetPublicKeyFrom("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"));
+
+        var destinationMultiAddress = new EnumMultiAddress();
+        destinationMultiAddress.Create(0, destinationAccountId);
+
+        var amount = new BaseCom<U128>(1000000000000); // This is equivalent to 1 TZERO token (10^12 planks)
+
+        // Building the transfer Method
+        Method transfer = BalancesCalls.TransferAllowDeath(destinationMultiAddress, amount);
+
+        // Make a Balances.Transfer call
+        await substrateClient.Author.SubmitExtrinsicAsync(
+            transfer,
+            account, // Request a signature from this account
+            ChargeTransactionPayment.Default(), // No tip
+            64, // Lifetime. For details, refer to: https://polkadot.js.org/docs/api/FAQ/#how-long-do-transactions-live
+            CancellationToken.None);
+
+        // Wait 1 second
+        await Task.Delay(1000);
+
+        byte[] message = new byte[] { 1, 2, 3 };
+
+        byte[] signature = await account.SignAsync(message);
+
+        Assert.That(await account.VerifyAsync(signature, account.Bytes, message));
+
+        Assert.That(connectionConfirmed);
+    }
+
+    [Test]
+    public async Task WalletDisconnectionAsync()
+    {
+        Account account = new Account();
+
+        Account automatedTestsAccount = GetAccount();
+
+        var disconnected = new TaskCompletionSource<bool>();
+
+        await Task.WhenAll(
+            Task.Run(async () =>
+            {
+                account = await PlutonicationDAppClient.InitializeAsync(
+                    ac,
+                    (string _) => { },
+                    onWalletDisconnected: () =>
+                    {
+                        disconnected.SetResult(true);
+                    }
+                );
+            }),
+            Task.Run(async () =>
+            {
+                // Wait 3 seconds so that the PlutonicationDAppClient has got enough time to connect
+                await Task.Delay(3000);
+
+                await PlutonicationWalletClient.InitializeAsync(
+                    // Your Access Credentials
+                    ac,
+
+                    // Account public address
+                    automatedTestsAccount.Value,
+
+                    // Payload signing logic
+                    async (unCheckedExtrinsic, runtime) =>
+                    {
+                        //
+                        // You can use the unCheckedExtrinsic and runtime to showcase the
+                        // info about the transaction to the user before signing it.
+                        //
+
+                        // Get the Extrinsic Payload and sign it
+                        Substrate.NetApi.Model.Extrinsics.Payload payload = unCheckedExtrinsic.GetPayload(runtime);
+                        unCheckedExtrinsic.AddPayloadSignature(await automatedTestsAccount.SignPayloadAsync(payload));
+
+                        var signerResult = new SignerResult
+                        {
+                            // Id of the signature
+                            id = 1,
+                            signature = Utils.Bytes2HexString(
+                                // This 1 means the signature is using Sr25519
+                                new byte[1] { 1 }
+                                // The signature
+                                .Concat(unCheckedExtrinsic.Signature).ToArray()
+                            ).ToLower(),
+                        };
+
+                        // Send the payload signature to the dApp.
+                        await PlutonicationWalletClient.SendPayloadSignatureAsync(signerResult);
+                    },
+
+                    // Raw message signing logic
+                    async (raw) =>
+                    {
                         //
                         // You can use the raw to show the message to the user before signing it.
                         //
@@ -158,33 +289,107 @@ public class Plutonication
 
         Assert.That(account.Value == automatedTestsAccount.Value);
 
-        var destinationAccountId = new AccountId32();
-        destinationAccountId.Create(Utils.GetPublicKeyFrom("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"));
+        await PlutonicationWalletClient.DisconnectAsync();
 
-        var destinationMultiAddress = new EnumMultiAddress();
-        destinationMultiAddress.Create(0, destinationAccountId);
+        Assert.That(await disconnected.Task);
+    }
 
-        var amount = new BaseCom<U128>(1000000000000); // This is equivalent to 1 TZERO token (10^12 planks)
+    [Test]
+    public async Task DAppDisconnectionAsync()
+    {
+        Account account = new Account();
 
-        // Building the transfer Method
-        Method transfer = BalancesCalls.TransferAllowDeath(destinationMultiAddress, amount);
+        Account automatedTestsAccount = GetAccount();
 
-        // Make a Balances.Transfer call
-        await substrateClient.Author.SubmitExtrinsicAsync(
-            transfer,
-            account, // Request a signature from this account
-            ChargeTransactionPayment.Default(), // No tip
-            64, // Lifetime. For details, refer to: https://polkadot.js.org/docs/api/FAQ/#how-long-do-transactions-live
-            CancellationToken.None);
+        var disconnected = new TaskCompletionSource<bool>();
 
+        await Task.WhenAll(
+            Task.Run(async () =>
+            {
+                account = await PlutonicationDAppClient.InitializeAsync(
+                    ac,
+                    (string _) => { }
+                );
+            }),
+            Task.Run(async () =>
+            {
+                // Wait 3 seconds so that the PlutonicationDAppClient has got enough time to connect
+                await Task.Delay(3000);
 
-        // Wait 1 second
-        await Task.Delay(1000);
+                await PlutonicationWalletClient.InitializeAsync(
+                    // Your Access Credentials
+                    ac,
 
-        byte[] message = new byte[] { 1, 2, 3 };
+                    // Account public address
+                    automatedTestsAccount.Value,
 
-        byte[] signature = await account.SignAsync(message);
+                    // Payload signing logic
+                    async (unCheckedExtrinsic, runtime) =>
+                    {
+                        //
+                        // You can use the unCheckedExtrinsic and runtime to showcase the
+                        // info about the transaction to the user before signing it.
+                        //
 
-        Assert.That(await account.VerifyAsync(signature, account.Bytes, message));
+                        // Get the Extrinsic Payload and sign it
+                        Substrate.NetApi.Model.Extrinsics.Payload payload = unCheckedExtrinsic.GetPayload(runtime);
+                        unCheckedExtrinsic.AddPayloadSignature(await automatedTestsAccount.SignPayloadAsync(payload));
+
+                        var signerResult = new SignerResult
+                        {
+                            // Id of the signature
+                            id = 1,
+                            signature = Utils.Bytes2HexString(
+                                // This 1 means the signature is using Sr25519
+                                new byte[1] { 1 }
+                                // The signature
+                                .Concat(unCheckedExtrinsic.Signature).ToArray()
+                            ).ToLower(),
+                        };
+
+                        // Send the payload signature to the dApp.
+                        await PlutonicationWalletClient.SendPayloadSignatureAsync(signerResult);
+                    },
+
+                    // Raw message signing logic
+                    async (raw) =>
+                    {
+                        //
+                        // You can use the raw to show the message to the user before signing it.
+                        //
+
+                        if (raw.type != "bytes")
+                        {
+                            // Unsupported
+                            return;
+                        }
+
+                        byte[] rawMessageBytes = Utils.HexToByteArray(raw.data);
+
+                        var signerResult = new SignerResult
+                        {
+                            // Id of the signature
+                            id = 1,
+                            signature = Utils.Bytes2HexString(
+                                await automatedTestsAccount.SignAsync(rawMessageBytes)
+                            ).ToLower(),
+                        };
+
+                        await PlutonicationWalletClient.SendRawSignatureAsync(signerResult);
+                    },
+
+                    onDAppDisconnected: () =>
+                    {
+                        disconnected.SetResult(true);
+                    }
+                );
+            })
+        );
+
+        Assert.That(account.Value == automatedTestsAccount.Value);
+
+        await ((PlutonicationAccount)account).DisconnectAsync();
+
+        Assert.That(await disconnected.Task);
     }
 }
