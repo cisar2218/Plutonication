@@ -59,7 +59,8 @@ namespace Plutonication
 
                 if (pubkey is null || !pubkey.Any())
                 {
-                    throw new WrongMessageReceivedException();
+                    // Wrong message received
+                    return;
                 }
 
                 Task confirmDAppConnection = client.EmitAsync(

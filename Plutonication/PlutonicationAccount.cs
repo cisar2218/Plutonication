@@ -140,6 +140,22 @@ namespace Plutonication
         }
 
         /// <summary>
+        /// Equivalent of https://github.com/polkadot-js/api/blob/23586f9849d882e057f4d446184eb32e0b5f84c8/packages/types/src/types/extrinsic.ts#L182
+        /// </summary>
+        /// <param name="update">Status of the signed extrinsic</param>
+        /// <returns></returns>
+        public async Task UpdateAsync(Update update)
+        {
+            await client.EmitAsync(
+                "update",
+                new PlutonicationMessage
+                {
+                    Data = update,
+                    Room = roomKey
+                });
+        }
+
+        /// <summary>
         /// Disconnects from the Plutonication server.
         /// </summary>
         /// <returns></returns>

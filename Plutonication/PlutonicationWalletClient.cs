@@ -22,6 +22,8 @@ namespace Plutonication
         /// <param name="pubkey">The public key associated with the wallet.</param>
         /// <param name="signPayload">Callback function to handle payload signing.</param>
         /// <param name="signRaw">Callback function to handle raw message signing.</param>
+        /// <param name="update">Callback function to handle extrinsic updates</param>
+        /// <param name="onConnected">Callback function to handle the successful Connection to the Plutonication Server.</param>
         /// <param name="onDisconnected">Callback function to handle the disconnection from the Plutonication Server.</param>
         /// <param name="onReconnectAttempt">Callback function to handle the reconnection attempt to the Plutonication Server.</param>
         /// <param name="onReconnected">Callback function to handle the reconnection to the Plutonication Server.</param>
@@ -30,12 +32,12 @@ namespace Plutonication
         /// <param name="onDAppDisconnected">Callback function to handle the disconnection of the respective dApp.</param>
         /// <returns></returns>
         /// <exception cref="PlutonicationConnectionException">Error when unable to establish connection with the websocket server provided in the access credentials.</exception>
-        /// <exception cref="WrongMessageReceivedException">Error when receiving a wrong message from the Plutonication server.</exception>
         public static async Task InitializeAsync(
             AccessCredentials ac,
             string pubkey,
             Func<UnCheckedExtrinsic, RuntimeVersion, Task> signPayload,
             Func<RawMessage, Task> signRaw,
+            Action<Update>? update = null,
             EventHandler? onConnected = null,
             EventHandler<string>? onDisconnected = null,
             EventHandler<int>? onReconnectAttempt = null,
@@ -63,7 +65,7 @@ namespace Plutonication
                     payload.transactionVersion is null || payload.nonce is null)
                 {
                     throw new WrongMessageReceivedException();
-                }
+                }                
 
                 byte[] methodBytes = Utils.HexToByteArray(payload.method);
 
@@ -121,10 +123,24 @@ namespace Plutonication
 
                 if (rawMessages is null || !rawMessages.Any())
                 {
-                    throw new WrongMessageReceivedException();
+                    // Wrong message received
+                    return;
                 }
 
                 Task signRawTask = signRaw.Invoke(rawMessages[0]);
+            });
+
+            client.On("update", receivedUpdate =>
+            {
+                Update[]? receivedUpdates = JsonConvert.DeserializeObject<Update[]>(receivedUpdate.ToString());
+
+                if (receivedUpdates is null || !receivedUpdates.Any())
+                {
+                    // Wrong message received
+                    return;
+                }
+
+                update?.Invoke(receivedUpdates[0]);
             });
 
             // Handle the scenario where dApp connects after the Wallet.
@@ -139,7 +155,7 @@ namespace Plutonication
                 onConfirmDAppConnection?.Invoke();
             });
 
-            //  Handle the dApp disconnection
+            // Handle the dApp disconnection
             client.On("disconnect", _ =>
             {
                 onDAppDisconnected?.Invoke();
@@ -171,7 +187,7 @@ namespace Plutonication
 
         /// <summary>
         /// Helper method used to send the public key to the dApp.
-        /// Important at initialisation.
+        /// Important at initialization.
         /// </summary>
         /// <param name="pubkey"></param>
         /// <returns></returns>
@@ -260,4 +276,3 @@ namespace Plutonication
         }
     }
 }
-
