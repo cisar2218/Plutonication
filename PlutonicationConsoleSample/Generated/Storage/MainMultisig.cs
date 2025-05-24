@@ -65,10 +65,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Multisigs
         ///  The set of open multisig operations.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_multisig.Multisig> Multisigs(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Types.Base.Arr32U8> key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_multisig.Multisig> Multisigs(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Types.Base.Arr32U8> key, string blockhash, CancellationToken token)
         {
             string parameters = MultisigStorage.MultisigsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_multisig.Multisig>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_multisig.Multisig>(parameters, blockhash, token);
             return result;
         }
     }

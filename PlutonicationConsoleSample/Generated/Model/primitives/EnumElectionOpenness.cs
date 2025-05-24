@@ -33,7 +33,7 @@ namespace Substrate.NetApi.Generated.Model.primitives
     }
     
     /// <summary>
-    /// >> 130 - Variant[primitives.ElectionOpenness]
+    /// >> 154 - Variant[primitives.ElectionOpenness]
     /// </summary>
     public sealed class EnumElectionOpenness : BaseEnum<ElectionOpenness>
     {

@@ -33,7 +33,7 @@ namespace Substrate.NetApi.Generated.Model.frame_support.traits.tokens.misc
     }
     
     /// <summary>
-    /// >> 36 - Variant[frame_support.traits.tokens.misc.BalanceStatus]
+    /// >> 37 - Variant[frame_support.traits.tokens.misc.BalanceStatus]
     /// </summary>
     public sealed class EnumBalanceStatus : BaseEnum<BalanceStatus>
     {

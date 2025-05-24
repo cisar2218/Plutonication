@@ -61,10 +61,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Key
         ///  The `AccountId` of the sudo key.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32> Key(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32> Key(string blockhash, CancellationToken token)
         {
             string parameters = SudoStorage.KeyParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(parameters, blockhash, token);
             return result;
         }
     }
@@ -120,6 +120,16 @@ namespace Substrate.NetApi.Generated.Storage
             byteArray.AddRange(call.Encode());
             return new Method(17, "Sudo", 3, "sudo_as", byteArray.ToArray());
         }
+        
+        /// <summary>
+        /// >> remove_key
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method RemoveKey()
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            return new Method(17, "Sudo", 4, "remove_key", byteArray.ToArray());
+        }
     }
     
     /// <summary>
@@ -137,7 +147,7 @@ namespace Substrate.NetApi.Generated.Storage
         
         /// <summary>
         /// >> RequireSudo
-        /// Sender must be the Sudo account
+        /// Sender must be the Sudo account.
         /// </summary>
         RequireSudo,
     }

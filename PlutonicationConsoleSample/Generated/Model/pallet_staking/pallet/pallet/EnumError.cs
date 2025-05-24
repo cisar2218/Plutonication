@@ -115,70 +115,82 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking.pallet.pallet
         AlreadyClaimed = 14,
         
         /// <summary>
+        /// >> InvalidPage
+        /// No nominators exist on this page.
+        /// </summary>
+        InvalidPage = 15,
+        
+        /// <summary>
         /// >> IncorrectHistoryDepth
         /// Incorrect previous history depth input provided.
         /// </summary>
-        IncorrectHistoryDepth = 15,
+        IncorrectHistoryDepth = 16,
         
         /// <summary>
         /// >> IncorrectSlashingSpans
         /// Incorrect number of slashing spans provided.
         /// </summary>
-        IncorrectSlashingSpans = 16,
+        IncorrectSlashingSpans = 17,
         
         /// <summary>
         /// >> BadState
         /// Internal state has become somehow corrupted and the operation cannot continue.
         /// </summary>
-        BadState = 17,
+        BadState = 18,
         
         /// <summary>
         /// >> TooManyTargets
         /// Too many nomination targets supplied.
         /// </summary>
-        TooManyTargets = 18,
+        TooManyTargets = 19,
         
         /// <summary>
         /// >> BadTarget
         /// A nomination target was supplied that was blocked or otherwise not a validator.
         /// </summary>
-        BadTarget = 19,
+        BadTarget = 20,
         
         /// <summary>
         /// >> CannotChillOther
         /// The user has enough bond and thus cannot be chilled forcefully by an external person.
         /// </summary>
-        CannotChillOther = 20,
+        CannotChillOther = 21,
         
         /// <summary>
         /// >> TooManyNominators
         /// There are too many nominators in the system. Governance needs to adjust the staking
         /// settings to keep things safe for the runtime.
         /// </summary>
-        TooManyNominators = 21,
+        TooManyNominators = 22,
         
         /// <summary>
         /// >> TooManyValidators
         /// There are too many validator candidates in the system. Governance needs to adjust the
         /// staking settings to keep things safe for the runtime.
         /// </summary>
-        TooManyValidators = 22,
+        TooManyValidators = 23,
         
         /// <summary>
         /// >> CommissionTooLow
         /// Commission is too low. Must be at least `MinCommission`.
         /// </summary>
-        CommissionTooLow = 23,
+        CommissionTooLow = 24,
         
         /// <summary>
         /// >> BoundNotMet
         /// Some bound is not met.
         /// </summary>
-        BoundNotMet = 24,
+        BoundNotMet = 25,
+        
+        /// <summary>
+        /// >> ControllerDeprecated
+        /// Used when attempting to use deprecated controller account logic.
+        /// </summary>
+        ControllerDeprecated = 26,
     }
     
     /// <summary>
-    /// >> 245 - Variant[pallet_staking.pallet.pallet.Error]
+    /// >> 285 - Variant[pallet_staking.pallet.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

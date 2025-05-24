@@ -86,13 +86,42 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.pallet
         /// rolled back.
         /// </summary>
         DelegateCalled = 7,
+        
+        /// <summary>
+        /// >> StorageDepositTransferredAndHeld
+        /// Some funds have been transferred and held as storage deposit.
+        /// </summary>
+        StorageDepositTransferredAndHeld = 8,
+        
+        /// <summary>
+        /// >> StorageDepositTransferredAndReleased
+        /// Some storage deposit funds have been transferred and released.
+        /// </summary>
+        StorageDepositTransferredAndReleased = 9,
     }
     
     /// <summary>
-    /// >> 59 - Variant[pallet_contracts.pallet.Event]
+    /// >> 60 - Variant[pallet_contracts.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>, Substrate.NetApi.Generated.Model.primitive_types.H256, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, Substrate.NetApi.Generated.Model.primitive_types.H256, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.primitive_types.H256, Substrate.NetApi.Generated.Model.primitive_types.H256>, BaseTuple<Substrate.NetApi.Generated.Model.pallet_contracts.EnumOrigin, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.primitive_types.H256>>
+    public sealed class EnumEvent : BaseEnumRust<Event>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumEvent()
+        {
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.Instantiated);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.Terminated);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.primitive_types.H256, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.CodeStored);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>>(Event.ContractEmitted);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.primitive_types.H256, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.CodeRemoved);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.primitive_types.H256, Substrate.NetApi.Generated.Model.primitive_types.H256>>(Event.ContractCodeUpdated);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.pallet_contracts.EnumOrigin, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.Called);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.primitive_types.H256>>(Event.DelegateCalled);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.StorageDepositTransferredAndHeld);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.StorageDepositTransferredAndReleased);
+        }
     }
 }

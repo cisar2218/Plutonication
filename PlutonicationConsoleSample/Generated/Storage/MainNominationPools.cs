@@ -36,6 +36,7 @@ namespace Substrate.NetApi.Generated.Storage
         public NominationPoolsStorage(SubstrateClientExt client)
         {
             this._client = client;
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "TotalValueLocked"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "MinJoinBond"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "MinCreateBond"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "MaxPools"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
@@ -55,7 +56,7 @@ namespace Substrate.NetApi.Generated.Storage
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.pallet_nomination_pools.SubPools)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "CounterForSubPoolsStorage"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "Metadata"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT18)));
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "CounterForMetadata"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "LastPoolId"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "ReversePoolIdLookup"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
@@ -63,6 +64,43 @@ namespace Substrate.NetApi.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "CounterForReversePoolIdLookup"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("NominationPools", "ClaimPermissions"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumClaimPermission)));
+        }
+        
+        /// <summary>
+        /// >> TotalValueLockedParams
+        ///  The sum of funds across all pools.
+        /// 
+        ///  This might be lower but never higher than the sum of `total_balance` of all [`PoolMembers`]
+        ///  because calling `pool_withdraw_unbonded` might decrease the total stake of the pool's
+        ///  `bonded_account` without adjusting the pallet-internal `UnbondingPool`'s.
+        /// </summary>
+        public static string TotalValueLockedParams()
+        {
+            return RequestGenerator.GetStorage("NominationPools", "TotalValueLocked", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> TotalValueLockedDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string TotalValueLockedDefault()
+        {
+            return "0x00000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> TotalValueLocked
+        ///  The sum of funds across all pools.
+        /// 
+        ///  This might be lower but never higher than the sum of `total_balance` of all [`PoolMembers`]
+        ///  because calling `pool_withdraw_unbonded` might decrease the total stake of the pool's
+        ///  `bonded_account` without adjusting the pallet-internal `UnbondingPool`'s.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> TotalValueLocked(string blockhash, CancellationToken token)
+        {
+            string parameters = NominationPoolsStorage.TotalValueLockedParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
+            return result;
         }
         
         /// <summary>
@@ -87,10 +125,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> MinJoinBond
         ///  Minimum amount to bond to join a pool.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> MinJoinBond(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> MinJoinBond(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.MinJoinBondParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
             return result;
         }
         
@@ -128,10 +166,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  This is the value that will always exist in the staking ledger of the pool bonded account
         ///  while all other accounts leave.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> MinCreateBond(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> MinCreateBond(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.MinCreateBondParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
             return result;
         }
         
@@ -159,10 +197,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Maximum number of nomination pools that can exist. If `None`, then an unbounded number of
         ///  pools can exist.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaxPools(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaxPools(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.MaxPoolsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -190,10 +228,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Maximum number of members that can exist in the system. If `None`, then the count
         ///  members are not bound on a system wide basis.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaxPoolMembers(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaxPoolMembers(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.MaxPoolMembersParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -221,10 +259,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Maximum number of members that may belong to pool. If `None`, then the count of
         ///  members is not bound on a per pool basis.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaxPoolMembersPerPool(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaxPoolMembersPerPool(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.MaxPoolMembersPerPoolParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -254,10 +292,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  pool commissions that are > `GlobalMaxCommission`, necessary if a future
         ///  `GlobalMaxCommission` is lower than some current pool commissions.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill> GlobalMaxCommission(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill> GlobalMaxCommission(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.GlobalMaxCommissionParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill>(parameters, blockhash, token);
             return result;
         }
         
@@ -289,10 +327,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// 
         ///  TWOX-NOTE: SAFE since `AccountId` is a secure hash.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.PoolMember> PoolMembers(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.PoolMember> PoolMembers(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.PoolMembersParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.PoolMember>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.PoolMember>(parameters, blockhash, token);
             return result;
         }
         
@@ -318,10 +356,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CounterForPoolMembers
         /// Counter for the related counted storage map
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForPoolMembers(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForPoolMembers(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.CounterForPoolMembersParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -349,10 +387,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> BondedPools
         ///  Storage for bonded pools.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.BondedPoolInner> BondedPools(Substrate.NetApi.Model.Types.Primitive.U32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.BondedPoolInner> BondedPools(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.BondedPoolsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.BondedPoolInner>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.BondedPoolInner>(parameters, blockhash, token);
             return result;
         }
         
@@ -378,10 +416,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CounterForBondedPools
         /// Counter for the related counted storage map
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForBondedPools(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForBondedPools(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.CounterForBondedPoolsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -411,10 +449,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Reward pools. This is where there rewards for each pool accumulate. When a members payout is
         ///  claimed, the balance comes out fo the reward pool. Keyed by the bonded pools account.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.RewardPool> RewardPools(Substrate.NetApi.Model.Types.Primitive.U32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.RewardPool> RewardPools(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.RewardPoolsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.RewardPool>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.RewardPool>(parameters, blockhash, token);
             return result;
         }
         
@@ -440,10 +478,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CounterForRewardPools
         /// Counter for the related counted storage map
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForRewardPools(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForRewardPools(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.CounterForRewardPoolsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -473,10 +511,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Groups of unbonding pools. Each group of unbonding pools belongs to a
         ///  bonded pool, hence the name sub-pools. Keyed by the bonded pools account.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.SubPools> SubPoolsStorage(Substrate.NetApi.Model.Types.Primitive.U32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.SubPools> SubPoolsStorage(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.SubPoolsStorageParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.SubPools>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.SubPools>(parameters, blockhash, token);
             return result;
         }
         
@@ -502,10 +540,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CounterForSubPoolsStorage
         /// Counter for the related counted storage map
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForSubPoolsStorage(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForSubPoolsStorage(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.CounterForSubPoolsStorageParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -533,10 +571,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Metadata
         ///  Metadata for the pool.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT18> Metadata(Substrate.NetApi.Model.Types.Primitive.U32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3> Metadata(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.MetadataParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT18>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -562,10 +600,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CounterForMetadata
         /// Counter for the related counted storage map
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForMetadata(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForMetadata(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.CounterForMetadataParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -591,10 +629,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> LastPoolId
         ///  Ever increasing number of all pools created so far.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> LastPoolId(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> LastPoolId(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.LastPoolIdParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -628,10 +666,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  This is only used for slashing. In all other instances, the pool id is used, and the
         ///  accounts are deterministically derived from it.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> ReversePoolIdLookup(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> ReversePoolIdLookup(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.ReversePoolIdLookupParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -657,10 +695,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CounterForReversePoolIdLookup
         /// Counter for the related counted storage map
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForReversePoolIdLookup(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CounterForReversePoolIdLookup(string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.CounterForReversePoolIdLookupParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -688,10 +726,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> ClaimPermissions
         ///  Map from a pool member account to their opted claim permission.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumClaimPermission> ClaimPermissions(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumClaimPermission> ClaimPermissions(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = NominationPoolsStorage.ClaimPermissionsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumClaimPermission>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumClaimPermission>(parameters, blockhash, token);
             return result;
         }
     }
@@ -957,6 +995,29 @@ namespace Substrate.NetApi.Generated.Storage
             byteArray.AddRange(pool_id.Encode());
             return new Method(19, "NominationPools", 20, "claim_commission", byteArray.ToArray());
         }
+        
+        /// <summary>
+        /// >> adjust_pool_deposit
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method AdjustPoolDeposit(Substrate.NetApi.Model.Types.Primitive.U32 pool_id)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(pool_id.Encode());
+            return new Method(19, "NominationPools", 21, "adjust_pool_deposit", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> set_commission_claim_permission
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method SetCommissionClaimPermission(Substrate.NetApi.Model.Types.Primitive.U32 pool_id, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumCommissionClaimPermission> permission)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(pool_id.Encode());
+            byteArray.AddRange(permission.Encode());
+            return new Method(19, "NominationPools", 22, "set_commission_claim_permission", byteArray.ToArray());
+        }
     }
     
     /// <summary>
@@ -995,6 +1056,17 @@ namespace Substrate.NetApi.Generated.Storage
         {
             var result = new Substrate.NetApi.Model.Types.Primitive.U8();
             result.Create("0x0A");
+            return result;
+        }
+        
+        /// <summary>
+        /// >> MaxUnbonding
+        ///  The maximum number of simultaneous unbonding chunks that can exist per member.
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.U32 MaxUnbonding()
+        {
+            var result = new Substrate.NetApi.Model.Types.Primitive.U32();
+            result.Create("0x08000000");
             return result;
         }
     }
@@ -1059,9 +1131,9 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> MinimumBondNotMet
         /// The amount does not meet the minimum bond to either join or create a pool.
         /// 
-        /// The depositor can never unbond to a value less than
-        /// `Pallet::depositor_min_bond`. The caller does not have nominating
-        /// permissions for the pool. Members can never unbond to a value below `MinJoinBond`.
+        /// The depositor can never unbond to a value less than `Pallet::depositor_min_bond`. The
+        /// caller does not have nominating permissions for the pool. Members can never unbond to a
+        /// value below `MinJoinBond`.
         /// </summary>
         MinimumBondNotMet,
         
@@ -1198,5 +1270,11 @@ namespace Substrate.NetApi.Generated.Storage
         /// Bonding extra is restricted to the exact pending reward amount.
         /// </summary>
         BondExtraRestricted,
+        
+        /// <summary>
+        /// >> NothingToAdjust
+        /// No imbalance in the ED deposit for the pool.
+        /// </summary>
+        NothingToAdjust,
     }
 }

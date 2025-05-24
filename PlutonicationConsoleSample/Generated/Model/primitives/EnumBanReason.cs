@@ -22,20 +22,35 @@ namespace Substrate.NetApi.Generated.Model.primitives
     {
         
         /// <summary>
-        /// >> InsufficientUptime
+        /// >> InsufficientProduction
         /// </summary>
-        InsufficientUptime = 0,
+        InsufficientProduction = 0,
+        
+        /// <summary>
+        /// >> InsufficientFinalization
+        /// </summary>
+        InsufficientFinalization = 1,
         
         /// <summary>
         /// >> OtherReason
         /// </summary>
-        OtherReason = 1,
+        OtherReason = 2,
     }
     
     /// <summary>
-    /// >> 73 - Variant[primitives.BanReason]
+    /// >> 79 - Variant[primitives.BanReason]
     /// </summary>
-    public sealed class EnumBanReason : BaseEnumExt<BanReason, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT1>
+    public sealed class EnumBanReason : BaseEnumRust<BanReason>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumBanReason()
+        {
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(BanReason.InsufficientProduction);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(BanReason.InsufficientFinalization);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT2>(BanReason.OtherReason);
+        }
     }
 }

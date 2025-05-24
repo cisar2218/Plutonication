@@ -36,6 +36,8 @@ namespace Substrate.NetApi.Generated.Storage
         public AlephStorage(SubstrateClientExt client)
         {
             this._client = client;
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "AzeroCap"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "ExponentialInflationHorizon"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "Authorities"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "NextAuthorities"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "NextFinalityCommittee"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>)));
@@ -44,6 +46,63 @@ namespace Substrate.NetApi.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "NextEmergencyFinalizer"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.primitives.app.Public)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "FinalityVersion"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "FinalityScheduledVersionChange"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.primitives.VersionChange)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "AbftScores"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.primitives.Score)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Aleph", "LastScoreNonce"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+        }
+        
+        /// <summary>
+        /// >> AzeroCapParams
+        /// </summary>
+        public static string AzeroCapParams()
+        {
+            return RequestGenerator.GetStorage("Aleph", "AzeroCap", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> AzeroCapDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string AzeroCapDefault()
+        {
+            return "0x00002003EC1C73301C00000000000000";
+        }
+        
+        /// <summary>
+        /// >> AzeroCap
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> AzeroCap(string blockhash, CancellationToken token)
+        {
+            string parameters = AlephStorage.AzeroCapParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ExponentialInflationHorizonParams
+        /// </summary>
+        public static string ExponentialInflationHorizonParams()
+        {
+            return RequestGenerator.GetStorage("Aleph", "ExponentialInflationHorizon", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ExponentialInflationHorizonDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ExponentialInflationHorizonDefault()
+        {
+            return "0xB19203EC23000000";
+        }
+        
+        /// <summary>
+        /// >> ExponentialInflationHorizon
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> ExponentialInflationHorizon(string blockhash, CancellationToken token)
+        {
+            string parameters = AlephStorage.ExponentialInflationHorizonParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
+            return result;
         }
         
         /// <summary>
@@ -66,10 +125,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// <summary>
         /// >> Authorities
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>> Authorities(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>> Authorities(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.AuthoritiesParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>>(parameters, blockhash, token);
             return result;
         }
         
@@ -87,56 +146,16 @@ namespace Substrate.NetApi.Generated.Storage
         /// </summary>
         public static string NextAuthoritiesDefault()
         {
-            return "0xC870921B8CB1E41AE5D1CE4157A712108878B52FF0B2C8F7F9823766327A51863C6B45203855B19" +
-                "4F73FBE88ADE1F15C4AF8626742C3443FEBE4653FFCE4126A91BCE64EE5BC4DCFB2B4D368A8A3C18" +
-                "C379901E169B4A0E6ECAA1E24600E37FC83ACFF59B9E6244B760707D3B2B301A5FA3A4B751375452" +
-                "2679C2CADCD778901E5EF2B812B83D27A0CDE91CC1D2D145AD96C443EFD4554BE437370F0F68C245" +
-                "7B88F5D4AA9E23B75F4FD907BBB185629D2316E1BAAA2640C5C00D726D12049800B70202E1279C40" +
-                "878583E65FD390C8225E840E549898A460F6DF0241B7ABAAB5129E2DC963F0EA0B637DE388A0A9DD" +
-                "DA222FBA27E4B5466ED4CB37F57AB44CD68FAA3CC7EBB469621EF9FE58534C1967928376FD8E5279" +
-                "F55CC43C1ADADAE029ADB10CB92BB658B2A27FC3C7F1ED3505139423EE49B7E769B69AC2BFFCA540" +
-                "5D5BC3DD7F2D89967C36527070A59ABCA5AB20B044B7E040166B5EA75023745BEAC97680F6E0C1B2" +
-                "8173EDDD592E1F570559FC1433C710424A9554CD78EA37D68B29309964181658883FD0EF7286FA5C" +
-                "9763430756E9722746F38CF91F4034FC777CA25BB1B6A85E398FF23AF8CD07CA72460EBEB4AF6556" +
-                "9D9F7BD04DE1044CE02B12028AF8D8B1E63640B52A0C3633D8FFFE13947C933813FDA4B8B6C9CBCD" +
-                "55E97E8DBD921EE104F1951567F55898C4E76106F1BDA1607EA925E20AD60679B3EFC291076AD443" +
-                "46339E3D3D5CED463BA3E99329AD2B8F5BE39A67A589DE37AFB2031C079278D63A9468699B045ABE" +
-                "F2EEDA1C0EF37852D001453F61A3B98418F4A4AE75AB7F54FBB5AD3B9D7C55603EE871205904A371" +
-                "82EDF3AE7C18E44BCC68FF2BEB07CF522933ADAF20635AD3FB0FD99AB1B0777B241C381AECA21167" +
-                "509490CEFFF6E9F3DDB7E9E81C2295D53DAAD6D7DFFE6CDEEB29346A658B4315FA08D7B63DE3F88E" +
-                "2AD338A1B6B5BFA4B450276EAE0C9B8E2DE89100F00F6E55A0800BFE7FA8026B71DE1138A7AF65DF" +
-                "CD0953DFC1DC2F5CAD05BF0EFA53EA5855B2849AC7706C8C7C6B7270AE28B37C24D45536805120B5" +
-                "A2893C2BE5037F2FF70CB721D8665359470735BD36BB3E7BD4EF3E33B982B39E82A753CDA0F2FBFB" +
-                "56B724F66C1358BFCE657A19ECBD0035977E4736B33644C8054FC6E3EDAD00C6B885FE335E9E2E24" +
-                "248235E5616CF5DBC119908A7301CDA9E25CBB0DC059F94733A05AC108EF3005CB2B4DA115AA00AC" +
-                "F9A36FA9FD6A6B912659DE051245B6F2F2A88146488980DD111BFB10BF0957ACC980B9DF02D867A6" +
-                "ED9D95F29FCDD6A35695C80E9217BE0D74827E082C35CF8FDC569B6460A24485CFFE94746E73186C" +
-                "A761763FDAC5DF70FCE05D85558F1F09C5DE21A7CB563C5D9F82E85335617BB79A0F1CE34F703FDD" +
-                "C157D8B9968CA3EE756F3F3A2B5E08C83959151D6E0F7B55EA20B8EE23FEDBB518FF54FF54513AC3" +
-                "F1F90ECCF7178A7433C9D8908BC614B1C65957670787233F52CCE557F8CCDC9D2083929FAA2E095E" +
-                "3F234C0B60997049B06E9C20C6B8DADEC0672B194C45F8B89425BEE972811606996DE1EFADE35E45" +
-                "D5A8E337E9178CC3DA177F1B8894E48D26349DBE13A39D9F7161A05C554CF59D7D0EBD1675526129" +
-                "10692B2246C545444975AA34333ED16CB4CBD1ADD890B981F94B37CF90CCDD0269142BC109686F27" +
-                "98B4B0B9738B1CED576F939992FC98B8B9EACD09854BA69FE0D6C9DDA28047E3C4DB373BA215B47D" +
-                "391B295FBE549F85466AB43B4E46102E552D6563C65E2A1B7445B30666135C20143F73A5E4381602" +
-                "351033B6412847C62BF4B5A6347DFEF8242791C483D0AF02E89130DB491280638A6CDAED9BD7A785" +
-                "F2C9B3ED2422143E93062F9950FE8C9735D9D69B84B3999E5659B88603AB6F979C55585D2CEEC01B" +
-                "4E5E19C20D6D7447065A8FB38BBB8BDDE1558A321C3C6C7707CDD5380ACC13D8B34B032FAA4972A2" +
-                "651C442A623653BA81FEB32AB3CA828D90692A630029B26AA4CE584D0C07EB50E23C2D51644DB8F6" +
-                "8B7BDC73203F8008E13716FBFCF33428BA460FCB70D94C0597D7EE9914FF8E2A3509DF6B7D6998D3" +
-                "2230B0F2CBDC38EBEF265B5F367F4112784B2CF165C859335F06DAF76F8DE9AB8C3567F87A5CB8E9" +
-                "E9A3C05201F8DB7E7F2E52E24F7C85A3D301C6F96C2B34995DB8D9D0F100B8351028F9ADBB25F3B9" +
-                "EC4E23F3BAD8F3ABF3E91EFB004D383DC2FC934E4EF9F79AF7F4DF37B61DC84DC3CEE7AAAF9DBC99" +
-                "A35";
+            return "0x00";
         }
         
         /// <summary>
         /// >> NextAuthorities
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>> NextAuthorities(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>> NextAuthorities(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.NextAuthoritiesParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.primitives.app.Public>>(parameters, blockhash, token);
             return result;
         }
         
@@ -162,10 +181,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> NextFinalityCommittee
         ///  Set of account ids that will be used as authorities in the next session
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>> NextFinalityCommittee(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>> NextFinalityCommittee(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.NextFinalityCommitteeParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
             return result;
         }
         
@@ -189,10 +208,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// <summary>
         /// >> EmergencyFinalizer
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.app.Public> EmergencyFinalizer(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.app.Public> EmergencyFinalizer(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.EmergencyFinalizerParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.app.Public>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.app.Public>(parameters, blockhash, token);
             return result;
         }
         
@@ -216,10 +235,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// <summary>
         /// >> QueuedEmergencyFinalizer
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.app.Public> QueuedEmergencyFinalizer(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.app.Public> QueuedEmergencyFinalizer(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.QueuedEmergencyFinalizerParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.app.Public>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.app.Public>(parameters, blockhash, token);
             return result;
         }
         
@@ -243,10 +262,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// <summary>
         /// >> NextEmergencyFinalizer
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.app.Public> NextEmergencyFinalizer(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.app.Public> NextEmergencyFinalizer(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.NextEmergencyFinalizerParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.app.Public>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.app.Public>(parameters, blockhash, token);
             return result;
         }
         
@@ -272,10 +291,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> FinalityVersion
         ///  Current finality version.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> FinalityVersion(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> FinalityVersion(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.FinalityVersionParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -301,10 +320,66 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> FinalityScheduledVersionChange
         ///  Scheduled finality version change.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.VersionChange> FinalityScheduledVersionChange(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.VersionChange> FinalityScheduledVersionChange(string blockhash, CancellationToken token)
         {
             string parameters = AlephStorage.FinalityScheduledVersionChangeParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.VersionChange>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.VersionChange>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> AbftScoresParams
+        /// </summary>
+        public static string AbftScoresParams(Substrate.NetApi.Model.Types.Primitive.U32 key)
+        {
+            return RequestGenerator.GetStorage("Aleph", "AbftScores", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> AbftScoresDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string AbftScoresDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> AbftScores
+        /// </summary>
+        public async Task<Substrate.NetApi.Generated.Model.primitives.Score> AbftScores(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        {
+            string parameters = AlephStorage.AbftScoresParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.Score>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> LastScoreNonceParams
+        /// </summary>
+        public static string LastScoreNonceParams()
+        {
+            return RequestGenerator.GetStorage("Aleph", "LastScoreNonce", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> LastScoreNonceDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string LastScoreNonceDefault()
+        {
+            return "0x00000000";
+        }
+        
+        /// <summary>
+        /// >> LastScoreNonce
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> LastScoreNonce(string blockhash, CancellationToken token)
+        {
+            string parameters = AlephStorage.LastScoreNonceParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
     }
@@ -337,6 +412,30 @@ namespace Substrate.NetApi.Generated.Storage
             byteArray.AddRange(session.Encode());
             return new Method(11, "Aleph", 1, "schedule_finality_version_change", byteArray.ToArray());
         }
+        
+        /// <summary>
+        /// >> set_inflation_parameters
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method SetInflationParameters(Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128> azero_cap, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64> horizon_millisecs)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(azero_cap.Encode());
+            byteArray.AddRange(horizon_millisecs.Encode());
+            return new Method(11, "Aleph", 2, "set_inflation_parameters", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> unsigned_submit_abft_score
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method UnsignedSubmitAbftScore(Substrate.NetApi.Generated.Model.primitives.Score score, Substrate.NetApi.Generated.Model.primitives.crypto.SignatureSet signature)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(score.Encode());
+            byteArray.AddRange(signature.Encode());
+            return new Method(11, "Aleph", 3, "unsigned_submit_abft_score", byteArray.ToArray());
+        }
     }
     
     /// <summary>
@@ -344,5 +443,15 @@ namespace Substrate.NetApi.Generated.Storage
     /// </summary>
     public sealed class AlephConstants
     {
+        
+        /// <summary>
+        /// >> ScoreSubmissionPeriod
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.U32 ScoreSubmissionPeriod()
+        {
+            var result = new Substrate.NetApi.Model.Types.Primitive.U32();
+            result.Create("0x2C010000");
+            return result;
+        }
     }
 }

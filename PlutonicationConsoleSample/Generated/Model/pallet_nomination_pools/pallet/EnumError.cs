@@ -76,9 +76,9 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet
         /// >> MinimumBondNotMet
         /// The amount does not meet the minimum bond to either join or create a pool.
         /// 
-        /// The depositor can never unbond to a value less than
-        /// `Pallet::depositor_min_bond`. The caller does not have nominating
-        /// permissions for the pool. Members can never unbond to a value below `MinJoinBond`.
+        /// The depositor can never unbond to a value less than `Pallet::depositor_min_bond`. The
+        /// caller does not have nominating permissions for the pool. Members can never unbond to a
+        /// value below `MinJoinBond`.
         /// </summary>
         MinimumBondNotMet = 8,
         
@@ -215,13 +215,58 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet
         /// Bonding extra is restricted to the exact pending reward amount.
         /// </summary>
         BondExtraRestricted = 30,
+        
+        /// <summary>
+        /// >> NothingToAdjust
+        /// No imbalance in the ED deposit for the pool.
+        /// </summary>
+        NothingToAdjust = 31,
     }
     
     /// <summary>
-    /// >> 300 - Variant[pallet_nomination_pools.pallet.Error]
+    /// >> 350 - Variant[pallet_nomination_pools.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
-    public sealed class EnumError : BaseEnumExt<Error, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet.EnumDefensiveError, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>
+    public sealed class EnumError : BaseEnumRust<Error>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumError()
+        {
+				AddTypeDecoder<BaseVoid>(Error.PoolNotFound);
+				AddTypeDecoder<BaseVoid>(Error.PoolMemberNotFound);
+				AddTypeDecoder<BaseVoid>(Error.RewardPoolNotFound);
+				AddTypeDecoder<BaseVoid>(Error.SubPoolsNotFound);
+				AddTypeDecoder<BaseVoid>(Error.AccountBelongsToOtherPool);
+				AddTypeDecoder<BaseVoid>(Error.FullyUnbonding);
+				AddTypeDecoder<BaseVoid>(Error.MaxUnbondingLimit);
+				AddTypeDecoder<BaseVoid>(Error.CannotWithdrawAny);
+				AddTypeDecoder<BaseVoid>(Error.MinimumBondNotMet);
+				AddTypeDecoder<BaseVoid>(Error.OverflowRisk);
+				AddTypeDecoder<BaseVoid>(Error.NotDestroying);
+				AddTypeDecoder<BaseVoid>(Error.NotNominator);
+				AddTypeDecoder<BaseVoid>(Error.NotKickerOrDestroying);
+				AddTypeDecoder<BaseVoid>(Error.NotOpen);
+				AddTypeDecoder<BaseVoid>(Error.MaxPools);
+				AddTypeDecoder<BaseVoid>(Error.MaxPoolMembers);
+				AddTypeDecoder<BaseVoid>(Error.CanNotChangeState);
+				AddTypeDecoder<BaseVoid>(Error.DoesNotHavePermission);
+				AddTypeDecoder<BaseVoid>(Error.MetadataExceedsMaxLen);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet.EnumDefensiveError>(Error.Defensive);
+				AddTypeDecoder<BaseVoid>(Error.PartialUnbondNotAllowedPermissionlessly);
+				AddTypeDecoder<BaseVoid>(Error.MaxCommissionRestricted);
+				AddTypeDecoder<BaseVoid>(Error.CommissionExceedsMaximum);
+				AddTypeDecoder<BaseVoid>(Error.CommissionExceedsGlobalMaximum);
+				AddTypeDecoder<BaseVoid>(Error.CommissionChangeThrottled);
+				AddTypeDecoder<BaseVoid>(Error.CommissionChangeRateNotAllowed);
+				AddTypeDecoder<BaseVoid>(Error.NoPendingCommission);
+				AddTypeDecoder<BaseVoid>(Error.NoCommissionCurrentSet);
+				AddTypeDecoder<BaseVoid>(Error.PoolIdInUse);
+				AddTypeDecoder<BaseVoid>(Error.InvalidPoolId);
+				AddTypeDecoder<BaseVoid>(Error.BondExtraRestricted);
+				AddTypeDecoder<BaseVoid>(Error.NothingToAdjust);
+        }
     }
 }

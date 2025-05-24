@@ -139,6 +139,26 @@ namespace Substrate.NetApi.Generated
         /// </summary>
         public CommitteeManagementStorage CommitteeManagementStorage;
         
+        /// <summary>
+        /// ProxyStorage storage calls.
+        /// </summary>
+        public ProxyStorage ProxyStorage;
+        
+        /// <summary>
+        /// SafeModeStorage storage calls.
+        /// </summary>
+        public SafeModeStorage SafeModeStorage;
+        
+        /// <summary>
+        /// TxPauseStorage storage calls.
+        /// </summary>
+        public TxPauseStorage TxPauseStorage;
+        
+        /// <summary>
+        /// OperationsStorage storage calls.
+        /// </summary>
+        public OperationsStorage OperationsStorage;
+        
         public SubstrateClientExt(System.Uri uri, Substrate.NetApi.Model.Extrinsics.ChargeType chargeType) : 
                 base(uri, chargeType)
         {
@@ -165,6 +185,10 @@ namespace Substrate.NetApi.Generated
             this.NominationPoolsStorage = new NominationPoolsStorage(this);
             this.IdentityStorage = new IdentityStorage(this);
             this.CommitteeManagementStorage = new CommitteeManagementStorage(this);
+            this.ProxyStorage = new ProxyStorage(this);
+            this.SafeModeStorage = new SafeModeStorage(this);
+            this.TxPauseStorage = new TxPauseStorage(this);
+            this.OperationsStorage = new OperationsStorage(this);
         }
     }
 }

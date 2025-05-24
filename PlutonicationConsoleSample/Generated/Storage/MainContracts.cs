@@ -37,16 +37,16 @@ namespace Substrate.NetApi.Generated.Storage
         {
             this._client = client;
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "PristineCode"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApi.Generated.Model.primitive_types.H256), typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT16)));
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApi.Generated.Model.primitive_types.H256), typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT19)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "CodeInfoOf"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApi.Generated.Model.primitive_types.H256), typeof(Substrate.NetApi.Generated.Model.pallet_contracts.wasm.CodeInfo)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "Nonce"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "ContractInfoOf"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Generated.Model.pallet_contracts.storage.ContractInfo)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "DeletionQueue"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5)));
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT8)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "DeletionQueueCounter"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.pallet_contracts.storage.DeletionQueueManager)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "MigrationInProgress"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT17)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Contracts", "MigrationInProgress"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT20)));
         }
         
         /// <summary>
@@ -73,10 +73,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> PristineCode
         ///  A mapping from a contract's code hash to its code.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT16> PristineCode(Substrate.NetApi.Generated.Model.primitive_types.H256 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT19> PristineCode(Substrate.NetApi.Generated.Model.primitive_types.H256 key, string blockhash, CancellationToken token)
         {
             string parameters = ContractsStorage.PristineCodeParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT16>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT19>(parameters, blockhash, token);
             return result;
         }
         
@@ -104,10 +104,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CodeInfoOf
         ///  A mapping from a contract's code hash to its code info.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_contracts.wasm.CodeInfo> CodeInfoOf(Substrate.NetApi.Generated.Model.primitive_types.H256 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_contracts.wasm.CodeInfo> CodeInfoOf(Substrate.NetApi.Generated.Model.primitive_types.H256 key, string blockhash, CancellationToken token)
         {
             string parameters = ContractsStorage.CodeInfoOfParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_contracts.wasm.CodeInfo>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_contracts.wasm.CodeInfo>(parameters, blockhash, token);
             return result;
         }
         
@@ -175,10 +175,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Do not use it to determine the number of contracts. It won't be decremented if
         ///  a contract is destroyed.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> Nonce(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> Nonce(string blockhash, CancellationToken token)
         {
             string parameters = ContractsStorage.NonceParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
             return result;
         }
         
@@ -210,10 +210,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// 
         ///  TWOX-NOTE: SAFE since `AccountId` is a secure hash.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_contracts.storage.ContractInfo> ContractInfoOf(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_contracts.storage.ContractInfo> ContractInfoOf(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = ContractsStorage.ContractInfoOfParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_contracts.storage.ContractInfo>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_contracts.storage.ContractInfo>(parameters, blockhash, token);
             return result;
         }
         
@@ -247,10 +247,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Child trie deletion is a heavy operation depending on the amount of storage items
         ///  stored in said trie. Therefore this operation is performed lazily in `on_idle`.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5> DeletionQueue(Substrate.NetApi.Model.Types.Primitive.U32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT8> DeletionQueue(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = ContractsStorage.DeletionQueueParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT8>(parameters, blockhash, token);
             return result;
         }
         
@@ -278,10 +278,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  A pair of monotonic counters used to track the latest contract marked for deletion
         ///  and the latest deleted contract in queue.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_contracts.storage.DeletionQueueManager> DeletionQueueCounter(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_contracts.storage.DeletionQueueManager> DeletionQueueCounter(string blockhash, CancellationToken token)
         {
             string parameters = ContractsStorage.DeletionQueueCounterParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_contracts.storage.DeletionQueueManager>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_contracts.storage.DeletionQueueManager>(parameters, blockhash, token);
             return result;
         }
         
@@ -309,10 +309,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  A migration can span across multiple blocks. This storage defines a cursor to track the
         ///  progress of the migration, enabling us to resume from the last completed position.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT17> MigrationInProgress(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT20> MigrationInProgress(string blockhash, CancellationToken token)
         {
             string parameters = ContractsStorage.MigrationInProgressParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT17>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT20>(parameters, blockhash, token);
             return result;
         }
     }
@@ -478,7 +478,7 @@ namespace Substrate.NetApi.Generated.Storage
         public Substrate.NetApi.Generated.Model.pallet_contracts.schedule.Schedule Schedule()
         {
             var result = new Substrate.NetApi.Generated.Model.pallet_contracts.schedule.Schedule();
-            result.Create(@"0x04000000000100000004000080000000100000000010000000010000200000000040000000000008F31300006A6D1500189203E5066D2A3E4210077D2A66991900189A5D0B000C1A0F0A000CBAB6140018B642210018A26E640018BE631400187AAD140018B6BF130018F218140018F29A5A00387EBB1100186910003683A300B40D0600AAB903FBB5783E887F002872F1ED0028D68A641E3127F90A00360C0F001C4911009ADB7D1F9504110B00AD040456DCB4473D30F61A721F85040004AADC4407850485020472604F07A504910D046A347D1FA504110A04328E6A276127666A0B76012BFA27D66325298E5B3E9131520911009223ACF949510265CD1D49284D1200BD13001E0A1800209111002A5931002009350032CC1B0020851300160C1C00206913000EA6020B3501E246E402A81AA7730DC101155F0406F70A000C9E621300A0AA9F09000C");
+            result.Create(@"0x0400000000010000000400008000000010000000001000000001000020000000004000000000000827130000B6B5140018F222DD06F129BAF81507012A762B1A0018362C0B000CD2170A000C4AFB1400185AAD160018B616650018A233150018CA941400189230140018129F1400181E4C5800387A4111001871100000B41D0600032470934D4952B2927D00285278E80028FE36AE1E31276D0B0062B90E001C391100A687811F95048D0800B90804F6E2264849308A30741F850410041E81480785044D0104D2355207A504C90F048642721FA5040D0A04EE4CF9266127261FC876852AEE7D506535290E4ED290AD515D11006E7D8DF7AD2A0265CD1DD527AD1E003120007273180020B91100EEF830002049350026531D0020991300CAD71E002091130016EAF90A35016E5ED902A812C0610DC1012D6004BE060B000CC66A1300A02A5409000C1209661FB9280E33351F2128");
             return result;
         }
         
@@ -524,6 +524,20 @@ namespace Substrate.NetApi.Generated.Storage
         }
         
         /// <summary>
+        /// >> CodeHashLockupDepositPercent
+        ///  The percentage of the storage deposit that should be held for using a code hash.
+        ///  Instantiating a contract, or calling [`chain_extension::Ext::add_delegate_dependency`]
+        ///  protects the code from being removed. In order to prevent abuse these actions are
+        ///  protected with a percentage of the code deposit.
+        /// </summary>
+        public Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill CodeHashLockupDepositPercent()
+        {
+            var result = new Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill();
+            result.Create("0x00A3E111");
+            return result;
+        }
+        
+        /// <summary>
         /// >> MaxCodeLen
         ///  The maximum length of a contract code in bytes.
         /// 
@@ -534,7 +548,7 @@ namespace Substrate.NetApi.Generated.Storage
         public Substrate.NetApi.Model.Types.Primitive.U32 MaxCodeLen()
         {
             var result = new Substrate.NetApi.Model.Types.Primitive.U32();
-            result.Create("0x00000200");
+            result.Create("0x00000400");
             return result;
         }
         
@@ -546,6 +560,18 @@ namespace Substrate.NetApi.Generated.Storage
         {
             var result = new Substrate.NetApi.Model.Types.Primitive.U32();
             result.Create("0x80000000");
+            return result;
+        }
+        
+        /// <summary>
+        /// >> MaxDelegateDependencies
+        ///  The maximum number of delegate_dependencies that a contract can lock with
+        ///  [`chain_extension::Ext::add_delegate_dependency`].
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.U32 MaxDelegateDependencies()
+        {
+            var result = new Substrate.NetApi.Model.Types.Primitive.U32();
+            result.Create("0x20000000");
             return result;
         }
         
@@ -576,6 +602,20 @@ namespace Substrate.NetApi.Generated.Storage
         {
             var result = new Substrate.NetApi.Model.Types.Primitive.U32();
             result.Create("0x00002000");
+            return result;
+        }
+        
+        /// <summary>
+        /// >> Environment
+        ///  Type that bundles together all the runtime configurable interface types.
+        /// 
+        ///  This is not a real config. We just mention the type here as constant so that
+        ///  its type appears in the metadata. Only valid value is `()`.
+        /// </summary>
+        public Substrate.NetApi.Generated.Model.pallet_contracts.Environment Environment()
+        {
+            var result = new Substrate.NetApi.Generated.Model.pallet_contracts.Environment();
+            result.Create("0x");
             return result;
         }
     }
@@ -707,6 +747,12 @@ namespace Substrate.NetApi.Generated.Storage
         NoChainExtension,
         
         /// <summary>
+        /// >> XCMDecodeFailed
+        /// Failed to decode the XCM program.
+        /// </summary>
+        XCMDecodeFailed,
+        
+        /// <summary>
         /// >> DuplicateContract
         /// A contract with the same AccountId already exists.
         /// </summary>
@@ -786,5 +832,29 @@ namespace Substrate.NetApi.Generated.Storage
         /// Migrate dispatch call was attempted but no migration was performed.
         /// </summary>
         NoMigrationPerformed,
+        
+        /// <summary>
+        /// >> MaxDelegateDependenciesReached
+        /// The contract has reached its maximum number of delegate dependencies.
+        /// </summary>
+        MaxDelegateDependenciesReached,
+        
+        /// <summary>
+        /// >> DelegateDependencyNotFound
+        /// The dependency was not found in the contract's delegate dependencies.
+        /// </summary>
+        DelegateDependencyNotFound,
+        
+        /// <summary>
+        /// >> DelegateDependencyAlreadyExists
+        /// The contract already depends on the given delegate dependency.
+        /// </summary>
+        DelegateDependencyAlreadyExists,
+        
+        /// <summary>
+        /// >> CannotAddSelfAsDelegateDependency
+        /// Can not add a delegate dependency to the code hash of the contract itself.
+        /// </summary>
+        CannotAddSelfAsDelegateDependency,
     }
 }

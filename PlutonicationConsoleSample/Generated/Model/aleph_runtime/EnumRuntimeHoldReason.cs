@@ -20,12 +20,31 @@ namespace Substrate.NetApi.Generated.Model.aleph_runtime
     /// </summary>
     public enum RuntimeHoldReason
     {
+        
+        /// <summary>
+        /// >> Contracts
+        /// </summary>
+        Contracts = 18,
+        
+        /// <summary>
+        /// >> SafeMode
+        /// </summary>
+        SafeMode = 23,
     }
     
     /// <summary>
-    /// >> 211 - Variant[aleph_runtime.RuntimeHoldReason]
+    /// >> 245 - Variant[aleph_runtime.RuntimeHoldReason]
     /// </summary>
-    public sealed class EnumRuntimeHoldReason : BaseEnum<RuntimeHoldReason>
+    public sealed class EnumRuntimeHoldReason : BaseEnumRust<RuntimeHoldReason>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumRuntimeHoldReason()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_contracts.pallet.EnumHoldReason>(RuntimeHoldReason.Contracts);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_safe_mode.pallet.EnumHoldReason>(RuntimeHoldReason.SafeMode);
+        }
     }
 }

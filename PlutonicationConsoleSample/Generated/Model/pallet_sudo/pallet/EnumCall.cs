@@ -45,13 +45,31 @@ namespace Substrate.NetApi.Generated.Model.pallet_sudo.pallet
         /// See [`Pallet::sudo_as`].
         /// </summary>
         sudo_as = 3,
+        
+        /// <summary>
+        /// >> remove_key
+        /// See [`Pallet::remove_key`].
+        /// </summary>
+        remove_key = 4,
     }
     
     /// <summary>
-    /// >> 141 - Variant[pallet_sudo.pallet.Call]
+    /// >> 166 - Variant[pallet_sudo.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall, BaseTuple<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall, Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>>
+    public sealed class EnumCall : BaseEnumRust<Call>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumCall()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>(Call.sudo);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall, Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight>>(Call.sudo_unchecked_weight);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress>(Call.set_key);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>>(Call.sudo_as);
+				AddTypeDecoder<BaseVoid>(Call.remove_key);
+        }
     }
 }

@@ -9,41 +9,36 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
-namespace Substrate.NetApi.Generated.Model.pallet_staking
+namespace Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec
 {
     
     
     /// <summary>
-    /// >> 231 - Composite[pallet_staking.IndividualExposure]
+    /// >> 377 - Composite[bounded_collections.bounded_vec.BoundedVecT26]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
-    public sealed class IndividualExposure : BaseType
+    public sealed class BoundedVecT26 : BaseType
     {
         
         /// <summary>
-        /// >> who
-        /// </summary>
-        public Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 Who { get; set; }
-        /// <summary>
         /// >> value
         /// </summary>
-        public Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128> Value { get; set; }
+        public Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.pallet_proxy.Announcement> Value { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
         {
-            return "IndividualExposure";
+            return "BoundedVecT26";
         }
         
         /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
-            result.AddRange(Who.Encode());
             result.AddRange(Value.Encode());
             return result.ToArray();
         }
@@ -52,14 +47,12 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Who = new Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32();
-            Who.Decode(byteArray, ref p);
-            Value = new Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>();
+            Value = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.pallet_proxy.Announcement>();
             Value.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

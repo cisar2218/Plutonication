@@ -38,7 +38,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
     }
     
     /// <summary>
-    /// >> 63 - Variant[pallet_nomination_pools.PoolState]
+    /// >> 64 - Variant[pallet_nomination_pools.PoolState]
     /// </summary>
     public sealed class EnumPoolState : BaseEnum<PoolState>
     {

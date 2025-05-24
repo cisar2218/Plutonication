@@ -36,10 +36,19 @@ namespace Substrate.NetApi.Generated.Model.pallet_elections.pallet
     }
     
     /// <summary>
-    /// >> 127 - Variant[pallet_elections.pallet.Call]
+    /// >> 151 - Variant[pallet_elections.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats>>, BaseVoid, BaseVoid, BaseVoid, Substrate.NetApi.Generated.Model.primitives.EnumElectionOpenness>
+    public sealed class EnumCall : BaseEnumRust<Call>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumCall()
+        {
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats>>>(Call.change_validators);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.primitives.EnumElectionOpenness>(Call.set_elections_openness);
+        }
     }
 }

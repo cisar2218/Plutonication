@@ -54,7 +54,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_scheduler.pallet
     }
     
     /// <summary>
-    /// >> 198 - Variant[pallet_scheduler.pallet.Error]
+    /// >> 232 - Variant[pallet_scheduler.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

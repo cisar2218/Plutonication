@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
     
     
     /// <summary>
-    /// >> 224 - Composite[pallet_staking.Nominations]
+    /// >> 262 - Composite[pallet_staking.Nominations]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Nominations : BaseType
@@ -27,7 +27,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
         /// <summary>
         /// >> targets
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT12 Targets { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT15 Targets { get; set; }
         /// <summary>
         /// >> submitted_in
         /// </summary>
@@ -57,7 +57,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Targets = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT12();
+            Targets = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT15();
             Targets.Decode(byteArray, ref p);
             SubmittedIn = new Substrate.NetApi.Model.Types.Primitive.U32();
             SubmittedIn.Decode(byteArray, ref p);
@@ -66,7 +66,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

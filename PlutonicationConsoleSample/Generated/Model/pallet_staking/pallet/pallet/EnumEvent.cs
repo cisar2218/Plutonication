@@ -31,7 +31,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking.pallet.pallet
         
         /// <summary>
         /// >> Rewarded
-        /// The nominator has been rewarded by this amount.
+        /// The nominator has been rewarded by this amount to this destination.
         /// </summary>
         Rewarded = 1,
         
@@ -114,17 +114,53 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking.pallet.pallet
         ValidatorPrefsSet = 13,
         
         /// <summary>
+        /// >> SnapshotVotersSizeExceeded
+        /// Voters size limit reached.
+        /// </summary>
+        SnapshotVotersSizeExceeded = 14,
+        
+        /// <summary>
+        /// >> SnapshotTargetsSizeExceeded
+        /// Targets size limit reached.
+        /// </summary>
+        SnapshotTargetsSizeExceeded = 15,
+        
+        /// <summary>
         /// >> ForceEra
         /// A new force era mode was set.
         /// </summary>
-        ForceEra = 14,
+        ForceEra = 16,
     }
     
     /// <summary>
-    /// >> 38 - Variant[pallet_staking.pallet.pallet.Event]
+    /// >> 39 - Variant[pallet_staking.pallet.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Primitive.U32, BaseVoid, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>, BaseVoid, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>, BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.pallet_staking.ValidatorPrefs>, Substrate.NetApi.Generated.Model.pallet_staking.EnumForcing>
+    public sealed class EnumEvent : BaseEnumRust<Event>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumEvent()
+        {
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.EraPaid);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.pallet_staking.EnumRewardDestination, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.Rewarded);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.Slashed);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill, Substrate.NetApi.Model.Types.Primitive.U32>>(Event.SlashReported);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Event.OldSlashingReportDiscarded);
+				AddTypeDecoder<BaseVoid>(Event.StakersElected);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.Bonded);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.Unbonded);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>>(Event.Withdrawn);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.Kicked);
+				AddTypeDecoder<BaseVoid>(Event.StakingElectionFailed);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(Event.Chilled);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.PayoutStarted);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.pallet_staking.ValidatorPrefs>>(Event.ValidatorPrefsSet);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Event.SnapshotVotersSizeExceeded);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Event.SnapshotTargetsSizeExceeded);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_staking.EnumForcing>(Event.ForceEra);
+        }
     }
 }

@@ -105,12 +105,60 @@ namespace Substrate.NetApi.Generated.Model.aleph_runtime
         /// >> CommitteeManagement
         /// </summary>
         CommitteeManagement = 21,
+        
+        /// <summary>
+        /// >> Proxy
+        /// </summary>
+        Proxy = 22,
+        
+        /// <summary>
+        /// >> SafeMode
+        /// </summary>
+        SafeMode = 23,
+        
+        /// <summary>
+        /// >> TxPause
+        /// </summary>
+        TxPause = 24,
+        
+        /// <summary>
+        /// >> Operations
+        /// </summary>
+        Operations = 255,
     }
     
     /// <summary>
-    /// >> 104 - Variant[aleph_runtime.RuntimeCall]
+    /// >> 118 - Variant[aleph_runtime.RuntimeCall]
     /// </summary>
-    public sealed class EnumRuntimeCall : BaseEnumExt<RuntimeCall, Substrate.NetApi.Generated.Model.frame_system.pallet.EnumCall, BaseVoid, Substrate.NetApi.Generated.Model.pallet_scheduler.pallet.EnumCall, BaseVoid, Substrate.NetApi.Generated.Model.pallet_timestamp.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_balances.pallet.EnumCall, BaseVoid, BaseVoid, Substrate.NetApi.Generated.Model.pallet_staking.pallet.pallet.EnumCall, BaseVoid, Substrate.NetApi.Generated.Model.pallet_session.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_aleph.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_elections.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_treasury.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_vesting.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_utility.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_multisig.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_sudo.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_contracts.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_identity.pallet.EnumCall, Substrate.NetApi.Generated.Model.pallet_committee_management.pallet.EnumCall>
+    public sealed class EnumRuntimeCall : BaseEnumRust<RuntimeCall>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumRuntimeCall()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.frame_system.pallet.EnumCall>(RuntimeCall.System);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_scheduler.pallet.EnumCall>(RuntimeCall.Scheduler);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_timestamp.pallet.EnumCall>(RuntimeCall.Timestamp);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_balances.pallet.EnumCall>(RuntimeCall.Balances);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_staking.pallet.pallet.EnumCall>(RuntimeCall.Staking);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_session.pallet.EnumCall>(RuntimeCall.Session);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_aleph.pallet.EnumCall>(RuntimeCall.Aleph);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_elections.pallet.EnumCall>(RuntimeCall.Elections);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_treasury.pallet.EnumCall>(RuntimeCall.Treasury);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_vesting.pallet.EnumCall>(RuntimeCall.Vesting);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_utility.pallet.EnumCall>(RuntimeCall.Utility);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_multisig.pallet.EnumCall>(RuntimeCall.Multisig);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_sudo.pallet.EnumCall>(RuntimeCall.Sudo);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_contracts.pallet.EnumCall>(RuntimeCall.Contracts);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet.EnumCall>(RuntimeCall.NominationPools);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_identity.pallet.EnumCall>(RuntimeCall.Identity);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_committee_management.pallet.EnumCall>(RuntimeCall.CommitteeManagement);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_proxy.pallet.EnumCall>(RuntimeCall.Proxy);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_safe_mode.pallet.EnumCall>(RuntimeCall.SafeMode);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_tx_pause.pallet.EnumCall>(RuntimeCall.TxPause);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_operations.pallet.EnumCall>(RuntimeCall.Operations);
+        }
     }
 }

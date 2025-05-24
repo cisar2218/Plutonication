@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,16 +18,20 @@ namespace Substrate.NetApi.Generated.Model.primitives
     
     
     /// <summary>
-    /// >> 316 - Composite[primitives.SessionValidators]
+    /// >> 370 - Composite[primitives.SessionValidators]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SessionValidators : BaseType
     {
         
         /// <summary>
-        /// >> committee
+        /// >> producers
         /// </summary>
-        public Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32> Committee { get; set; }
+        public Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32> Producers { get; set; }
+        /// <summary>
+        /// >> finalizers
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32> Finalizers { get; set; }
         /// <summary>
         /// >> non_committee
         /// </summary>
@@ -43,7 +47,8 @@ namespace Substrate.NetApi.Generated.Model.primitives
         public override byte[] Encode()
         {
             var result = new List<byte>();
-            result.AddRange(Committee.Encode());
+            result.AddRange(Producers.Encode());
+            result.AddRange(Finalizers.Encode());
             result.AddRange(NonCommittee.Encode());
             return result.ToArray();
         }
@@ -52,14 +57,16 @@ namespace Substrate.NetApi.Generated.Model.primitives
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Committee = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>();
-            Committee.Decode(byteArray, ref p);
+            Producers = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>();
+            Producers.Decode(byteArray, ref p);
+            Finalizers = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>();
+            Finalizers.Decode(byteArray, ref p);
             NonCommittee = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>();
             NonCommittee.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_elections.pallet
     }
     
     /// <summary>
-    /// >> 254 - Variant[pallet_elections.pallet.Error]
+    /// >> 294 - Variant[pallet_elections.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

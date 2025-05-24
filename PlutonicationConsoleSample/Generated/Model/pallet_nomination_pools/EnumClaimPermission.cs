@@ -43,7 +43,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
     }
     
     /// <summary>
-    /// >> 151 - Variant[pallet_nomination_pools.ClaimPermission]
+    /// >> 176 - Variant[pallet_nomination_pools.ClaimPermission]
     /// </summary>
     public sealed class EnumClaimPermission : BaseEnum<ClaimPermission>
     {

@@ -33,9 +33,18 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts
     }
     
     /// <summary>
-    /// >> 60 - Variant[pallet_contracts.Origin]
+    /// >> 61 - Variant[pallet_contracts.Origin]
     /// </summary>
-    public sealed class EnumOrigin : BaseEnumExt<Origin, BaseVoid, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>
+    public sealed class EnumOrigin : BaseEnumRust<Origin>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumOrigin()
+        {
+				AddTypeDecoder<BaseVoid>(Origin.Root);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(Origin.Signed);
+        }
     }
 }

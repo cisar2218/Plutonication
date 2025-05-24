@@ -52,6 +52,9 @@ namespace Plutonication
 
             client.On("sign_payload", payloadJson =>
             {
+                Console.WriteLine("Plutonication: sign_payload received:");
+                Console.WriteLine($"Plutonication: {payloadJson.ToString()}");
+
                 Plutonication.Payload[]? payloads = JsonConvert.DeserializeObject<Plutonication.Payload[]>(payloadJson.ToString());
 
                 if (payloads is null || !payloads.Any())
@@ -104,7 +107,7 @@ namespace Plutonication
                 {
                     int _p = 0;
 
-                    charge = new ChargeAssetTxPayment(0, 0);
+                    charge = new ChargeAssetTxPayment(0, new());
                     charge.Decode(Utils.HexToByteArray(payload.tip), ref _p);
                 }
 
@@ -113,6 +116,8 @@ namespace Plutonication
 
                 UnCheckedExtrinsic unCheckedExtrinsic = new UnCheckedExtrinsic(true, account, method, Era.Decode(Utils.HexToByteArray(payload.era)),
                     HexStringToUint(payload.nonce), charge, genesisHash, blockHash);
+
+                Console.WriteLine("Plutonication: unCheckedExtrinsic processed and passed to wallet application correctly. Invoking SignPayload method");
 
                 Task _signPayloadTask = signPayload.Invoke(unCheckedExtrinsic, runtime);
             });

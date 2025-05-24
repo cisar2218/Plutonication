@@ -24,7 +24,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_committee_management.pallet
         
         /// <summary>
         /// >> InvalidBanConfig
-        /// Raised in any scenario [`BanConfig`] is invalid
+        /// Raised in any scenario [`ProductionBanConfig`] is invalid
         /// * `performance_ratio_threshold` must be a number in range [0; 100]
         /// * `underperformed_session_count_threshold` must be a positive number,
         /// * `clean_session_counter_delay` must be a positive number.
@@ -46,7 +46,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_committee_management.pallet
     }
     
     /// <summary>
-    /// >> 317 - Variant[pallet_committee_management.pallet.Error]
+    /// >> 371 - Variant[pallet_committee_management.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

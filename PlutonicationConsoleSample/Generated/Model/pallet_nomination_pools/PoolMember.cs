@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
     
     
     /// <summary>
-    /// >> 282 - Composite[pallet_nomination_pools.PoolMember]
+    /// >> 333 - Composite[pallet_nomination_pools.PoolMember]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PoolMember : BaseType
@@ -39,7 +39,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
         /// <summary>
         /// >> unbonding_eras
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT1 UnbondingEras { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT2 UnbondingEras { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -68,12 +68,12 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
             Points.Decode(byteArray, ref p);
             LastRecordedRewardCounter = new Substrate.NetApi.Generated.Model.sp_arithmetic.fixed_point.FixedU128();
             LastRecordedRewardCounter.Decode(byteArray, ref p);
-            UnbondingEras = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT1();
+            UnbondingEras = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT2();
             UnbondingEras.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

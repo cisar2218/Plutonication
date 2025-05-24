@@ -48,7 +48,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet
     }
     
     /// <summary>
-    /// >> 301 - Variant[pallet_nomination_pools.pallet.DefensiveError]
+    /// >> 351 - Variant[pallet_nomination_pools.pallet.DefensiveError]
     /// </summary>
     public sealed class EnumDefensiveError : BaseEnum<DefensiveError>
     {

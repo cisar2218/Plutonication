@@ -33,9 +33,18 @@ namespace Substrate.NetApi.Generated.Model.aleph_runtime
     }
     
     /// <summary>
-    /// >> 136 - Variant[aleph_runtime.OriginCaller]
+    /// >> 161 - Variant[aleph_runtime.OriginCaller]
     /// </summary>
-    public sealed class EnumOriginCaller : BaseEnumExt<OriginCaller, Substrate.NetApi.Generated.Model.frame_support.dispatch.EnumRawOrigin, Substrate.NetApi.Model.Types.Base.BaseVoid>
+    public sealed class EnumOriginCaller : BaseEnumRust<OriginCaller>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumOriginCaller()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.frame_support.dispatch.EnumRawOrigin>(OriginCaller.system);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseVoid>(OriginCaller.Void);
+        }
     }
 }

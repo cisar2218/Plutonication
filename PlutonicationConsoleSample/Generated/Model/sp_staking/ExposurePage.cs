@@ -9,46 +9,41 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
-namespace Substrate.NetApi.Generated.Model.pallet_staking
+namespace Substrate.NetApi.Generated.Model.sp_staking
 {
     
     
     /// <summary>
-    /// >> 229 - Composite[pallet_staking.Exposure]
+    /// >> 271 - Composite[sp_staking.ExposurePage]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
-    public sealed class Exposure : BaseType
+    public sealed class ExposurePage : BaseType
     {
         
         /// <summary>
-        /// >> total
+        /// >> page_total
         /// </summary>
-        public Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128> Total { get; set; }
-        /// <summary>
-        /// >> own
-        /// </summary>
-        public Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128> Own { get; set; }
+        public Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128> PageTotal { get; set; }
         /// <summary>
         /// >> others
         /// </summary>
-        public Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.pallet_staking.IndividualExposure> Others { get; set; }
+        public Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_staking.IndividualExposure> Others { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
         {
-            return "Exposure";
+            return "ExposurePage";
         }
         
         /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
-            result.AddRange(Total.Encode());
-            result.AddRange(Own.Encode());
+            result.AddRange(PageTotal.Encode());
             result.AddRange(Others.Encode());
             return result.ToArray();
         }
@@ -57,16 +52,14 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Total = new Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>();
-            Total.Decode(byteArray, ref p);
-            Own = new Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>();
-            Own.Decode(byteArray, ref p);
-            Others = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.pallet_staking.IndividualExposure>();
+            PageTotal = new Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>();
+            PageTotal.Decode(byteArray, ref p);
+            Others = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_staking.IndividualExposure>();
             Others.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

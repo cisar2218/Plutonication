@@ -41,23 +41,63 @@ namespace Substrate.NetApi.Generated.Model.pallet_treasury.pallet
         approve_proposal = 2,
         
         /// <summary>
-        /// >> spend
-        /// See [`Pallet::spend`].
+        /// >> spend_local
+        /// See [`Pallet::spend_local`].
         /// </summary>
-        spend = 3,
+        spend_local = 3,
         
         /// <summary>
         /// >> remove_approval
         /// See [`Pallet::remove_approval`].
         /// </summary>
         remove_approval = 4,
+        
+        /// <summary>
+        /// >> spend
+        /// See [`Pallet::spend`].
+        /// </summary>
+        spend = 5,
+        
+        /// <summary>
+        /// >> payout
+        /// See [`Pallet::payout`].
+        /// </summary>
+        payout = 6,
+        
+        /// <summary>
+        /// >> check_status
+        /// See [`Pallet::check_status`].
+        /// </summary>
+        check_status = 7,
+        
+        /// <summary>
+        /// >> void_spend
+        /// See [`Pallet::void_spend`].
+        /// </summary>
+        void_spend = 8,
     }
     
     /// <summary>
-    /// >> 131 - Variant[pallet_treasury.pallet.Call]
+    /// >> 155 - Variant[pallet_treasury.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress>, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress>, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U32>>
+    public sealed class EnumCall : BaseEnumRust<Call>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumCall()
+        {
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress>>(Call.propose_spend);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U32>>(Call.reject_proposal);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U32>>(Call.approve_proposal);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress>>(Call.spend_local);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U32>>(Call.remove_approval);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseTuple, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32>>>(Call.spend);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Call.payout);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Call.check_status);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Call.void_spend);
+        }
     }
 }

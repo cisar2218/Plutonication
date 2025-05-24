@@ -9,37 +9,42 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
-namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
+namespace Substrate.NetApi.Generated.Model.primitives.crypto
 {
     
     
     /// <summary>
-    /// >> 274 - Composite[pallet_contracts.storage.DepositAccount]
+    /// >> 150 - Composite[primitives.crypto.IndexedSignature]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
-    public sealed class DepositAccount : BaseType
+    public sealed class IndexedSignature : BaseType
     {
         
         /// <summary>
-        /// >> value
+        /// >> index
         /// </summary>
-        public Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 Value { get; set; }
+        public Substrate.NetApi.Model.Types.Primitive.U64 Index { get; set; }
+        /// <summary>
+        /// >> signature
+        /// </summary>
+        public Substrate.NetApi.Generated.Model.primitives.app.Signature Signature { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
         {
-            return "DepositAccount";
+            return "IndexedSignature";
         }
         
         /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
-            result.AddRange(Value.Encode());
+            result.AddRange(Index.Encode());
+            result.AddRange(Signature.Encode());
             return result.ToArray();
         }
         
@@ -47,12 +52,14 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Value = new Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32();
-            Value.Decode(byteArray, ref p);
+            Index = new Substrate.NetApi.Model.Types.Primitive.U64();
+            Index.Decode(byteArray, ref p);
+            Signature = new Substrate.NetApi.Generated.Model.primitives.app.Signature();
+            Signature.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

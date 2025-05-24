@@ -105,12 +105,60 @@ namespace Substrate.NetApi.Generated.Model.aleph_runtime
         /// >> CommitteeManagement
         /// </summary>
         CommitteeManagement = 21,
+        
+        /// <summary>
+        /// >> Proxy
+        /// </summary>
+        Proxy = 22,
+        
+        /// <summary>
+        /// >> SafeMode
+        /// </summary>
+        SafeMode = 23,
+        
+        /// <summary>
+        /// >> TxPause
+        /// </summary>
+        TxPause = 24,
+        
+        /// <summary>
+        /// >> Operations
+        /// </summary>
+        Operations = 255,
     }
     
     /// <summary>
     /// >> 20 - Variant[aleph_runtime.RuntimeEvent]
     /// </summary>
-    public sealed class EnumRuntimeEvent : BaseEnumExt<RuntimeEvent, Substrate.NetApi.Generated.Model.frame_system.pallet.EnumEvent, BaseVoid, Substrate.NetApi.Generated.Model.pallet_scheduler.pallet.EnumEvent, BaseVoid, BaseVoid, Substrate.NetApi.Generated.Model.pallet_balances.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_transaction_payment.pallet.EnumEvent, BaseVoid, Substrate.NetApi.Generated.Model.pallet_staking.pallet.pallet.EnumEvent, BaseVoid, Substrate.NetApi.Generated.Model.pallet_session.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_aleph.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_elections.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_treasury.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_vesting.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_utility.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_multisig.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_sudo.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_contracts.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_identity.pallet.EnumEvent, Substrate.NetApi.Generated.Model.pallet_committee_management.pallet.EnumEvent>
+    public sealed class EnumRuntimeEvent : BaseEnumRust<RuntimeEvent>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumRuntimeEvent()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.frame_system.pallet.EnumEvent>(RuntimeEvent.System);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_scheduler.pallet.EnumEvent>(RuntimeEvent.Scheduler);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_balances.pallet.EnumEvent>(RuntimeEvent.Balances);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_transaction_payment.pallet.EnumEvent>(RuntimeEvent.TransactionPayment);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_staking.pallet.pallet.EnumEvent>(RuntimeEvent.Staking);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_session.pallet.EnumEvent>(RuntimeEvent.Session);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_aleph.pallet.EnumEvent>(RuntimeEvent.Aleph);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_elections.pallet.EnumEvent>(RuntimeEvent.Elections);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_treasury.pallet.EnumEvent>(RuntimeEvent.Treasury);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_vesting.pallet.EnumEvent>(RuntimeEvent.Vesting);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_utility.pallet.EnumEvent>(RuntimeEvent.Utility);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_multisig.pallet.EnumEvent>(RuntimeEvent.Multisig);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_sudo.pallet.EnumEvent>(RuntimeEvent.Sudo);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_contracts.pallet.EnumEvent>(RuntimeEvent.Contracts);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet.EnumEvent>(RuntimeEvent.NominationPools);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_identity.pallet.EnumEvent>(RuntimeEvent.Identity);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_committee_management.pallet.EnumEvent>(RuntimeEvent.CommitteeManagement);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_proxy.pallet.EnumEvent>(RuntimeEvent.Proxy);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_safe_mode.pallet.EnumEvent>(RuntimeEvent.SafeMode);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_tx_pause.pallet.EnumEvent>(RuntimeEvent.TxPause);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_operations.pallet.EnumEvent>(RuntimeEvent.Operations);
+        }
     }
 }

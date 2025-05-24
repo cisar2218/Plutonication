@@ -9,6 +9,9 @@
 
   <ItemGroup>
     <PackageReference Include="Substrate.NET.Wallet" Version="1.0.8" />
-    <PackageReference Include="Plutonication" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Plutonication\Plutonication.csproj" />
   </ItemGroup>
 </Project>

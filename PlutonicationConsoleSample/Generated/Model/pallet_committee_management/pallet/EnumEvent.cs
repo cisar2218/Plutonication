@@ -29,17 +29,33 @@ namespace Substrate.NetApi.Generated.Model.pallet_committee_management.pallet
         SetBanConfig = 0,
         
         /// <summary>
+        /// >> SetFinalityBanConfig
+        /// Ban thresholds for the next era has changed
+        /// </summary>
+        SetFinalityBanConfig = 1,
+        
+        /// <summary>
         /// >> BanValidators
         /// Validators have been banned from the committee
         /// </summary>
-        BanValidators = 1,
+        BanValidators = 2,
     }
     
     /// <summary>
-    /// >> 68 - Variant[pallet_committee_management.pallet.Event]
+    /// >> 72 - Variant[pallet_committee_management.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApi.Generated.Model.primitives.BanConfig, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.primitives.BanInfo>>>
+    public sealed class EnumEvent : BaseEnumRust<Event>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumEvent()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.primitives.ProductionBanConfig>(Event.SetBanConfig);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.primitives.FinalityBanConfig>(Event.SetFinalityBanConfig);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Generated.Model.primitives.BanInfo>>>(Event.BanValidators);
+        }
     }
 }

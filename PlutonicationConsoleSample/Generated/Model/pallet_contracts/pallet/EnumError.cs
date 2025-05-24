@@ -143,10 +143,16 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.pallet
         NoChainExtension = 18,
         
         /// <summary>
+        /// >> XCMDecodeFailed
+        /// Failed to decode the XCM program.
+        /// </summary>
+        XCMDecodeFailed = 19,
+        
+        /// <summary>
         /// >> DuplicateContract
         /// A contract with the same AccountId already exists.
         /// </summary>
-        DuplicateContract = 19,
+        DuplicateContract = 20,
         
         /// <summary>
         /// >> TerminatedInConstructor
@@ -154,7 +160,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.pallet
         /// 
         /// This can be triggered by a call to `seal_terminate`.
         /// </summary>
-        TerminatedInConstructor = 20,
+        TerminatedInConstructor = 21,
         
         /// <summary>
         /// >> ReentranceDenied
@@ -163,25 +169,25 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.pallet
         /// into `pallet-contracts`. This would make the whole pallet reentrant with regard to
         /// contract code execution which is not supported.
         /// </summary>
-        ReentranceDenied = 21,
+        ReentranceDenied = 22,
         
         /// <summary>
         /// >> StorageDepositNotEnoughFunds
         /// Origin doesn't have enough balance to pay the required storage deposits.
         /// </summary>
-        StorageDepositNotEnoughFunds = 22,
+        StorageDepositNotEnoughFunds = 23,
         
         /// <summary>
         /// >> StorageDepositLimitExhausted
         /// More storage was created than allowed by the storage deposit limit.
         /// </summary>
-        StorageDepositLimitExhausted = 23,
+        StorageDepositLimitExhausted = 24,
         
         /// <summary>
         /// >> CodeInUse
         /// Code removal was denied because the code is still in use by at least one contract.
         /// </summary>
-        CodeInUse = 24,
+        CodeInUse = 25,
         
         /// <summary>
         /// >> ContractReverted
@@ -190,7 +196,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.pallet
         /// or via RPC an `Ok` will be returned. In this case the caller needs to inspect the flags
         /// to determine whether a reversion has taken place.
         /// </summary>
-        ContractReverted = 25,
+        ContractReverted = 26,
         
         /// <summary>
         /// >> CodeRejected
@@ -203,29 +209,53 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.pallet
         /// A more detailed error can be found on the node console if debug messages are enabled
         /// by supplying `-lruntime::contracts=debug`.
         /// </summary>
-        CodeRejected = 26,
+        CodeRejected = 27,
         
         /// <summary>
         /// >> Indeterministic
         /// An indetermistic code was used in a context where this is not permitted.
         /// </summary>
-        Indeterministic = 27,
+        Indeterministic = 28,
         
         /// <summary>
         /// >> MigrationInProgress
         /// A pending migration needs to complete before the extrinsic can be called.
         /// </summary>
-        MigrationInProgress = 28,
+        MigrationInProgress = 29,
         
         /// <summary>
         /// >> NoMigrationPerformed
         /// Migrate dispatch call was attempted but no migration was performed.
         /// </summary>
-        NoMigrationPerformed = 29,
+        NoMigrationPerformed = 30,
+        
+        /// <summary>
+        /// >> MaxDelegateDependenciesReached
+        /// The contract has reached its maximum number of delegate dependencies.
+        /// </summary>
+        MaxDelegateDependenciesReached = 31,
+        
+        /// <summary>
+        /// >> DelegateDependencyNotFound
+        /// The dependency was not found in the contract's delegate dependencies.
+        /// </summary>
+        DelegateDependencyNotFound = 32,
+        
+        /// <summary>
+        /// >> DelegateDependencyAlreadyExists
+        /// The contract already depends on the given delegate dependency.
+        /// </summary>
+        DelegateDependencyAlreadyExists = 33,
+        
+        /// <summary>
+        /// >> CannotAddSelfAsDelegateDependency
+        /// Can not add a delegate dependency to the code hash of the contract itself.
+        /// </summary>
+        CannotAddSelfAsDelegateDependency = 34,
     }
     
     /// <summary>
-    /// >> 281 - Variant[pallet_contracts.pallet.Error]
+    /// >> 332 - Variant[pallet_contracts.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

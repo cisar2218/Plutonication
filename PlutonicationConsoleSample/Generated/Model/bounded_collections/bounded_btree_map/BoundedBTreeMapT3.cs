@@ -9,42 +9,37 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
-namespace Substrate.NetApi.Generated.Model.aleph_runtime
+namespace Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map
 {
     
     
     /// <summary>
-    /// >> 123 - Composite[aleph_runtime.SessionKeys]
+    /// >> 346 - Composite[bounded_collections.bounded_btree_map.BoundedBTreeMapT3]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
-    public sealed class SessionKeys : BaseType
+    public sealed class BoundedBTreeMapT3 : BaseType
     {
         
         /// <summary>
-        /// >> aura
+        /// >> value
         /// </summary>
-        public Substrate.NetApi.Generated.Model.sp_consensus_aura.sr25519.app_sr25519.Public Aura { get; set; }
-        /// <summary>
-        /// >> aleph
-        /// </summary>
-        public Substrate.NetApi.Generated.Model.primitives.app.Public Aleph { get; set; }
+        public Substrate.NetApi.Generated.Types.Base.BTreeMapT4 Value { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
         {
-            return "SessionKeys";
+            return "BoundedBTreeMapT3";
         }
         
         /// <inheritdoc/>
         public override byte[] Encode()
         {
             var result = new List<byte>();
-            result.AddRange(Aura.Encode());
-            result.AddRange(Aleph.Encode());
+            result.AddRange(Value.Encode());
             return result.ToArray();
         }
         
@@ -52,14 +47,12 @@ namespace Substrate.NetApi.Generated.Model.aleph_runtime
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Aura = new Substrate.NetApi.Generated.Model.sp_consensus_aura.sr25519.app_sr25519.Public();
-            Aura.Decode(byteArray, ref p);
-            Aleph = new Substrate.NetApi.Generated.Model.primitives.app.Public();
-            Aleph.Decode(byteArray, ref p);
+            Value = new Substrate.NetApi.Generated.Types.Base.BTreeMapT4();
+            Value.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

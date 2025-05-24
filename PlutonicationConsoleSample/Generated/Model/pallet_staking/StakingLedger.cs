@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
     
     
     /// <summary>
-    /// >> 219 - Composite[pallet_staking.StakingLedger]
+    /// >> 257 - Composite[pallet_staking.StakingLedger]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class StakingLedger : BaseType
@@ -39,11 +39,11 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
         /// <summary>
         /// >> unlocking
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT10 Unlocking { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT13 Unlocking { get; set; }
         /// <summary>
-        /// >> claimed_rewards
+        /// >> legacy_claimed_rewards
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT11 ClaimedRewards { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT14 LegacyClaimedRewards { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -59,7 +59,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
             result.AddRange(Total.Encode());
             result.AddRange(Active.Encode());
             result.AddRange(Unlocking.Encode());
-            result.AddRange(ClaimedRewards.Encode());
+            result.AddRange(LegacyClaimedRewards.Encode());
             return result.ToArray();
         }
         
@@ -73,14 +73,14 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
             Total.Decode(byteArray, ref p);
             Active = new Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>();
             Active.Decode(byteArray, ref p);
-            Unlocking = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT10();
+            Unlocking = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT13();
             Unlocking.Decode(byteArray, ref p);
-            ClaimedRewards = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT11();
-            ClaimedRewards.Decode(byteArray, ref p);
+            LegacyClaimedRewards = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT14();
+            LegacyClaimedRewards.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

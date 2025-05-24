@@ -33,13 +33,36 @@ namespace Substrate.NetApi.Generated.Model.pallet_aleph.pallet
         /// See [`Pallet::schedule_finality_version_change`].
         /// </summary>
         schedule_finality_version_change = 1,
+        
+        /// <summary>
+        /// >> set_inflation_parameters
+        /// See [`Pallet::set_inflation_parameters`].
+        /// </summary>
+        set_inflation_parameters = 2,
+        
+        /// <summary>
+        /// >> unsigned_submit_abft_score
+        /// See [`Pallet::unsigned_submit_abft_score`].
+        /// </summary>
+        unsigned_submit_abft_score = 3,
     }
     
     /// <summary>
-    /// >> 126 - Variant[pallet_aleph.pallet.Call]
+    /// >> 140 - Variant[pallet_aleph.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Generated.Model.primitives.app.Public, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>>
+    public sealed class EnumCall : BaseEnumRust<Call>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumCall()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.primitives.app.Public>(Call.set_emergency_finalizer);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>>(Call.schedule_finality_version_change);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>>>(Call.set_inflation_parameters);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.primitives.Score, Substrate.NetApi.Generated.Model.primitives.crypto.SignatureSet>>(Call.unsigned_submit_abft_score);
+        }
     }
 }

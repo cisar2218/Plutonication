@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_multisig
     
     
     /// <summary>
-    /// >> 267 - Composite[pallet_multisig.Multisig]
+    /// >> 308 - Composite[pallet_multisig.Multisig]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Multisig : BaseType
@@ -39,7 +39,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_multisig
         /// <summary>
         /// >> approvals
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT15 Approvals { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT18 Approvals { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -68,12 +68,12 @@ namespace Substrate.NetApi.Generated.Model.pallet_multisig
             Deposit.Decode(byteArray, ref p);
             Depositor = new Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32();
             Depositor.Decode(byteArray, ref p);
-            Approvals = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT15();
+            Approvals = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT18();
             Approvals.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -33,9 +33,18 @@ namespace Substrate.NetApi.Generated.Types.Base
     }
     
     /// <summary>
-    /// >> 33 - Variant[Result]
+    /// >> 34 - Variant[Result]
     /// </summary>
-    public sealed class EnumResult : BaseEnumExt<Result, Substrate.NetApi.Model.Types.Base.BaseTuple, Substrate.NetApi.Generated.Model.sp_runtime.EnumDispatchError>
+    public sealed class EnumResult : BaseEnumRust<Result>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumResult()
+        {
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseTuple>(Result.Ok);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.sp_runtime.EnumDispatchError>(Result.Err);
+        }
     }
 }

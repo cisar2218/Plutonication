@@ -9,16 +9,16 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
-namespace Substrate.NetApi.Generated.Model.pallet_identity.types
+namespace Substrate.NetApi.Generated.Model.pallet_identity.legacy
 {
     
     
     /// <summary>
-    /// >> 153 - Composite[pallet_identity.types.IdentityInfo]
+    /// >> 178 - Composite[pallet_identity.legacy.IdentityInfo]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class IdentityInfo : BaseType
@@ -27,7 +27,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_identity.types
         /// <summary>
         /// >> additional
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4 Additional { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT7 Additional { get; set; }
         /// <summary>
         /// >> display
         /// </summary>
@@ -87,7 +87,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_identity.types
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Additional = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4();
+            Additional = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT7();
             Additional.Decode(byteArray, ref p);
             Display = new Substrate.NetApi.Generated.Model.pallet_identity.types.EnumData();
             Display.Decode(byteArray, ref p);
@@ -108,7 +108,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_identity.types
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

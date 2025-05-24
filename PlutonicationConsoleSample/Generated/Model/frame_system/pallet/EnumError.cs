@@ -61,10 +61,22 @@ namespace Substrate.NetApi.Generated.Model.frame_system.pallet
         /// The origin filter prevent the call to be dispatched.
         /// </summary>
         CallFiltered = 5,
+        
+        /// <summary>
+        /// >> NothingAuthorized
+        /// No upgrade authorized.
+        /// </summary>
+        NothingAuthorized = 6,
+        
+        /// <summary>
+        /// >> Unauthorized
+        /// The submitted code is not authorized.
+        /// </summary>
+        Unauthorized = 7,
     }
     
     /// <summary>
-    /// >> 98 - Variant[frame_system.pallet.Error]
+    /// >> 112 - Variant[frame_system.pallet.Error]
     /// Error for the System pallet
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

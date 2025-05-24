@@ -40,12 +40,15 @@ namespace Substrate.NetApi.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "SessionValidatorBlockCount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "ValidatorEraTotalReward"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.pallet_committee_management.ValidatorTotalRewards)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "BanConfig"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.primitives.BanConfig)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "ProductionBanConfig"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.primitives.ProductionBanConfig)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "UnderperformedValidatorSessionCount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "Banned"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Generated.Model.primitives.BanInfo)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "CurrentAndNextSessionValidatorsStorage"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.pallet_committee_management.CurrentAndNextSessionValidators)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "UnderperformedFinalizerSessionCount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("CommitteeManagement", "FinalityBanConfig"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.primitives.FinalityBanConfig)));
         }
         
         /// <summary>
@@ -68,10 +71,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// <summary>
         /// >> LenientThreshold
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perquintill> LenientThreshold(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perquintill> LenientThreshold(string blockhash, CancellationToken token)
         {
             string parameters = CommitteeManagementStorage.LenientThresholdParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perquintill>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perquintill>(parameters, blockhash, token);
             return result;
         }
         
@@ -99,10 +102,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> SessionValidatorBlockCount
         ///  A lookup how many blocks a validator produced.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> SessionValidatorBlockCount(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> SessionValidatorBlockCount(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = CommitteeManagementStorage.SessionValidatorBlockCountParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -128,45 +131,45 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> ValidatorEraTotalReward
         ///  Total possible reward per validator for the current era.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_committee_management.ValidatorTotalRewards> ValidatorEraTotalReward(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_committee_management.ValidatorTotalRewards> ValidatorEraTotalReward(string blockhash, CancellationToken token)
         {
             string parameters = CommitteeManagementStorage.ValidatorEraTotalRewardParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_committee_management.ValidatorTotalRewards>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_committee_management.ValidatorTotalRewards>(parameters, blockhash, token);
             return result;
         }
         
         /// <summary>
-        /// >> BanConfigParams
-        ///  Current era config for ban functionality, see [`BanConfig`]
+        /// >> ProductionBanConfigParams
+        ///  Current era config for ban functionality related to block production.
         /// </summary>
-        public static string BanConfigParams()
+        public static string ProductionBanConfigParams()
         {
-            return RequestGenerator.GetStorage("CommitteeManagement", "BanConfig", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+            return RequestGenerator.GetStorage("CommitteeManagement", "ProductionBanConfig", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
         }
         
         /// <summary>
-        /// >> BanConfigDefault
+        /// >> ProductionBanConfigDefault
         /// Default value as hex string
         /// </summary>
-        public static string BanConfigDefault()
+        public static string ProductionBanConfigDefault()
         {
             return "0x0000000003000000C00300000A000000";
         }
         
         /// <summary>
-        /// >> BanConfig
-        ///  Current era config for ban functionality, see [`BanConfig`]
+        /// >> ProductionBanConfig
+        ///  Current era config for ban functionality related to block production.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.BanConfig> BanConfig(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.ProductionBanConfig> ProductionBanConfig(string blockhash, CancellationToken token)
         {
-            string parameters = CommitteeManagementStorage.BanConfigParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.BanConfig>(parameters, token);
+            string parameters = CommitteeManagementStorage.ProductionBanConfigParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.ProductionBanConfig>(parameters, blockhash, token);
             return result;
         }
         
         /// <summary>
         /// >> UnderperformedValidatorSessionCountParams
-        ///  A lookup for a number of underperformance sessions for a given validator
+        ///  A lookup for a number of underperformance sessions in block production for a given validator
         /// </summary>
         public static string UnderperformedValidatorSessionCountParams(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key)
         {
@@ -186,12 +189,12 @@ namespace Substrate.NetApi.Generated.Storage
         
         /// <summary>
         /// >> UnderperformedValidatorSessionCount
-        ///  A lookup for a number of underperformance sessions for a given validator
+        ///  A lookup for a number of underperformance sessions in block production for a given validator
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> UnderperformedValidatorSessionCount(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> UnderperformedValidatorSessionCount(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = CommitteeManagementStorage.UnderperformedValidatorSessionCountParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -219,10 +222,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Banned
         ///  Validators to be removed from non reserved list in the next era
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.BanInfo> Banned(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.BanInfo> Banned(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = CommitteeManagementStorage.BannedParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.BanInfo>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.BanInfo>(parameters, blockhash, token);
             return result;
         }
         
@@ -241,17 +244,77 @@ namespace Substrate.NetApi.Generated.Storage
         /// </summary>
         public static string CurrentAndNextSessionValidatorsStorageDefault()
         {
-            return "0x00000000";
+            return "0x000000000000";
         }
         
         /// <summary>
         /// >> CurrentAndNextSessionValidatorsStorage
         ///  SessionValidators in the current session.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_committee_management.CurrentAndNextSessionValidators> CurrentAndNextSessionValidatorsStorage(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_committee_management.CurrentAndNextSessionValidators> CurrentAndNextSessionValidatorsStorage(string blockhash, CancellationToken token)
         {
             string parameters = CommitteeManagementStorage.CurrentAndNextSessionValidatorsStorageParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_committee_management.CurrentAndNextSessionValidators>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_committee_management.CurrentAndNextSessionValidators>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> UnderperformedFinalizerSessionCountParams
+        ///  A lookup for a number of underperformance sessions in block finalization for a given validator
+        /// </summary>
+        public static string UnderperformedFinalizerSessionCountParams(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key)
+        {
+            return RequestGenerator.GetStorage("CommitteeManagement", "UnderperformedFinalizerSessionCount", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> UnderperformedFinalizerSessionCountDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string UnderperformedFinalizerSessionCountDefault()
+        {
+            return "0x00000000";
+        }
+        
+        /// <summary>
+        /// >> UnderperformedFinalizerSessionCount
+        ///  A lookup for a number of underperformance sessions in block finalization for a given validator
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> UnderperformedFinalizerSessionCount(Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
+        {
+            string parameters = CommitteeManagementStorage.UnderperformedFinalizerSessionCountParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> FinalityBanConfigParams
+        ///  Current era config for ban functionality related to block finality.
+        /// </summary>
+        public static string FinalityBanConfigParams()
+        {
+            return RequestGenerator.GetStorage("CommitteeManagement", "FinalityBanConfig", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> FinalityBanConfigDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string FinalityBanConfigDefault()
+        {
+            return "0x0B00FFFFFFFF0A000000C0030000";
+        }
+        
+        /// <summary>
+        /// >> FinalityBanConfig
+        ///  Current era config for ban functionality related to block finality.
+        /// </summary>
+        public async Task<Substrate.NetApi.Generated.Model.primitives.FinalityBanConfig> FinalityBanConfig(string blockhash, CancellationToken token)
+        {
+            string parameters = CommitteeManagementStorage.FinalityBanConfigParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.FinalityBanConfig>(parameters, blockhash, token);
             return result;
         }
     }
@@ -309,6 +372,20 @@ namespace Substrate.NetApi.Generated.Storage
             byteArray.AddRange(threshold_percent.Encode());
             return new Method(21, "CommitteeManagement", 4, "set_lenient_threshold", byteArray.ToArray());
         }
+        
+        /// <summary>
+        /// >> set_finality_ban_config
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method SetFinalityBanConfig(Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U16> minimal_expected_performance, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32> underperformed_session_count_threshold, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32> ban_period, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32> clean_session_counter_delay)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(minimal_expected_performance.Encode());
+            byteArray.AddRange(underperformed_session_count_threshold.Encode());
+            byteArray.AddRange(ban_period.Encode());
+            byteArray.AddRange(clean_session_counter_delay.Encode());
+            return new Method(21, "CommitteeManagement", 5, "set_finality_ban_config", byteArray.ToArray());
+        }
     }
     
     /// <summary>
@@ -337,7 +414,7 @@ namespace Substrate.NetApi.Generated.Storage
         
         /// <summary>
         /// >> InvalidBanConfig
-        /// Raised in any scenario [`BanConfig`] is invalid
+        /// Raised in any scenario [`ProductionBanConfig`] is invalid
         /// * `performance_ratio_threshold` must be a number in range [0; 100]
         /// * `underperformed_session_count_threshold` must be a positive number,
         /// * `clean_session_counter_delay` must be a positive number.

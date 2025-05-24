@@ -60,10 +60,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// <summary>
         /// >> NextFeeMultiplier
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.sp_arithmetic.fixed_point.FixedU128> NextFeeMultiplier(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.sp_arithmetic.fixed_point.FixedU128> NextFeeMultiplier(string blockhash, CancellationToken token)
         {
             string parameters = TransactionPaymentStorage.NextFeeMultiplierParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_arithmetic.fixed_point.FixedU128>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_arithmetic.fixed_point.FixedU128>(parameters, blockhash, token);
             return result;
         }
         
@@ -87,10 +87,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// <summary>
         /// >> StorageVersion
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_transaction_payment.EnumReleases> StorageVersion(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_transaction_payment.EnumReleases> StorageVersion(string blockhash, CancellationToken token)
         {
             string parameters = TransactionPaymentStorage.StorageVersionParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_transaction_payment.EnumReleases>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_transaction_payment.EnumReleases>(parameters, blockhash, token);
             return result;
         }
     }
@@ -110,10 +110,10 @@ namespace Substrate.NetApi.Generated.Storage
         
         /// <summary>
         /// >> OperationalFeeMultiplier
-        ///  A fee mulitplier for `Operational` extrinsics to compute "virtual tip" to boost their
+        ///  A fee multiplier for `Operational` extrinsics to compute "virtual tip" to boost their
         ///  `priority`
         /// 
-        ///  This value is multipled by the `final_fee` to obtain a "virtual tip" that is later
+        ///  This value is multiplied by the `final_fee` to obtain a "virtual tip" that is later
         ///  added to a tip component in regular `priority` calculations.
         ///  It means that a `Normal` transaction can front-run a similarly-sized `Operational`
         ///  extrinsic (with no tip), by including a tip value greater than the virtual tip.

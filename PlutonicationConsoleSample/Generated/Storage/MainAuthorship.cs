@@ -61,10 +61,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Author
         ///  Author of current block.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32> Author(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32> Author(string blockhash, CancellationToken token)
         {
             string parameters = AuthorshipStorage.AuthorParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(parameters, blockhash, token);
             return result;
         }
     }

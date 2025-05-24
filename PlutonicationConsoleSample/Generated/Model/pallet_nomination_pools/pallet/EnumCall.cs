@@ -147,13 +147,55 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools.pallet
         /// See [`Pallet::claim_commission`].
         /// </summary>
         claim_commission = 20,
+        
+        /// <summary>
+        /// >> adjust_pool_deposit
+        /// See [`Pallet::adjust_pool_deposit`].
+        /// </summary>
+        adjust_pool_deposit = 21,
+        
+        /// <summary>
+        /// >> set_commission_claim_permission
+        /// See [`Pallet::set_commission_claim_permission`].
+        /// </summary>
+        set_commission_claim_permission = 22,
     }
     
     /// <summary>
-    /// >> 145 - Variant[pallet_nomination_pools.pallet.Call]
+    /// >> 170 - Variant[pallet_nomination_pools.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumBondExtra, BaseVoid, BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumPoolState>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, BaseTuple<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp>, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumBondExtra>, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumClaimPermission, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.pallet_nomination_pools.CommissionChangeRate>, Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumCall : BaseEnumRust<Call>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumCall()
+        {
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Primitive.U32>>(Call.join);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumBondExtra>(Call.bond_extra);
+				AddTypeDecoder<BaseVoid>(Call.claim_payout);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>>>(Call.unbond);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>>(Call.pool_withdraw_unbonded);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Primitive.U32>>(Call.withdraw_unbonded);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress>>(Call.create);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Primitive.U32>>(Call.create_with_pool_id);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>>(Call.nominate);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumPoolState>>(Call.set_state);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>>(Call.set_metadata);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp>>(Call.set_configs);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumConfigOp>>(Call.update_roles);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Call.chill);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumBondExtra>>(Call.bond_extra_other);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumClaimPermission>(Call.set_claim_permission);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(Call.claim_payout_other);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>>>(Call.set_commission);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.sp_arithmetic.per_things.Perbill>>(Call.set_commission_max);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Generated.Model.pallet_nomination_pools.CommissionChangeRate>>(Call.set_commission_change_rate);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Call.claim_commission);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Primitive.U32>(Call.adjust_pool_deposit);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumCommissionClaimPermission>>>(Call.set_commission_claim_permission);
+        }
     }
 }

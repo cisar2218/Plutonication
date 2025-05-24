@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.schedule
     
     
     /// <summary>
-    /// >> 280 - Composite[pallet_contracts.schedule.HostFnWeights]
+    /// >> 324 - Composite[pallet_contracts.schedule.HostFnWeights]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class HostFnWeights : BaseType
@@ -268,6 +268,14 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.schedule
         /// >> instantiation_nonce
         /// </summary>
         public Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight InstantiationNonce { get; set; }
+        /// <summary>
+        /// >> add_delegate_dependency
+        /// </summary>
+        public Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight AddDelegateDependency { get; set; }
+        /// <summary>
+        /// >> remove_delegate_dependency
+        /// </summary>
+        public Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight RemoveDelegateDependency { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -340,6 +348,8 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.schedule
             result.AddRange(ReentranceCount.Encode());
             result.AddRange(AccountReentranceCount.Encode());
             result.AddRange(InstantiationNonce.Encode());
+            result.AddRange(AddDelegateDependency.Encode());
+            result.AddRange(RemoveDelegateDependency.Encode());
             return result.ToArray();
         }
         
@@ -469,10 +479,14 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.schedule
             AccountReentranceCount.Decode(byteArray, ref p);
             InstantiationNonce = new Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight();
             InstantiationNonce.Decode(byteArray, ref p);
+            AddDelegateDependency = new Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight();
+            AddDelegateDependency.Decode(byteArray, ref p);
+            RemoveDelegateDependency = new Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight();
+            RemoveDelegateDependency.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

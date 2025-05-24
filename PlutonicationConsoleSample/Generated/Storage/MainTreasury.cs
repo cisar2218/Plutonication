@@ -40,7 +40,10 @@ namespace Substrate.NetApi.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Treasury", "Proposals"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.pallet_treasury.Proposal)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Treasury", "Deactivated"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Treasury", "Approvals"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT13)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Treasury", "Approvals"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT16)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Treasury", "SpendCount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Treasury", "Spends"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Generated.Model.pallet_treasury.SpendStatus)));
         }
         
         /// <summary>
@@ -65,10 +68,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> ProposalCount
         ///  Number of proposals that have been made.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> ProposalCount(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> ProposalCount(string blockhash, CancellationToken token)
         {
             string parameters = TreasuryStorage.ProposalCountParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -96,10 +99,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Proposals
         ///  Proposals that have been made.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.pallet_treasury.Proposal> Proposals(Substrate.NetApi.Model.Types.Primitive.U32 key, CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.pallet_treasury.Proposal> Proposals(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = TreasuryStorage.ProposalsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_treasury.Proposal>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_treasury.Proposal>(parameters, blockhash, token);
             return result;
         }
         
@@ -125,10 +128,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Deactivated
         ///  The amount which has been reported as inactive to Currency.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> Deactivated(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> Deactivated(string blockhash, CancellationToken token)
         {
             string parameters = TreasuryStorage.DeactivatedParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
             return result;
         }
         
@@ -154,10 +157,70 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> Approvals
         ///  Proposal indices that have been approved but not yet awarded.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT13> Approvals(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT16> Approvals(string blockhash, CancellationToken token)
         {
             string parameters = TreasuryStorage.ApprovalsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT13>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT16>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> SpendCountParams
+        ///  The count of spends that have been made.
+        /// </summary>
+        public static string SpendCountParams()
+        {
+            return RequestGenerator.GetStorage("Treasury", "SpendCount", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> SpendCountDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string SpendCountDefault()
+        {
+            return "0x00000000";
+        }
+        
+        /// <summary>
+        /// >> SpendCount
+        ///  The count of spends that have been made.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> SpendCount(string blockhash, CancellationToken token)
+        {
+            string parameters = TreasuryStorage.SpendCountParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> SpendsParams
+        ///  Spends that have been approved and being processed.
+        /// </summary>
+        public static string SpendsParams(Substrate.NetApi.Model.Types.Primitive.U32 key)
+        {
+            return RequestGenerator.GetStorage("Treasury", "Spends", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> SpendsDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string SpendsDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> Spends
+        ///  Spends that have been approved and being processed.
+        /// </summary>
+        public async Task<Substrate.NetApi.Generated.Model.pallet_treasury.SpendStatus> Spends(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        {
+            string parameters = TreasuryStorage.SpendsParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.pallet_treasury.SpendStatus>(parameters, blockhash, token);
             return result;
         }
     }
@@ -203,15 +266,15 @@ namespace Substrate.NetApi.Generated.Storage
         }
         
         /// <summary>
-        /// >> spend
+        /// >> spend_local
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method Spend(Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128> amount, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress beneficiary)
+        public static Method SpendLocal(Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128> amount, Substrate.NetApi.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress beneficiary)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(amount.Encode());
             byteArray.AddRange(beneficiary.Encode());
-            return new Method(13, "Treasury", 3, "spend", byteArray.ToArray());
+            return new Method(13, "Treasury", 3, "spend_local", byteArray.ToArray());
         }
         
         /// <summary>
@@ -223,6 +286,53 @@ namespace Substrate.NetApi.Generated.Storage
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(proposal_id.Encode());
             return new Method(13, "Treasury", 4, "remove_approval", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> spend
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method Spend(Substrate.NetApi.Model.Types.Base.BaseTuple asset_kind, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128> amount, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32 beneficiary, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32> valid_from)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(asset_kind.Encode());
+            byteArray.AddRange(amount.Encode());
+            byteArray.AddRange(beneficiary.Encode());
+            byteArray.AddRange(valid_from.Encode());
+            return new Method(13, "Treasury", 5, "spend", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> payout
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method Payout(Substrate.NetApi.Model.Types.Primitive.U32 index)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(index.Encode());
+            return new Method(13, "Treasury", 6, "payout", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> check_status
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method CheckStatus(Substrate.NetApi.Model.Types.Primitive.U32 index)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(index.Encode());
+            return new Method(13, "Treasury", 7, "check_status", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> void_spend
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method VoidSpend(Substrate.NetApi.Model.Types.Primitive.U32 index)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(index.Encode());
+            return new Method(13, "Treasury", 8, "void_spend", byteArray.ToArray());
         }
     }
     
@@ -311,6 +421,17 @@ namespace Substrate.NetApi.Generated.Storage
             result.Create("0x14000000");
             return result;
         }
+        
+        /// <summary>
+        /// >> PayoutPeriod
+        ///  The period during which an approved treasury spend has to be claimed.
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.U32 PayoutPeriod()
+        {
+            var result = new Substrate.NetApi.Model.Types.Primitive.U32();
+            result.Create("0x00000000");
+            return result;
+        }
     }
     
     /// <summary>
@@ -327,7 +448,7 @@ namespace Substrate.NetApi.Generated.Storage
         
         /// <summary>
         /// >> InvalidIndex
-        /// No proposal or bounty at that index.
+        /// No proposal, bounty or spend at that index.
         /// </summary>
         InvalidIndex,
         
@@ -349,5 +470,47 @@ namespace Substrate.NetApi.Generated.Storage
         /// Proposal has not been approved.
         /// </summary>
         ProposalNotApproved,
+        
+        /// <summary>
+        /// >> FailedToConvertBalance
+        /// The balance of the asset kind is not convertible to the balance of the native asset.
+        /// </summary>
+        FailedToConvertBalance,
+        
+        /// <summary>
+        /// >> SpendExpired
+        /// The spend has expired and cannot be claimed.
+        /// </summary>
+        SpendExpired,
+        
+        /// <summary>
+        /// >> EarlyPayout
+        /// The spend is not yet eligible for payout.
+        /// </summary>
+        EarlyPayout,
+        
+        /// <summary>
+        /// >> AlreadyAttempted
+        /// The payment has already been attempted.
+        /// </summary>
+        AlreadyAttempted,
+        
+        /// <summary>
+        /// >> PayoutError
+        /// There was some issue with the mechanism of payment.
+        /// </summary>
+        PayoutError,
+        
+        /// <summary>
+        /// >> NotAttempted
+        /// The payout was not yet attempted/claimed.
+        /// </summary>
+        NotAttempted,
+        
+        /// <summary>
+        /// >> Inconclusive
+        /// The payment has neither failed nor succeeded yet.
+        /// </summary>
+        Inconclusive,
     }
 }

@@ -36,13 +36,29 @@ namespace Substrate.NetApi.Generated.Model.pallet_aleph.pallet
         /// >> FinalityVersionChange
         /// </summary>
         FinalityVersionChange = 2,
+        
+        /// <summary>
+        /// >> InflationParametersChange
+        /// </summary>
+        InflationParametersChange = 3,
     }
     
     /// <summary>
-    /// >> 45 - Variant[pallet_aleph.pallet.Event]
+    /// >> 46 - Variant[pallet_aleph.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApi.Generated.Model.primitives.app.Public, Substrate.NetApi.Generated.Model.primitives.VersionChange, Substrate.NetApi.Generated.Model.primitives.VersionChange>
+    public sealed class EnumEvent : BaseEnumRust<Event>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumEvent()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.primitives.app.Public>(Event.ChangeEmergencyFinalizer);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.primitives.VersionChange>(Event.ScheduleFinalityVersionChange);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.primitives.VersionChange>(Event.FinalityVersionChange);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U64>>(Event.InflationParametersChange);
+        }
     }
 }

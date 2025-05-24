@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
     
     
     /// <summary>
-    /// >> 273 - Composite[pallet_contracts.storage.ContractInfo]
+    /// >> 314 - Composite[pallet_contracts.storage.ContractInfo]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class ContractInfo : BaseType
@@ -27,11 +27,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
         /// <summary>
         /// >> trie_id
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5 TrieId { get; set; }
-        /// <summary>
-        /// >> deposit_account
-        /// </summary>
-        public Substrate.NetApi.Generated.Model.pallet_contracts.storage.DepositAccount DepositAccount { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT8 TrieId { get; set; }
         /// <summary>
         /// >> code_hash
         /// </summary>
@@ -56,6 +52,10 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
         /// >> storage_base_deposit
         /// </summary>
         public Substrate.NetApi.Model.Types.Primitive.U128 StorageBaseDeposit { get; set; }
+        /// <summary>
+        /// >> delegate_dependencies
+        /// </summary>
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT1 DelegateDependencies { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -68,13 +68,13 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
         {
             var result = new List<byte>();
             result.AddRange(TrieId.Encode());
-            result.AddRange(DepositAccount.Encode());
             result.AddRange(CodeHash.Encode());
             result.AddRange(StorageBytes.Encode());
             result.AddRange(StorageItems.Encode());
             result.AddRange(StorageByteDeposit.Encode());
             result.AddRange(StorageItemDeposit.Encode());
             result.AddRange(StorageBaseDeposit.Encode());
+            result.AddRange(DelegateDependencies.Encode());
             return result.ToArray();
         }
         
@@ -82,10 +82,8 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            TrieId = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5();
+            TrieId = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_vec.BoundedVecT8();
             TrieId.Decode(byteArray, ref p);
-            DepositAccount = new Substrate.NetApi.Generated.Model.pallet_contracts.storage.DepositAccount();
-            DepositAccount.Decode(byteArray, ref p);
             CodeHash = new Substrate.NetApi.Generated.Model.primitive_types.H256();
             CodeHash.Decode(byteArray, ref p);
             StorageBytes = new Substrate.NetApi.Model.Types.Primitive.U32();
@@ -98,10 +96,12 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
             StorageItemDeposit.Decode(byteArray, ref p);
             StorageBaseDeposit = new Substrate.NetApi.Model.Types.Primitive.U128();
             StorageBaseDeposit.Decode(byteArray, ref p);
+            DelegateDependencies = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT1();
+            DelegateDependencies.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

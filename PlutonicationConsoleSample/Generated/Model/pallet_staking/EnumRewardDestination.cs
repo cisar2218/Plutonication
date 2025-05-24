@@ -48,9 +48,21 @@ namespace Substrate.NetApi.Generated.Model.pallet_staking
     }
     
     /// <summary>
-    /// >> 114 - Variant[pallet_staking.RewardDestination]
+    /// >> 40 - Variant[pallet_staking.RewardDestination]
     /// </summary>
-    public sealed class EnumRewardDestination : BaseEnumExt<RewardDestination, BaseVoid, BaseVoid, BaseVoid, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32, BaseVoid>
+    public sealed class EnumRewardDestination : BaseEnumRust<RewardDestination>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumRewardDestination()
+        {
+				AddTypeDecoder<BaseVoid>(RewardDestination.Staked);
+				AddTypeDecoder<BaseVoid>(RewardDestination.Stash);
+				AddTypeDecoder<BaseVoid>(RewardDestination.Controller);
+				AddTypeDecoder<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>(RewardDestination.Account);
+				AddTypeDecoder<BaseVoid>(RewardDestination.None);
+        }
     }
 }

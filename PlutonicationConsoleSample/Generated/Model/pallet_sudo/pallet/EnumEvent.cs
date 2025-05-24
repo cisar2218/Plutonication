@@ -24,28 +24,45 @@ namespace Substrate.NetApi.Generated.Model.pallet_sudo.pallet
         
         /// <summary>
         /// >> Sudid
-        /// A sudo just took place. \[result\]
+        /// A sudo call just took place.
         /// </summary>
         Sudid = 0,
         
         /// <summary>
         /// >> KeyChanged
-        /// The \[sudoer\] just switched identity; the old key is supplied if one existed.
+        /// The sudo key has been updated.
         /// </summary>
         KeyChanged = 1,
         
         /// <summary>
-        /// >> SudoAsDone
-        /// A sudo just took place. \[result\]
+        /// >> KeyRemoved
+        /// The key was permanently removed.
         /// </summary>
-        SudoAsDone = 2,
+        KeyRemoved = 2,
+        
+        /// <summary>
+        /// >> SudoAsDone
+        /// A [sudo_as](Pallet::sudo_as) call just took place.
+        /// </summary>
+        SudoAsDone = 3,
     }
     
     /// <summary>
-    /// >> 57 - Variant[pallet_sudo.pallet.Event]
+    /// >> 58 - Variant[pallet_sudo.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApi.Generated.Types.Base.EnumResult, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>, Substrate.NetApi.Generated.Types.Base.EnumResult>
+    public sealed class EnumEvent : BaseEnumRust<Event>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumEvent()
+        {
+				AddTypeDecoder<Substrate.NetApi.Generated.Types.Base.EnumResult>(Event.Sudid);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>, Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(Event.KeyChanged);
+				AddTypeDecoder<BaseVoid>(Event.KeyRemoved);
+				AddTypeDecoder<Substrate.NetApi.Generated.Types.Base.EnumResult>(Event.SudoAsDone);
+        }
     }
 }

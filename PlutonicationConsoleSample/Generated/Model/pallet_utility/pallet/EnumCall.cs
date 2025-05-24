@@ -60,10 +60,23 @@ namespace Substrate.NetApi.Generated.Model.pallet_utility.pallet
     }
     
     /// <summary>
-    /// >> 134 - Variant[pallet_utility.pallet.Call]
+    /// >> 159 - Variant[pallet_utility.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>, BaseTuple<Substrate.NetApi.Generated.Model.aleph_runtime.EnumOriginCaller, Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>, BaseTuple<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall, Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight>>
+    public sealed class EnumCall : BaseEnumRust<Call>
     {
+        
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public EnumCall()
+        {
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>>(Call.batch);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>>(Call.as_derivative);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>>(Call.batch_all);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.aleph_runtime.EnumOriginCaller, Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>>(Call.dispatch_as);
+				AddTypeDecoder<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall>>(Call.force_batch);
+				AddTypeDecoder<BaseTuple<Substrate.NetApi.Generated.Model.aleph_runtime.EnumRuntimeCall, Substrate.NetApi.Generated.Model.sp_weights.weight_v2.Weight>>(Call.with_weight);
+        }
     }
 }

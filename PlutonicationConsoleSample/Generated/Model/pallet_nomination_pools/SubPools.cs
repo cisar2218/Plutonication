@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
     
     
     /// <summary>
-    /// >> 293 - Composite[pallet_nomination_pools.SubPools]
+    /// >> 344 - Composite[pallet_nomination_pools.SubPools]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SubPools : BaseType
@@ -31,7 +31,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
         /// <summary>
         /// >> with_era
         /// </summary>
-        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT2 WithEra { get; set; }
+        public Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT3 WithEra { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -54,12 +54,12 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
             var start = p;
             NoEra = new Substrate.NetApi.Generated.Model.pallet_nomination_pools.UnbondPool();
             NoEra.Decode(byteArray, ref p);
-            WithEra = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT2();
+            WithEra = new Substrate.NetApi.Generated.Model.bounded_collections.bounded_btree_map.BoundedBTreeMapT3();
             WithEra.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

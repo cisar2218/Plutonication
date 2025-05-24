@@ -66,10 +66,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CommitteeSize
         ///  Desirable size of a committee, see [`CommitteeSeats`].
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats> CommitteeSize(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats> CommitteeSize(string blockhash, CancellationToken token)
         {
             string parameters = ElectionsStorage.CommitteeSizeParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats>(parameters, blockhash, token);
             return result;
         }
         
@@ -88,17 +88,17 @@ namespace Substrate.NetApi.Generated.Storage
         /// </summary>
         public static string NextEraCommitteeSizeDefault()
         {
-            return "0x0A0000002800000004000000";
+            return "0x010000001D0000000D000000";
         }
         
         /// <summary>
         /// >> NextEraCommitteeSize
         ///  Desired size of a committee in effect from a new era.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats> NextEraCommitteeSize(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats> NextEraCommitteeSize(string blockhash, CancellationToken token)
         {
             string parameters = ElectionsStorage.NextEraCommitteeSizeParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.CommitteeSeats>(parameters, blockhash, token);
             return result;
         }
         
@@ -124,10 +124,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> NextEraReservedValidators
         ///  Next era's list of reserved validators.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>> NextEraReservedValidators(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>> NextEraReservedValidators(string blockhash, CancellationToken token)
         {
             string parameters = ElectionsStorage.NextEraReservedValidatorsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
             return result;
         }
         
@@ -153,10 +153,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> CurrentEraValidators
         ///  Current era's list of reserved validators.
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.EraValidators> CurrentEraValidators(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.EraValidators> CurrentEraValidators(string blockhash, CancellationToken token)
         {
             string parameters = ElectionsStorage.CurrentEraValidatorsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.EraValidators>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.EraValidators>(parameters, blockhash, token);
             return result;
         }
         
@@ -182,10 +182,10 @@ namespace Substrate.NetApi.Generated.Storage
         /// >> NextEraNonReservedValidators
         ///  Next era's list of non reserved validators.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>> NextEraNonReservedValidators(CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>> NextEraNonReservedValidators(string blockhash, CancellationToken token)
         {
             string parameters = ElectionsStorage.NextEraNonReservedValidatorsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
             return result;
         }
         
@@ -213,10 +213,10 @@ namespace Substrate.NetApi.Generated.Storage
         ///  Openness of the elections, whether we allow all candidates that bonded enough tokens or
         ///  the validators list is managed by sudo
         /// </summary>
-        public async Task<Substrate.NetApi.Generated.Model.primitives.EnumElectionOpenness> Openness(CancellationToken token)
+        public async Task<Substrate.NetApi.Generated.Model.primitives.EnumElectionOpenness> Openness(string blockhash, CancellationToken token)
         {
             string parameters = ElectionsStorage.OpennessParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.EnumElectionOpenness>(parameters, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Generated.Model.primitives.EnumElectionOpenness>(parameters, blockhash, token);
             return result;
         }
     }

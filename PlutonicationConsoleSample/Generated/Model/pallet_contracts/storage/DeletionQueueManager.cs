@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
     
     
     /// <summary>
-    /// >> 275 - Composite[pallet_contracts.storage.DeletionQueueManager]
+    /// >> 319 - Composite[pallet_contracts.storage.DeletionQueueManager]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class DeletionQueueManager : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_contracts.storage
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

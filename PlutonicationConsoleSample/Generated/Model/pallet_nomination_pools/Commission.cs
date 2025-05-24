@@ -9,7 +9,7 @@
 
 using Substrate.NetApi.Attributes;
 using Substrate.NetApi.Model.Types.Base;
-using Substrate.NetApi.Model.Types.Metadata.V14;
+using Substrate.NetApi.Model.Types.Metadata.Base;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
     
     
     /// <summary>
-    /// >> 288 - Composite[pallet_nomination_pools.Commission]
+    /// >> 339 - Composite[pallet_nomination_pools.Commission]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Commission : BaseType
@@ -40,6 +40,10 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
         /// >> throttle_from
         /// </summary>
         public Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32> ThrottleFrom { get; set; }
+        /// <summary>
+        /// >> claim_permission
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumCommissionClaimPermission> ClaimPermission { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -55,6 +59,7 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
             result.AddRange(Max.Encode());
             result.AddRange(ChangeRate.Encode());
             result.AddRange(ThrottleFrom.Encode());
+            result.AddRange(ClaimPermission.Encode());
             return result.ToArray();
         }
         
@@ -70,10 +75,12 @@ namespace Substrate.NetApi.Generated.Model.pallet_nomination_pools
             ChangeRate.Decode(byteArray, ref p);
             ThrottleFrom = new Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32>();
             ThrottleFrom.Decode(byteArray, ref p);
+            ClaimPermission = new Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Generated.Model.pallet_nomination_pools.EnumCommissionClaimPermission>();
+            ClaimPermission.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }
