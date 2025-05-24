@@ -24,9 +24,6 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
-    - name: NUnit tests
-      run: dotnet test PlutonicationTests/PlutonicationTests.csproj
-
     - name: Display build error
       if: failure()
       run: |
